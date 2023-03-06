@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+
+#header {
+}
+
+#page {
+  display: flex;
+  height: 400px;
+}
+
+#sideBar {
+  min-width: 100px;
+  max-width: 100px;
+  background: purple;
+  color: white;
+}
+
+#content {
+  width: 100%;
+}
