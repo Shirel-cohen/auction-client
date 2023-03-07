@@ -55,3 +55,55 @@
 #content {
   width: 100%;
 }
+.statistics{
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+#statistics1{
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+#statistics2{
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.Buttons {
+  position: relative;
+  top: 50px;
+  width: 260px;
+  background-color: rgba(204, 159, 9, 0.06);
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  font-size: 30px;
+  font-family: Aharoni, serif;
+  font-weight: bold;
+  /*font-family: Fjalla One, serif;*/
+  opacity: 0.6;
+  transition: 0.3s;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+*{
+
+  color: #070533;
+
+
+}
+
+.Buttons:hover {
+  -webkit-transform: scale(0.8);
+  -ms-transform: scale(0.8);
+  transform: scale(0.8);
+  opacity: 3;
+  box-shadow:
+          1px 1px #423c85,
+          2px 2px #4d4881,
+          3px 3px #525073;
+
+}
