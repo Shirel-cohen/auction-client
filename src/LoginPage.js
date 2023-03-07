@@ -42,7 +42,7 @@ function LoginPage () {
 
     const submit = () => {
         if (type == "signUp") {
-            axios.post("http://localhost:8989/sign-up", null, {
+            axios.post("http://localhost:8080/sign-up", null, {
                 params: {username,  password}
             }).then((response) => {
                 if (response.data.success) {
@@ -53,7 +53,7 @@ function LoginPage () {
                 }
             })
         } else {
-            axios.post("http://localhost:8989/login", null, {
+            axios.post("http://localhost:8080/login", null, {
                 params: {username,  password}
             }).then((response) => {
                 if (response.data.success) {
@@ -69,8 +69,8 @@ function LoginPage () {
     }
 
     return (
-        <div>
-            <div style={{marginRight: "1600px"}}>
+        <div style={{marginLeft: "1000px"} }>
+            <div>
                  <span  >
                      <input type={"radio"} name={"type"} value={"login"}
                             checked={type == "login"} onChange={typeChanged} />Login
@@ -115,12 +115,12 @@ function LoginPage () {
                 errorCode > 0 &&
                 <ErrorMessage message={errorCode} lineBreak={true}/>
             }
-            <button style={{marginRight: "1700px"}} onClick={submit} disabled={
+            <button  onClick={submit} disabled={
                 (password != password2 && type == "signUp") ||
                 username.length == 0
             }>{type == "signUp" ? "Sign Up" : "Login"}</button>
 
-            <div style={{marginLeft: "1400px"}}>
+            <div>
                 Statistics
                 <table className={"statistics"}>
                     <tr className={"statistics"}>

@@ -8,31 +8,11 @@ import MySuggestions from "./MySuggestions";
 import MyProducts from "./MyProducts";
 
 function App() {
-    const links=[
-        {to:"ManagePage", text:"Manage"},
-        {to:"/", text:"LOG-IN"},
-        {to:"Dashboard", text:"DASHBOARD"},
-        {to:"Product", text:"PRODUCT"},
-        {to:"MySuggestions", text:"MY-SUGGESTIONS"},
-        {to:"MyProducts", text:"MY-PRODUCTS"}
 
-    ]
     return (
-        <div className="App">
+        <div >
         <BrowserRouter>
-            <ul>
-                {
-                    links.map((link)=>{
-                        return(
-                            <button className={"Buttons"}>
-                                <NavLink to={link.to}>
-                                    {link.text}
-                                </NavLink>
-                            </button>
-                        )
-                    })
-                }
-            </ul>
+
             <Routes>
                 <Route path={"/managePage"} element={<ManagePage/>}></Route>
                 <Route path={"/"} element={<LoginPage/>}></Route>

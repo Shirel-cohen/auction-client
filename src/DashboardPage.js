@@ -2,9 +2,15 @@ import Cookies from "js-cookie";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
-import Message from "./Message";
+import {NavLink} from "react-router-dom";
 
 function DashboardPage () {
+    const links=[
+      {to:"ManagePage", text:"Manage"},
+      {to:"Product", text:"PRODUCT"},
+      {to:"MySuggestions", text:"MY-SUGGESTIONS"},
+      {to:"MyProducts", text:"MY-PRODUCTS"}
+  ]
 
     const[username, setUsername] = useState("");
     const[tenders, setTenders] = useState([]);
@@ -17,14 +23,14 @@ function DashboardPage () {
             navigate("../login");
         } else {
             setToken(token);
-            axios.get("http://localhost:8989//get-username" , (res)=> {
-                    setUsername(res.data.username);
-                })
+            axios.get("http://localhost:8080/get-username?token=" + token).then((res) => {
+                setUsername(res.data.username);
+            });
         }
     }, []);
 
     useEffect(() => {
-        axios.get("http://localhost:8989/get-all-open-tenders")
+        axios.get("http://localhost:8080/get-all-open-tenders")
             .then(response => {
                 if (response.data.success) {
                     setTenders(response.data.tenders)
@@ -41,13 +47,26 @@ function DashboardPage () {
     return (
         <div>
             <div id={"header"}>
-
                 Hello {username}
-                <button onClick={logout}>Logout</button>
+                <button onClick={logout}> Logout</button>
             </div>
-            <div id={"page"}>
+             <ul>
+                {
+                    links.map((link)=>{
+                        return(
+                            <button className={"Buttons"}>
+                                <NavLink to={"../"+ link.to}>
+                                    {link.text}
+                                </NavLink>
+                            </button>
+                        )
+                    })
+                }
+            </ul>
 
-            </div>
+            <div>dashboard page</div>
+
+
         </div>
     )
 }
