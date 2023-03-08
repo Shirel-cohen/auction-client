@@ -69,8 +69,8 @@ function LoginPage () {
     }
 
     return (
-        <div style={{marginLeft: "1000px"} }>
-            <div>
+        <div >
+            <div style={{alignItems: "center", justifyContent: "center", display: "flex"}}>
                  <span  >
                      <input type={"radio"} name={"type"} value={"login"}
                             checked={type == "login"} onChange={typeChanged} />Login
@@ -78,50 +78,56 @@ function LoginPage () {
                  <input type={"radio"} name={"type"} value={"signUp"}
                                checked={type == "signUp"} onChange={typeChanged}/>Sign Up
             </div>
-            <table>
-                <tr>
-                    <td>
-                        Username:
-                    </td>
-                    <td>
-                        <input type={"text"} value={username} onChange={usernameChanged}/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Password:
-                    </td>
-                    <td>
-                        <input type={"password"} value={password} onChange={passwordChanged}/>
-                    </td>
-                </tr>
-                {
-                    type == "signUp" &&
+            <div style={{alignItems: "center", justifyContent: "center", display: "flex"}}>
+                <table>
                     <tr>
-                        <td>Repeat Password:</td>
-                        <td><input type={"password"} value={password2} onChange={password2Changed}/></td>
                         <td>
-                            {
-                                password != password2 &&
-                                <ErrorMessage message={"Passwords Don't match"} lineBreak={true}/>
-                            }
+                            Username:
+                        </td>
+                        <td>
+                            <input type={"text"} value={username} onChange={usernameChanged}/>
                         </td>
                     </tr>
-                }
+                    <tr>
+                        <td>
+                            Password:
+                        </td>
+                        <td>
+                            <input type={"password"} value={password} onChange={passwordChanged}/>
+                        </td>
+                    </tr>
+                    {
+                        type == "signUp" &&
+                        <tr>
+                            <td>Repeat Password:</td>
+                            <td><input type={"password"} value={password2} onChange={password2Changed}/></td>
+                            <td>
+                                {
+                                    password != password2 &&
+                                    <ErrorMessage message={"Passwords Don't match"} lineBreak={true}/>
+                                }
+                            </td>
+                        </tr>
+                    }
 
-            </table>
+                </table>
+
+            </div>
 
             {
                 errorCode > 0 &&
                 <ErrorMessage message={errorCode} lineBreak={true}/>
             }
-            <button  onClick={submit} disabled={
-                (password != password2 && type == "signUp") ||
-                username.length == 0
-            }>{type == "signUp" ? "Sign Up" : "Login"}</button>
+            <div   style={{alignItems: "center", justifyContent: "center", display: "flex" ,marginTop:"5px" ,marginBottom:"50px"}}>
+                <button  onClick={submit} disabled={
+                    (password != password2 && type == "signUp") ||
+                    username.length == 0
+                }>{type == "signUp" ? "Sign Up" : "Login"}</button>
 
-            <div>
-                Statistics
+            </div>
+
+            <div  style={{alignItems: "center", justifyContent: "center", display: "flex"} }>
+
                 <table className={"statistics"}>
                     <tr className={"statistics"}>
                         <th className={"statistics"}>users</th>

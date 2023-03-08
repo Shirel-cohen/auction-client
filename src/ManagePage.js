@@ -1,9 +1,14 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import {useNavigate} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 
 function ManagePage () {
+    const links=[
+        {to:"dashboard", text:"Home"},
+        {to:"MySuggestions", text:"MY-SUGGESTIONS"},
+        {to:"MyProducts", text:"MY-PRODUCTS"}
+    ]
 
     const[users, setUsers] = useState([]);
     const[tenders, setTenders] = useState([]);
@@ -32,9 +37,37 @@ function ManagePage () {
         Cookies.set("token", token);
         navigate("../dashboard");
     }
+    const logout = () => {
+        Cookies.remove("token");
+        navigate("../login");
+    }
+    useEffect(()=>{
+        const token = Cookies.get("token");
+        if (token == undefined) {
+            navigate("../login")
+        }
+    },[])
 
     return  (
         <div>
+            <div  style={{alignItems: "center", justifyContent: "center", display: "flex"}}>
+                <h1 style={{fontStyle:"italic"}}> Manage Page</h1>
+            </div>
+            <button style={{padding: "10px", color: "#000"}} onClick={logout}> Logout</button>
+
+            <ul style={{alignItems: "center", justifyContent: "center", display: "flex"}}>
+                {
+                    links.map((link) => {
+                        return (
+                            <button className={"Buttons"}>
+                                <NavLink to={"../" + link.to}>
+                                    {link.text}
+                                </NavLink>
+                            </button>
+                        )
+                    })
+                }
+            </ul>
 
             <div style={{marginRight:"1700px"}}>
             Users: {users.length}
@@ -62,7 +95,6 @@ function ManagePage () {
                                 <tr>
                                     <td><button> {item.productName}</button> </td>
                                 </tr>
-
 
                             )
                         })

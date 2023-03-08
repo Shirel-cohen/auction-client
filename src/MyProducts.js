@@ -1,13 +1,24 @@
 import Cookies from "js-cookie";
-import {NavLink, useNavigate} from "react-router-dom";
+import {NavLink} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import axios from "axios";
+import {useEffect} from "react";
+
 
 function MyProducts(){
     const navigate = useNavigate();
     const links=[
+        {to:"dashboard", text:"Home"},
         {to:"ManagePage", text:"Manage"},
-        {to:"Product", text:"PRODUCT"},
         {to:"MySuggestions", text:"MY-SUGGESTIONS"},
     ]
+    useEffect(()=>{
+        const token = Cookies.get("token");
+        if (token == undefined) {
+            navigate("../login")
+        }
+    },[])
+
 
     const logout = () => {
         Cookies.remove("token");
