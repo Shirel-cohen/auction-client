@@ -3,6 +3,8 @@ import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {NavLink} from "react-router-dom";
+import Product from "./Product";
+import ProductPage from "./ProductPage";
 
 function DashboardPage () {
     const links=[
@@ -12,7 +14,7 @@ function DashboardPage () {
   ]
 
     const[username, setUsername] = useState("");
-    const[tenders, setTenders] = useState([]);
+    const[openAuctions, setOpenAuctions] = useState([]);
     const[token, setToken] = useState("");
     const[option , setOption] = useState("update")
     //product inputs from user
@@ -21,6 +23,7 @@ function DashboardPage () {
     const[urlImage , setUrlImage] = useState("")
     const[minimalPrice , setMinimalPrice] = useState("")
     const navigate = useNavigate();
+    const filter = openAuctions;
 
     useEffect(() => {
         const token = Cookies.get("token");
@@ -35,13 +38,13 @@ function DashboardPage () {
     }, []);
 
     useEffect(() => {
-        axios.get("http://localhost:8080/get-all-open-tenders")
+        axios.get("http://localhost:8080/get-all-open-auctions")
             .then(response => {
                 if (response.data.success) {
-                    setTenders(response.data.tenders)
+                    setOpenAuctions(response.data.tenders)
                 }
             })
-    }, [])
+    })
     const uploadProduct = () => {
         axios.post("http://localhost:8080/upload-product" , null ,{
             params:{owner : username ,productName:productName,img: urlImage , describe:describeProduct, minimalCost: minimalPrice}
@@ -85,6 +88,26 @@ function DashboardPage () {
         return  productName.length == 0 || describeProduct.length == 0 || urlImage.length == 0 || minimalPrice.length == 0;
     }
 
+    const filterTable = () => {
+        let input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
 
     return (
         <div>
@@ -117,6 +140,7 @@ function DashboardPage () {
                            onChange={event => setOption(event.target.value)}/> Presentation of tenders
 
                 </div>
+                <br/> <br/> <br/>
 
                 {
                     option == "update" &&
@@ -130,9 +154,41 @@ function DashboardPage () {
 
                 {
                     option == "showTenders" &&
-                    <div style={{alignItems: "center", justifyContent: "center", display: "flex"}}>
-                       show Tenders here
+                    <div style={{justifyContent: "center" ,marginLeft:"650px"}}>
+                        <input type={"text"} onKeyUp={filterTable} id={"myInput"}/> <br/><br/>
 
+
+                        <table className={"auctionTable"} id={"myTable"}>
+                            <tr>
+
+                                <th>productName</th>
+                                <th>Image</th>
+                                <th>Description</th>
+                                <th>Opening Date</th>
+                                <th>Number of Offers</th>
+                                <th>Number of Offers of {username}</th>
+                            </tr>
+
+                            {
+
+                                openAuctions.map((auction,i) => {
+                                    return (
+                                        <tr className={"wpos"}>
+
+                                            <td>{auction.productName}</td>
+                                            <td>{auction.productImage}</td>
+                                            <td>{auction.productDescription}</td>
+                                            <td>{auction.dateOpenTender}</td>
+                                            <td>{auction.amountOfOffering}</td>
+                                            <td>{auction.getAmountOfOfferingForUser}</td>
+                                        </tr>
+
+                                    );
+
+
+                                })
+                            }
+                        </table>
 
                     </div>
                 }
@@ -140,9 +196,9 @@ function DashboardPage () {
 
             </div>
 
-
         </div>
-    );
+
+);
 }
 
 export default DashboardPage;

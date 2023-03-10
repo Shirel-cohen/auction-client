@@ -67,20 +67,41 @@
   border: 1px solid black;
   border-collapse: collapse;
 }
+.auctionTable{
+  border: 1px solid black;
+  border-collapse: collapse;
+}
 
-.Buttons {
-  position: relative;
-  top: 50px;
-  width: 260px;
-  background-color: rgba(204, 159, 9, 0.06);
-  border: none;
-  color: white;
-  padding: 16px 32px;
-  text-align: center;
-  font-size: 30px;
-  font-family: Aharoni, serif;
-  font-weight: bold;
-  /*font-family: Fjalla One, serif;*/
+.auctionTable td{
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.auctionTable tr{
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.auctionTable th{
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+
+
+  .Buttons {
+    position: relative;
+    top: 50px;
+    width: 260px;
+    background-color: rgba(204, 159, 9, 0.06);
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    font-size: 30px;
+    font-family: Aharoni, serif;
+    font-weight: bold;
+    /*font-family: Fjalla One, serif;*/
   opacity: 0.6;
   transition: 0.3s;
   display: inline-block;

@@ -3,29 +3,33 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import {NavLink, useNavigate} from "react-router-dom";
 
-function ManagePage () {
+function ManagePage (props) {
     const links=[
         {to:"dashboard", text:"Home"},
         {to:"MySuggestions", text:"MY-SUGGESTIONS"},
         {to:"MyProducts", text:"MY-PRODUCTS"}
     ]
 
+
     const[users, setUsers] = useState([]);
     const[tenders, setTenders] = useState([]);
     const navigate = useNavigate();
 
 
+
     useEffect(() => {
-        axios.get("http://localhost:8989/get-all-users")
+        axios.get("http://localhost:8080/get-all-users")
             .then(response => {
+                debugger
                 if (response.data.success) {
                     setUsers(response.data.users)
+
                 }
             })
     }, [])
 
     useEffect(() => {
-        axios.get("http://localhost:8989/get-all-open-tenders")
+        axios.get("http://localhost:8080/get-all-open-auctions")
             .then(response => {
                 if (response.data.success) {
                     setTenders(response.data.tenders)
@@ -47,6 +51,27 @@ function ManagePage () {
             navigate("../login")
         }
     },[])
+
+    const showDetails = () =>{
+        return(
+            <div>
+                <table>
+                    {
+                        users.map((item) => {
+                            return (
+                                <tr>
+                                    <td> {item.amountOfTenders}</td>
+
+                                </tr>
+
+
+                            )
+                        })
+                    }
+                </table>
+            </div>
+        )
+    }
 
     return  (
         <div>

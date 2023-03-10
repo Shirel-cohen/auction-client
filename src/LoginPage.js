@@ -12,6 +12,9 @@ function LoginPage () {
     const[type, setType] = useState("login");
     const[errorCode, setErrorCode] = useState(0);
     const navigate = useNavigate();
+    const[amountOfUsers, setAmountOfUsers] = useState("");
+    const[amountOfAuctions, setAmountOfAuctions] = useState("");
+    const[amountOfOffers, setAmountOfOffers] = useState("");
 
 
     useEffect(() => {
@@ -21,6 +24,37 @@ function LoginPage () {
             navigate("../dashboard")
         }
     }, [])
+
+    useEffect(() => {
+        axios.get("http://localhost:8080/get-all-users")
+            .then(response => {
+                if (response.data.success) {
+                    setAmountOfUsers(response.data.users.length)
+
+                }
+            })
+    } )
+
+    useEffect(() => {
+        axios.get("http://localhost:8080/get-all-auctions")
+            .then(response => {
+                if (response.data.success) {
+                    setAmountOfAuctions(response.data.auctions.length)
+
+                }
+            })
+    } )
+
+    useEffect(() => {
+        axios.get("http://localhost:8080/get-all-offers")
+            .then(response => {
+                if (response.data.success) {
+                    setAmountOfOffers(response.data.offers.length)
+
+                }
+            })
+    } )
+
 
     const usernameChanged = (event) => {
         setUsername(event.target.value)
@@ -131,13 +165,13 @@ function LoginPage () {
                 <table className={"statistics"}>
                     <tr className={"statistics"}>
                         <th className={"statistics"}>users</th>
-                        <th className={"statistics"}>tender</th>
+                        <th className={"statistics"}>auctions</th>
                         <th className={"statistics"}>Offers made</th>
                     </tr>
                     <tr className={"statistics"}>
-                        <td className={"statistics"}>a</td>
-                        <td className={"statistics"}>b</td>
-                        <td className={"statistics"}>c</td>
+                        <td className={"statistics"}>{amountOfUsers}</td>
+                        <td className={"statistics"}>{amountOfAuctions}</td>
+                        <td className={"statistics"}>{amountOfOffers}</td>
                     </tr>
                 </table>
 
