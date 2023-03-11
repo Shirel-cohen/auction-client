@@ -3,8 +3,7 @@ import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {NavLink} from "react-router-dom";
-import Product from "./Product";
-import ProductPage from "./ProductPage";
+import {Button} from "@mui/material";
 
 function DashboardPage () {
     const links=[
@@ -130,7 +129,6 @@ function DashboardPage () {
                     })
                 }
             </ul>
-
             <div>
                 <div style={{alignItems: "center", justifyContent: "center", display: "flex", marginTop: "70px"}}>
                     <input type={"radio"} value={"update"} name={"option"} checked={option == "update"}
@@ -146,15 +144,13 @@ function DashboardPage () {
                     option == "update" &&
                     <div style={{alignItems: "center", justifyContent: "center", display: "flex"}}>
                         {updateProduct()}
-                        <button onClick={uploadProduct} style={{backgroundColor: "greenyellow"}}
-                                disabled={isAllowToSubmit()}>upload
-                        </button>
+                        <Button variant="contained" color="success"  onClick={uploadProduct} disabled={isAllowToSubmit()}>Upload</Button>
                     </div>
                 }
 
                 {
                     option == "showTenders" &&
-                    <div style={{justifyContent: "center" ,marginLeft:"650px"}}>
+                    <div style={{justifyContent: "center", marginLeft: "650px"}}>
                         <input type={"text"} onKeyUp={filterTable} id={"myInput"}/> <br/><br/>
 
 
@@ -171,7 +167,7 @@ function DashboardPage () {
 
                             {
 
-                                openAuctions.map((auction,i) => {
+                                openAuctions.map((auction, i) => {
                                     return (
                                         <tr className={"wpos"}>
 
@@ -198,7 +194,7 @@ function DashboardPage () {
 
         </div>
 
-);
+    );
 }
 
 export default DashboardPage;

@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import {NavLink, useNavigate} from "react-router-dom";
+import Product from "./Product";
 
 function ManagePage (props) {
     const links=[
@@ -13,28 +14,31 @@ function ManagePage (props) {
 
     const[users, setUsers] = useState([]);
     const[tenders, setTenders] = useState([]);
+    const[showUserDetails,setShowUserDetails] = useState("")
+    const [option, setOption] = useState("")
     const navigate = useNavigate();
 
 
 
     useEffect(() => {
+        const token = Cookies.get("token");
+        if (token == undefined) {
+            navigate("../login")
+        }
+
         axios.get("http://localhost:8080/get-all-users")
             .then(response => {
-                debugger
                 if (response.data.success) {
-                    setUsers(response.data.users)
-
+                    setUsers(response.data.users);
                 }
-            })
-    }, [])
+            });
 
-    useEffect(() => {
         axios.get("http://localhost:8080/get-all-open-auctions")
             .then(response => {
                 if (response.data.success) {
                     setTenders(response.data.tenders)
                 }
-            })
+            });
     }, [])
 
     const loginAs = (token) => {
@@ -45,40 +49,30 @@ function ManagePage (props) {
         Cookies.remove("token");
         navigate("../login");
     }
-    useEffect(()=>{
-        const token = Cookies.get("token");
-        if (token == undefined) {
-            navigate("../login")
-        }
-    },[])
+    const optionChangedToTenders = (e) => {
+        setOption(e.target.value);
+        setShowUserDetails("")
 
-    const showDetails = () =>{
-        return(
-            <div>
-                <table>
-                    {
-                        users.map((item) => {
-                            return (
-                                <tr>
-                                    <td> {item.amountOfTenders}</td>
-
-                                </tr>
-
-
-                            )
-                        })
-                    }
-                </table>
-            </div>
-        )
     }
 
-    return  (
+
+
+
+    return (
         <div>
-            <div  style={{alignItems: "center", justifyContent: "center", display: "flex"}}>
-                <h1 style={{fontStyle:"italic"}}> Manage Page</h1>
+            <button onClick={logout}> Logout</button>
+            <div style={{textAlign: "center", color: "darkmagenta"}}>
+                <h2 style={{fontStyle: "italic", color: "darkmagenta"}}>Manage Page</h2>
+                <div style={{fontSize: "23px", fontStyle: "oblique"}}>
+                      <span>
+                      Users: {users.length}
+                </span>
+                    <span style={{marginLeft: "20px"}}>
+                         Tenders: {tenders.length}
+                </span>
+                </div>
+
             </div>
-            <button style={{padding: "10px", color: "#000"}} onClick={logout}> Logout</button>
 
             <ul style={{alignItems: "center", justifyContent: "center", display: "flex"}}>
                 {
@@ -94,42 +88,90 @@ function ManagePage (props) {
                 }
             </ul>
 
-            <div style={{marginRight:"1700px"}}>
-            Users: {users.length}
-            <table>
+            <div style={{alignItems: "center", justifyContent: "center", display: "flex", marginTop: "70px "}}>
+                <input type={"radio"} name={"option"} value={"users"} checked={option == "users"}
+                       onChange={event => setOption(event.target.value)}/> Show Users
+
+                <input type={"radio"} name={"option"} value={"tenders"} checked={option == "tenders"}
+                       onChange={optionChangedToTenders}/> Show Tenders
+
+            </div>
+
+            <div>
+
                 {
-                    users.map((item) => {
-                        return (
-                                <tr>
-                                    <td><button> {item.username}</button> </td>
-                                </tr>
+                    option == "users" &&
+                    <div>
+                        {
+                            users.map((item) => {
+                                return (
 
+                                    <td style={{
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                        marginTop: "20px"
+                                    }}>
+                                        <input type={"radio"} name={"showUserDetails"} value={item.username}
+                                               checked={showUserDetails == item.username}
+                                               onChange={e => setShowUserDetails(e.target.value)}
+                                        />
+                                        {item.username}
 
-                        )
-                    })
+                                        {
+                                            showUserDetails == item.username &&
+
+                                            <div style={{margin: "20px"}}>
+                                                <table>
+                                                    <th>Credit</th>
+                                                    <th>Tenders</th>
+                                                    <th>edit Credit</th>
+                                                    <tr>
+                                                        <td style={{padding: "20px"}}>{item.amountOfCredits}</td>
+                                                        <td>{item.amountOfTenders}</td>
+                                                        <td>
+                                                            <input type={"number"}/>
+                                                        </td>
+                                                        <td>
+                                                            <button>Edit</button>
+                                                        </td>
+
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        }
+                                    </td>
+                                );
+                            })
+                        }
+                    </div>
                 }
-            </table>
             </div>
 
-            <div style={{marginLeft:"500px"}}>
-                Tenders: {tenders.length}
-                <table style={{marginLeft:"500px"}} >
-                    {
-                        tenders.map((item) => {
-                            return (
-                                <tr>
-                                    <td><button> {item.productName}</button> </td>
-                                </tr>
+            {
+                option == "tenders" &&
+                <div>
+                    <table>
+                        {
+                            tenders.map((item) => {
+                                return (
+                                    <tr>
+                                        <td>
+                                            <button onClick={navigate("../Product" , ()=> <Product data={item}/>)}> {item.productName}</button>
+                                        </td>
+                                    </tr>
 
-                            )
-                        })
-                    }
-                </table>
-            </div>
+                                );
+                            })
+                        }
+                    </table>
+                </div>
+
+            }
 
 
         </div>
-    )
+    );
 }
 
 export default ManagePage;
