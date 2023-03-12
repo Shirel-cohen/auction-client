@@ -13,7 +13,7 @@ function ManagePage (props) {
 
 
     const[users, setUsers] = useState([]);
-    const[tenders, setTenders] = useState([]);
+    const[auction, setAuction] = useState([]);
     const[showUserDetails,setShowUserDetails] = useState("")
     const [option, setOption] = useState("")
     const navigate = useNavigate();
@@ -36,7 +36,7 @@ function ManagePage (props) {
         axios.get("http://localhost:8080/get-all-open-auctions")
             .then(response => {
                 if (response.data.success) {
-                    setTenders(response.data.tenders)
+                    setAuction(response.data.tenders)
                 }
             });
     }, [])
@@ -68,7 +68,7 @@ function ManagePage (props) {
                       Users: {users.length}
                 </span>
                     <span style={{marginLeft: "20px"}}>
-                         Tenders: {tenders.length}
+                         Tenders: {auction.length}
                 </span>
                 </div>
 
@@ -92,7 +92,7 @@ function ManagePage (props) {
                 <input type={"radio"} name={"option"} value={"users"} checked={option == "users"}
                        onChange={event => setOption(event.target.value)}/> Show Users
 
-                <input type={"radio"} name={"option"} value={"tenders"} checked={option == "tenders"}
+                <input type={"radio"} name={"option"} value={"auction"} checked={option == "auction"}
                        onChange={optionChangedToTenders}/> Show Tenders
 
             </div>
@@ -149,15 +149,16 @@ function ManagePage (props) {
             </div>
 
             {
-                option == "tenders" &&
+                option == "auction" &&
                 <div>
                     <table>
                         {
-                            tenders.map((item) => {
+                            auction.map((item) => {
                                 return (
                                     <tr>
                                         <td>
-                                            <button onClick={navigate("../Product" , ()=> <Product data={item}/>)}> {item.productName}</button>
+                                            <button> {item.productName}</button>
+                                            {/*//onClick={navigate("../Product" , ()=> <Product data={item}/>)}*/}
                                         </td>
                                     </tr>
 

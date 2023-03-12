@@ -40,7 +40,7 @@ function DashboardPage () {
         axios.get("http://localhost:8080/get-all-open-auctions")
             .then(response => {
                 if (response.data.success) {
-                    setOpenAuctions(response.data.tenders)
+                    setOpenAuctions(response.data.auctions)
                 }
             })
     })
@@ -174,9 +174,9 @@ function DashboardPage () {
                                             <td>{auction.productName}</td>
                                             <td>{auction.productImage}</td>
                                             <td>{auction.productDescription}</td>
-                                            <td>{auction.dateOpenTender}</td>
-                                            <td>{auction.amountOfOffering}</td>
-                                            <td>{auction.getAmountOfOfferingForUser}</td>
+                                            <td>{auction.dateOpening}</td>
+                                            <td>{auction.amountOfOffers}</td>
+                                            <td>{auction.amountOfOfferingForUser}</td>
                                         </tr>
 
                                     );
