@@ -1,4 +1,4 @@
-import {NavLink} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import Cookies from "js-cookie";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
@@ -66,7 +66,9 @@ function MySuggestions (){
                             offersForUser.map((offers) => {
                                 return(
                                     <tr className={"statistics"}>
+                                        <Link to={`/product/${offers.auctionId}`}>
                                         <td className={"statistics"}>{offers.productName}</td>
+                                        </Link>
                                         <td className={"statistics"}>{offers.amountOfOffer}</td>
                                         <td className={"statistics"}>a</td>
                                         <td className={"statistics"}>{offers.chosen?"Yes":"No"}</td>

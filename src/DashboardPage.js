@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 import {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 import {NavLink} from "react-router-dom";
 import {Button} from "@mui/material";
@@ -162,7 +162,7 @@ function DashboardPage () {
                                 <th>Description</th>
                                 <th>Opening Date</th>
                                 <th>Number of Offers</th>
-                                <th>Number of Offers of {username}</th>
+                                <th>Number of My Offers</th>
                             </tr>
 
                             {
@@ -170,9 +170,10 @@ function DashboardPage () {
                                 openAuctions.map((auction, i) => {
                                     return (
                                         <tr className={"wpos"}>
-
+                                            <Link to={`/product/${auction.id}`}>
                                             <td>{auction.productName}</td>
-                                            <td>{auction.productImage}</td>
+                                            </Link>
+                                            <td><img src={auction.productImage} width={"100px"} height={"100px"} /></td>
                                             <td>{auction.productDescription}</td>
                                             <td>{auction.dateOpening}</td>
                                             <td>{auction.amountOfOffers}</td>

@@ -1,8 +1,7 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import {NavLink, useNavigate} from "react-router-dom";
-import Product from "./Product";
+import {Link, NavLink, useNavigate} from "react-router-dom";
 
 function ManagePage (props) {
     const links=[
@@ -36,7 +35,7 @@ function ManagePage (props) {
         axios.get("http://localhost:8080/get-all-open-auctions")
             .then(response => {
                 if (response.data.success) {
-                    setAuction(response.data.tenders)
+                    setAuction(response.data.auctions)
                 }
             });
     }, [])
@@ -45,17 +44,16 @@ function ManagePage (props) {
         Cookies.set("token", token);
         navigate("../dashboard");
     }
+
     const logout = () => {
         Cookies.remove("token");
         navigate("../login");
     }
+
     const optionChangedToTenders = (e) => {
         setOption(e.target.value);
         setShowUserDetails("")
-
     }
-
-
 
 
     return (
@@ -68,10 +66,9 @@ function ManagePage (props) {
                       Users: {users.length}
                 </span>
                     <span style={{marginLeft: "20px"}}>
-                         Tenders: {auction.length}
+                         Auctions: {auction.length}
                 </span>
                 </div>
-
             </div>
 
             <ul style={{alignItems: "center", justifyContent: "center", display: "flex"}}>
@@ -93,10 +90,8 @@ function ManagePage (props) {
                        onChange={event => setOption(event.target.value)}/> Show Users
 
                 <input type={"radio"} name={"option"} value={"auction"} checked={option == "auction"}
-                       onChange={optionChangedToTenders}/> Show Tenders
-
+                       onChange={optionChangedToTenders}/> Show Auctions
             </div>
-
             <div>
 
                 {
@@ -124,7 +119,7 @@ function ManagePage (props) {
                                             <div style={{margin: "20px"}}>
                                                 <table>
                                                     <th>Credit</th>
-                                                    <th>Tenders</th>
+                                                    <th>Auctions</th>
                                                     <th>edit Credit</th>
                                                     <tr>
                                                         <td style={{padding: "20px"}}>{item.amountOfCredits}</td>
@@ -157,7 +152,9 @@ function ManagePage (props) {
                                 return (
                                     <tr>
                                         <td>
+                                            <Link to={`/product/${item.id}`}>
                                             <button> {item.productName}</button>
+                                            </Link>
                                             {/*//onClick={navigate("../Product" , ()=> <Product data={item}/>)}*/}
                                         </td>
                                     </tr>
