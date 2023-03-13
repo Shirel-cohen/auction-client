@@ -8,7 +8,7 @@ import {Button} from "@mui/material";
 function DashboardPage () {
     const links=[
       {to:"ManagePage", text:"Manage"},
-      {to:"MySuggestions", text:"MY-SUGGESTIONS"},
+      {to:"MySuggestions", text:"MY-OFFERS"},
       {to:"MyProducts", text:"MY-PRODUCTS"}
   ]
 

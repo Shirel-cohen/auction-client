@@ -3,6 +3,7 @@ import {NavLink} from "react-router-dom";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {useEffect, useState} from "react";
+import {Link} from "react-router-dom";
 import ErrorMessage from "./ErrorMessage";
 import {Button} from "@mui/material";
 
@@ -11,7 +12,7 @@ function MyProducts(){
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [auctionForUser, setAuctionForUser] = useState([]);
-    const [maxOffer, setMaxOffer] = useState("");
+    const [maxOffer, setMaxOffer] = useState([]);
 
     const links=[
         {to:"dashboard", text:"Home"},
@@ -38,14 +39,26 @@ function MyProducts(){
             })
     })
 
-     const maxOfferFunction = (productName)=>{
-         axios.get("http://localhost:8080/get-max-offer-for-product?username=" + username +  "&productName=" + productName)
-             .then(response => {
-                 if (response.data.success) {
-                     setMaxOffer(response.data.maxOfferForProduct)
-                 }
-             })
-     }
+    useEffect(() => {
+        axios.get("http://localhost:8080/get-max-offer-for-product?username=" + username + "&productName=" + auctionForUser)
+            .then(response => {
+                if (response.data.success) {
+                   setMaxOffer(response.data.maxOfferForProduct);
+
+                }
+            })
+    })
+
+
+         //
+         // useEffect(()=>{
+         //     axios.get("http://localhost:8080/get-max-offer-for-product?username=" + username +  "&productName=" + auctionForUser)
+         //         .then(response => {
+         //             if (response.data.success) {
+         //                 setMaxOffer(response.data.maxOfferForProduct)
+         //             }
+         //         })
+         // })
 
 
     const logout = () => {
@@ -80,7 +93,9 @@ function MyProducts(){
                            auctionForUser.map((auction) => {
                                return(
                                    <tr className={"statistics"}>
+                                       <Link to={`/product/${auction.id}`}>
                                        <td className={"statistics"}>{auction.productName}</td>
+                                       </Link>
                                        <td className={"statistics"}>{maxOffer}</td>
                                        <td className={"statistics"}>{auction.open?"Yes":"No"}</td>
                                    </tr>
