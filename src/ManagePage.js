@@ -7,7 +7,7 @@ import Product from "./Product";
 function ManagePage (props) {
     const links=[
         {to:"dashboard", text:"Home"},
-        {to:"MySuggestions", text:"MY-SUGGESTIONS"},
+        {to:"MySuggestions", text:"MY-OFFERS"},
         {to:"MyProducts", text:"MY-PRODUCTS"}
     ]
 

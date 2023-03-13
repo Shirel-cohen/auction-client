@@ -22,6 +22,7 @@ function MyProducts(){
         const token = Cookies.get("token");
         if (token == undefined) {
             navigate("../login")
+        }else{
             axios.get("http://localhost:8080/get-username?token=" + token).then((res) => {
                 setUsername(res.data.username);
             });
@@ -36,14 +37,15 @@ function MyProducts(){
                 }
             })
     })
-    // useEffect(() => {
-    //     axios.get("http://localhost:8080/get-max-offer-for-product" + username)
-    //         .then(response => {
-    //             if (response.data.success) {
-    //                 setAuctionForUser(response.data.auctions)
-    //             }
-    //         })
-    // })
+
+     const maxOfferFunction = (productName)=>{
+         axios.get("http://localhost:8080/get-max-offer-for-product?username=" + username +  "&productName=" + productName)
+             .then(response => {
+                 if (response.data.success) {
+                     setMaxOffer(response.data.maxOfferForProduct)
+                 }
+             })
+     }
 
 
     const logout = () => {
@@ -51,82 +53,47 @@ function MyProducts(){
         navigate("../login");
     }
 
-    // return(
-    //     <div>
-    //         <button onClick={logout}> Logout</button>
-    //         <ul>
-    //             {
-    //                 links.map((link)=>{
-    //                     return(
-    //                         <button className={"Buttons"}>
-    //                             <NavLink to={"../"+ link.to}>
-    //                                 {link.text}
-    //                             </NavLink>
-    //                         </button>
-    //                     )
-    //                 })
-    //             }
-    //         </ul>
-    //
-    //         <div>
-    //             {auctionForUser.map((auction) => {
-    //                 return (
-    //                     <table className={"statistics"}>
-    //
-    //                         <tr className={"statistics"}>
-    //                             <th className={"statistics"}>product name</th>
-    //                             <th className={"statistics"}>max offer</th>
-    //                             <th className={"statistics"}>is open?</th>
-    //                         </tr>
-    //                         <tr className={"statistics"}>
-    //                             <td className={"statistics"}>{auction.productName}</td>
-    //                             <td className={"statistics"}>a</td>
-    //                             <td className={"statistics"}>a</td>
-    //                         </tr>
-    //                         })
-    //
-    //                         }
-    //                     </table>
-    //
-    //                 )
-    //             })
-    //             }
-    //
-    //         </div>
-    //     </div>
-    //
-    // )
     return (
         <div>
 
-            {
-
-                    <table className={"auctionTable"} id={"myTable"}>
-                        <tr>
-
-                                 <th>productName</th>
-                                <th>Image</th>
-
-                        </tr>
-
-                            {
-                                auctionForUser.map((auction) => {
-                                    return (
-                                        <tr className={"wpos"}>
-
-                                            <td>b</td>
-                                            <td>a</td>
-
-
-                                        </tr>
-
-                                    );
-
-
-                                })
-                            }
-                        </table>
+                {
+                    links.map((link) => {
+                        return (
+                            <button className={"Buttons"}>
+                                <NavLink to={"../" + link.to}>
+                                    {link.text}
+                                </NavLink>
+                            </button>
+                        )
+                    })
                 }
+           <br/><br/><br/>
+
+               {
+                   <table className={"statistics"}>
+                       <tr className={"statistics"}>
+                           <th className={"statistics"}>product name</th>
+                           <th className={"statistics"}>max offer</th>
+                           <th className={"statistics"}>auction is open?</th>
+                       </tr>
+                       {
+                           auctionForUser.map((auction) => {
+                               return(
+                                   <tr className={"statistics"}>
+                                       <td className={"statistics"}>{auction.productName}</td>
+                                       <td className={"statistics"}>{maxOffer}</td>
+                                       <td className={"statistics"}>{auction.open?"Yes":"No"}</td>
+                                   </tr>
+                               )
+                           })
+
+                       }
+
+                   </table>
+               }
+
+
+
 
         </div>
 

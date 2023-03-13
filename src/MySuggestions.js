@@ -2,7 +2,7 @@ import {NavLink} from "react-router-dom";
 import Cookies from "js-cookie";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 
 function MySuggestions (){
     const navigate = useNavigate();
@@ -11,17 +11,31 @@ function MySuggestions (){
         {to:"ManagePage", text:"Manage"},
         {to:"MyProducts", text:"MY-PRODUCTS"}
     ]
+    const[offersForUser, setOffersForUser] = useState([]);
+    const[username, setUsername] = useState("");
     const logout = () => {
         Cookies.remove("token");
         navigate("../login");
     }
-
     useEffect(()=>{
         const token = Cookies.get("token");
         if (token == undefined) {
             navigate("../login")
+        }else{
+            axios.get("http://localhost:8080/get-username?token=" + token).then((res) => {
+                setUsername(res.data.username);
+            });
         }
     },[])
+
+    useEffect(() => {
+        axios.get("http://localhost:8080/get-all-offers-for-user?username=" + username)
+            .then(response => {
+                if (response.data.success) {
+                    setOffersForUser(response.data.offers)
+                }
+            })
+    })
 
     return (
         <div>
@@ -40,7 +54,30 @@ function MySuggestions (){
                 }
             </ul>
             <div>
-                mySuggest page
+                {
+                    <table className={"statistics"}>
+                        <tr className={"statistics"}>
+                            <th className={"statistics"}>product name</th>
+                            <th className={"statistics"}>amount of offer</th>
+                            <th className={"statistics"}>auction is open?</th>
+                            <th className={"statistics"}>offer won?</th>
+                        </tr>
+                        {
+                            offersForUser.map((offers) => {
+                                return(
+                                    <tr className={"statistics"}>
+                                        <td className={"statistics"}>{offers.productName}</td>
+                                        <td className={"statistics"}>{offers.amountOfOffer}</td>
+                                        <td className={"statistics"}>a</td>
+                                        <td className={"statistics"}>{offers.chosen?"Yes":"No"}</td>
+                                    </tr>
+                                )
+                            })
+
+                        }
+
+                    </table>
+                }
             </div>
 
 
