@@ -5,6 +5,7 @@ import axios from "axios";
 import {useEffect, useState} from "react";
 import ErrorMessage from "./ErrorMessage";
 import {Button} from "@mui/material";
+import {Link} from "react-router-dom";
 
 
 function MyProducts(){
@@ -80,7 +81,9 @@ function MyProducts(){
                            auctionForUser.map((auction) => {
                                return(
                                    <tr className={"statistics"}>
+                                       <Link to={`/product/${auction.id}`}>
                                        <td className={"statistics"}>{auction.productName}</td>
+                                       </Link>
                                        <td className={"statistics"}>{maxOffer}</td>
                                        <td className={"statistics"}>{auction.open?"Yes":"No"}</td>
                                    </tr>

@@ -1,13 +1,11 @@
 
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import Cookies from "js-cookie";
 import {TextField} from "@mui/material";
 function Product (props){
     const navigate = useNavigate();
-  /*  const product = {owner: "gel", productName:"computer" , img: "http" , date:"11/3/23"  , offers:"3" , myOffer: "2"}*/
 
-    //const tender = {}
-
+const{id}= useParams();
 
     const logout = () => {
         Cookies.remove("token");
@@ -21,6 +19,9 @@ function Product (props){
             <button onClick={logout}> Logout</button>
             <div>
                 <TextField variant={"filled"} label={"Offer"} type={"number"}/>
+            </div>
+            <div>
+                {id}
             </div>
 
             <table>
