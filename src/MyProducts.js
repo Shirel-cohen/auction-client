@@ -10,7 +10,7 @@ function MyProducts(){
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [auctionForUser, setAuctionForUser] = useState([]);
-    const [maxOffer, setMaxOffer] = useState([]);
+    const [maxOffer, setMaxOffer] = useState("");
 
     const links=[
         {to:"dashboard", text:"Home"},
@@ -36,17 +36,6 @@ function MyProducts(){
                 }
             })
     })
-
-    const getMaxOffer =(id)=>{
-        axios.get("http://localhost:8080/get-max-offer-for-product?username=" + username + "&productName=" + auctionForUser)
-            .then(response => {
-                if (response.data.success) {
-                   setMaxOffer(response.data.maxOfferForProduct);
-
-                }
-            })
-        return maxOffer;
-    }
 
     const logout = () => {
         Cookies.remove("token");
@@ -83,7 +72,7 @@ function MyProducts(){
                                        <Link to={`/product/${auction.id}`}>
                                        <td className={"statistics"}>{auction.productName}</td>
                                        </Link>
-                                       <td className={"statistics"}>{getMaxOffer(auction.id)}</td>
+                                       <td className={"statistics"}>{auction.maxOfferAmount}</td>
                                        <td className={"statistics"}>{auction.open?"Yes":"No"}</td>
                                    </tr>
                                )

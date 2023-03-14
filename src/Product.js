@@ -60,7 +60,8 @@ function Product (props){
                 ownOfOffer: username,
                 productName: product.productName,
                 amountOfOffer: currentOffer,
-                ownOfProduct: product.ownerOfTheProduct
+                ownOfProduct: product.ownerOfTheProduct,
+                amountOfOffering : product.amountOfOffering + 1
             }}).then((res => {
             debugger
             if(res.data.errorCode==null){
