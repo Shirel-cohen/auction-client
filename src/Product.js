@@ -14,7 +14,7 @@ function Product (props){
         navigate("../login");
     }
     const{id} = useParams();
-    const[product, setProduct] = useState([]);
+    const[product, setProduct] = useState({});
     const[username, setUsername] = useState("");
     const[myOffers, setMyOffers]= useState([]);
     const[currentOffer, setCurrentOffer] = useState("");
@@ -56,13 +56,13 @@ function Product (props){
 
     const sendOffer = () => {
         axios.post("http://localhost:8080/send-offer",null,{
-            params:{
-                ownOfOffer : username,
-                productName : product.productName,
+            params: {
+                ownOfOffer: username,
+                productName: product.productName,
                 amountOfOffer: currentOffer,
                 ownOfProduct: product.ownerOfTheProduct
-            }
-        }).then((res => {
+            }}).then((res => {
+            debugger
             if(res.data.errorCode==null){
                 alert("Offer Uploaded")
             }else if(res.data.errorCode== 1010){
@@ -74,6 +74,7 @@ function Product (props){
             else if(res.data.errorCode== 1012) {
                 alert("Your Offer Is Lower Than The Minimal Cost!")
             }
+            debugger
         }));
     }
 
@@ -104,7 +105,8 @@ function Product (props){
             <img src={product.productImage} width={"400px"} height={"400px"} />
             {
                 product.open?             <div>
-                    <TextField variant={"filled"} label={"Offer"} type={"number"} onChange={offerChanged}/>
+                    <TextField variant={"filled"} label={"Offer"} type={"number"} value={currentOffer}
+                               onChange={(e) => setCurrentOffer(e.target.value)}/>
                     <button onClick={sendOffer}>Place Offer</button>
                 </div> : "Auction is Closed!"
             }

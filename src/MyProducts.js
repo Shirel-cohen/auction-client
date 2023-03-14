@@ -37,7 +37,7 @@ function MyProducts(){
             })
     })
 
-    useEffect(() => {
+    const getMaxOffer =(id)=>{
         axios.get("http://localhost:8080/get-max-offer-for-product?username=" + username + "&productName=" + auctionForUser)
             .then(response => {
                 if (response.data.success) {
@@ -45,19 +45,8 @@ function MyProducts(){
 
                 }
             })
-    })
-
-
-         //
-         // useEffect(()=>{
-         //     axios.get("http://localhost:8080/get-max-offer-for-product?username=" + username +  "&productName=" + auctionForUser)
-         //         .then(response => {
-         //             if (response.data.success) {
-         //                 setMaxOffer(response.data.maxOfferForProduct)
-         //             }
-         //         })
-         // })
-
+        return maxOffer;
+    }
 
     const logout = () => {
         Cookies.remove("token");
@@ -94,7 +83,7 @@ function MyProducts(){
                                        <Link to={`/product/${auction.id}`}>
                                        <td className={"statistics"}>{auction.productName}</td>
                                        </Link>
-                                       <td className={"statistics"}>{maxOffer}</td>
+                                       <td className={"statistics"}>{getMaxOffer(auction.id)}</td>
                                        <td className={"statistics"}>{auction.open?"Yes":"No"}</td>
                                    </tr>
                                )
