@@ -49,7 +49,7 @@ function Product (props){
         axios.get("http://localhost:8080/get-my-offers-on-product?username=" +username +"&productName="+ product.productName )
             .then(response => {
                 if (response.data.success) {
-                    setMyOffers(response.data.listOfMyOffers)
+                    setMyOffers(response.data.offers)
                 }
             })
     })
@@ -90,16 +90,28 @@ function Product (props){
                 <th className={"statistics"}>Date Of Auction Opening</th>
                 <th className={"statistics"}>Owner Of The Product</th>
                 <th className={"statistics"}>Amount Of Offerings</th>
-                <th className={"statistics"}>My Offers On The Product </th>
                 <tr className={"statistics"}>
                     <td className={"statistics"} >{product.productName}</td>
                     <td className={"statistics"}>{product.productDescription}</td>
                     <td className={"statistics"}>{product.dateOpenTender}</td>
                     <td className={"statistics"} >{product.ownerOfTheProduct}</td>
                     <td className={"statistics"}>{product.amountOfOffering}</td>
-                    <td className={"statistics"}>{myOffers}</td>
                 </tr>
             </table>
+            <div>
+                <h4>My Previous Offers Amount</h4>
+                <div>
+                    <ul>
+                        {
+                            myOffers.map(offer =>{
+                                return(<li>{offer}</li>)
+                            })
+                        }
+                    </ul>
+                </div>
+                    <ul className={"statistics"}>
+                    </ul>
+            </div>
             <div>
                 picture:
             </div>

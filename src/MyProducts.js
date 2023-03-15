@@ -64,6 +64,7 @@ function MyProducts(){
                            <th className={"statistics"}>product name</th>
                            <th className={"statistics"}>max offer</th>
                            <th className={"statistics"}>auction is open?</th>
+                           <th className={"statistics"}></th>
                        </tr>
                        {
                            auctionForUser.map((auction) => {
@@ -74,6 +75,7 @@ function MyProducts(){
                                        </Link>
                                        <td className={"statistics"}>{auction.maxOfferAmount}</td>
                                        <td className={"statistics"}>{auction.open?"Yes":"No"}</td>
+                                       <td><button>close auction</button></td>
                                    </tr>
                                )
                            })
