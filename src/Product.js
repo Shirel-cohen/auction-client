@@ -18,6 +18,8 @@ function Product (props){
     const[username, setUsername] = useState("");
     const[myOffers, setMyOffers]= useState([]);
     const[currentOffer, setCurrentOffer] = useState("");
+    const[credits, setCredits] = useState("");
+
 
 
 
@@ -31,6 +33,15 @@ function Product (props){
             });
         }
     },[])
+
+    useEffect(() => {
+        axios.get("http://localhost:8080/get-credits-for-user?username=" + username)
+            .then(response => {
+                if (response.data.success) {
+                    setCredits(response.data.credits)
+                }
+            })
+    })
 
     const offerChanged = (event) => {
         setCurrentOffer(event.target.value)
@@ -63,7 +74,6 @@ function Product (props){
                 ownOfProduct: product.ownerOfTheProduct,
                 amountOfOffering : product.amountOfOffering + 1
             }}).then((res => {
-            debugger
             if(res.data.errorCode==null){
                 alert("Offer Uploaded")
             }else if(res.data.errorCode== 1010){
@@ -81,6 +91,9 @@ function Product (props){
 
     return (
         <div style={{marginLeft: "70px"}}>
+            <div>
+                <h3>My Credits: {credits}</h3>
+            </div>
 
             <button onClick={logout}> Logout</button>
             <div></div>
@@ -90,12 +103,14 @@ function Product (props){
                 <th className={"statistics"}>Date Of Auction Opening</th>
                 <th className={"statistics"}>Owner Of The Product</th>
                 <th className={"statistics"}>Amount Of Offerings</th>
+                <th className={"statistics"}>Minimal Cost</th>
                 <tr className={"statistics"}>
                     <td className={"statistics"} >{product.productName}</td>
                     <td className={"statistics"}>{product.productDescription}</td>
                     <td className={"statistics"}>{product.dateOpenTender}</td>
                     <td className={"statistics"} >{product.ownerOfTheProduct}</td>
                     <td className={"statistics"}>{product.amountOfOffering}</td>
+                    <td className={"statistics"}>{product.minCost}</td>
                 </tr>
             </table>
             <div>

@@ -15,6 +15,7 @@ function LoginPage () {
     const[amountOfUsers, setAmountOfUsers] = useState("");
     const[amountOfAuctions, setAmountOfAuctions] = useState("");
     const[amountOfOffers, setAmountOfOffers] = useState("");
+    const[credits, setCredits] = useState("");
 
 
     useEffect(() => {
@@ -54,6 +55,14 @@ function LoginPage () {
                 }
             })
     } )
+    useEffect(() => {
+        axios.get("http://localhost:8080/get-credits-for-user?username=" + username)
+            .then(response => {
+                if (response.data.success) {
+                    setCredits(response.data.credits)
+                }
+            })
+    })
 
 
     const usernameChanged = (event) => {
@@ -104,6 +113,9 @@ function LoginPage () {
 
     return (
         <div >
+            <div>
+                <h3>My Credits: {credits}</h3>
+            </div>
             <div style={{alignItems: "center", justifyContent: "center", display: "flex"}}>
                  <span  >
                      <input type={"radio"} name={"type"} value={"login"}

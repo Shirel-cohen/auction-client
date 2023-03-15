@@ -4,13 +4,15 @@ import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
+import RenderProduct from "./RenderProduct";
 
 
 function MyProducts(){
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [auctionForUser, setAuctionForUser] = useState([]);
-    const [maxOffer, setMaxOffer] = useState("");
+    const [credits, setCredits] = useState("");
+
 
     const links=[
         {to:"dashboard", text:"Home"},
@@ -29,6 +31,15 @@ function MyProducts(){
     },[])
 
     useEffect(() => {
+        axios.get("http://localhost:8080/get-credits-for-user?username=" + username)
+            .then(response => {
+                if (response.data.success) {
+                    setCredits(response.data.credits)
+                }
+            })
+    })
+
+    useEffect(() => {
         axios.get("http://localhost:8080/get-all-auction-for-user?username=" + username)
             .then(response => {
                 if (response.data.success) {
@@ -37,6 +48,20 @@ function MyProducts(){
             })
     })
 
+    const closeAuction = (id) => {
+        axios.post("http://localhost:8080/close-auction",null, {
+            params:{
+                auctionId: id
+            }
+        }).then(res => {
+            if(res.data.errorCode==null){
+                alert("Auction Closed!")
+            }else if(res.data.errorCode== 1006){
+                alert("There Are Not Enough Offers In This Auction!")
+            }
+        })
+    }
+
     const logout = () => {
         Cookies.remove("token");
         navigate("../login");
@@ -44,6 +69,10 @@ function MyProducts(){
 
     return (
         <div>
+            <div>
+                <h3>My Credits: {credits} </h3>
+
+            </div>
             <button onClick={logout}> Logout</button>
                 {
                     links.map((link) => {
@@ -69,27 +98,15 @@ function MyProducts(){
                        {
                            auctionForUser.map((auction) => {
                                return(
-                                   <tr className={"statistics"}>
-                                       <Link to={`/product/${auction.id}`}>
-                                       <td className={"statistics"}>{auction.productName}</td>
-                                       </Link>
-                                       <td className={"statistics"}>{auction.maxOfferAmount}</td>
-                                       <td className={"statistics"}>{auction.open?"Yes":"No"}</td>
-                                       <td><button>close auction</button></td>
-                                   </tr>
+                                   <div>
+                                       <RenderProduct product={auction} closeAuction={closeAuction} />
+                                   </div>
                                )
                            })
-
                        }
-
                    </table>
                }
-
-
-
-
         </div>
-
     );
 }
 export default MyProducts;

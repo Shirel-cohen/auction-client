@@ -13,6 +13,8 @@ function MySuggestions (){
     ]
     const[offersForUser, setOffersForUser] = useState([]);
     const[username, setUsername] = useState("");
+    const[credits, setCredits] = useState("");
+
     const logout = () => {
         Cookies.remove("token");
         navigate("../login");
@@ -37,8 +39,20 @@ function MySuggestions (){
             })
     })
 
+    useEffect(() => {
+        axios.get("http://localhost:8080/get-credits-for-user?username=" + username)
+            .then(response => {
+                if (response.data.success) {
+                    setCredits(response.data.credits)
+                }
+            })
+    })
+
     return (
         <div>
+            <div>
+                <h3>My Credits : {credits}</h3>
+            </div>
             <button onClick={logout}> Logout</button>
             <ul>
                 {
@@ -70,7 +84,7 @@ function MySuggestions (){
                                         <td className={"statistics"}>{offers.productName}</td>
                                         </Link>
                                         <td className={"statistics"}>{offers.amountOfOffer}</td>
-                                        <td className={"statistics"}>a</td>
+                                        <td className={"statistics"}>{}</td>
                                         <td className={"statistics"}>{offers.chosen?"Yes":"No"}</td>
                                     </tr>
                                 )
