@@ -92,7 +92,7 @@ function Product (props){
     return (
         <div style={{marginLeft: "70px"}}>
             <div>
-                <h3>My Credits: {credits}</h3>
+                <h3>My Credits: {credits}$</h3>
             </div>
 
             <button onClick={logout}> Logout</button>

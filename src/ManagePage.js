@@ -14,6 +14,9 @@ function ManagePage (props) {
     const[users, setUsers] = useState([]);
     const[auction, setAuction] = useState([]);
     const[showUserDetails,setShowUserDetails] = useState("")
+    const[allAuctions, setAllAuctions] = useState([])
+    const[allOffers, setAllOffers] = useState([])
+    const[systemMoney, setSystemMoney] = useState(0)
     const [option, setOption] = useState("")
     const navigate = useNavigate();
 
@@ -39,6 +42,35 @@ function ManagePage (props) {
                 }
             });
     }, [])
+
+    useEffect(() => {
+        axios.get("http://localhost:8080/get-all-auctions")
+            .then(response => {
+                if (response.data.success) {
+                    setAllAuctions(response.data.auctions)
+
+                }
+            })
+    } )
+
+    useEffect(() => {
+        axios.get("http://localhost:8080/get-all-offers")
+            .then(response => {
+                if (response.data.success) {
+                    setAllOffers(response.data.offers)
+
+                }
+            })
+    } )
+
+    useEffect(() => {
+        let systemMoney = 0;
+        allAuctions.map(auction =>{
+            systemMoney = systemMoney + ( 0.05 * auction.maxOfferAmount)
+        })
+        systemMoney = systemMoney + allOffers.length + (2 * allAuctions.length)
+        setSystemMoney(systemMoney)
+    })
 
     const loginAs = (token) => {
         Cookies.set("token", token);
@@ -70,7 +102,6 @@ function ManagePage (props) {
                 </span>
                 </div>
             </div>
-
             <ul style={{alignItems: "center", justifyContent: "center", display: "flex"}}>
                 {
                     links.map((link) => {
@@ -84,6 +115,9 @@ function ManagePage (props) {
                     })
                 }
             </ul>
+            <div>
+                <h3>Money Earned : {systemMoney}$</h3>
+            </div>
 
             <div style={{alignItems: "center", justifyContent: "center", display: "flex", marginTop: "70px "}}>
                 <input type={"radio"} name={"option"} value={"users"} checked={option == "users"}

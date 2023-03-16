@@ -122,7 +122,7 @@ function DashboardPage () {
     return (
         <div>
             <div>
-                <h3>My Credits : {credits}</h3>
+                <h3>My Credits : {credits}$</h3>
             </div>
             <div style={{alignItems: "center", justifyContent: "center", display: "flex"}}>
                 <h3 style={{marginRight: "5px", fontStyle: "italic"}}>Hello <span

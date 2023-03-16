@@ -51,7 +51,7 @@ function MySuggestions (){
     return (
         <div>
             <div>
-                <h3>My Credits : {credits}</h3>
+                <h3>My Credits : {credits}$</h3>
             </div>
             <button onClick={logout}> Logout</button>
             <ul>
