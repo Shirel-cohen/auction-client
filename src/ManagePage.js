@@ -187,7 +187,7 @@ function ManagePage (props) {
                                     <tr>
                                         <td>
                                             <Link to={`/product/${item.id}`}>
-                                            <button> {item.productName}</button>
+                                                <button> {item.productName}</button>
                                             </Link>
                                             {/*//onClick={navigate("../Product" , ()=> <Product data={item}/>)}*/}
                                         </td>

@@ -7,10 +7,10 @@ import {Button} from "@mui/material";
 
 function DashboardPage () {
     const links=[
-      {to:"ManagePage", text:"Manage"},
-      {to:"MySuggestions", text:"MY-OFFERS"},
-      {to:"MyProducts", text:"MY-PRODUCTS"}
-  ]
+        {to:"ManagePage", text:"Manage"},
+        {to:"MySuggestions", text:"MY-OFFERS"},
+        {to:"MyProducts", text:"MY-PRODUCTS"}
+    ]
 
     const[username, setUsername] = useState("");
     const[openAuctions, setOpenAuctions] = useState([]);
@@ -74,25 +74,25 @@ function DashboardPage () {
         navigate("../login");
     }
     const updateProduct = () => {
-      return(
-          <table>
-              <th>
-                  <td>
-                      <input type={"text"} placeholder={"Product name"} value={productName} onChange={ (e) => setProductName(e.target.value) }/>
-                  </td>
-                  <td>
-                      <input type={"text"} placeholder={"describe product"} value={describeProduct} onChange={(e)=> setDescribe(e.target.value)}/>
-                  </td>
-                  <td>
-                      <input type={"url"} placeholder={"URL image"} value={urlImage} onChange={(e)=>setUrlImage(e.target.value)}/>
-                  </td>
-                  <td>
-                      <input type={"number"} placeholder={"minimal price"} value={minimalPrice} onChange={(e => setMinimalPrice(e.target.value))}/>
-                  </td>
-              </th>
+        return(
+            <table>
+                <th>
+                    <td>
+                        <input type={"text"} placeholder={"Product name"} value={productName} onChange={ (e) => setProductName(e.target.value) }/>
+                    </td>
+                    <td>
+                        <input type={"text"} placeholder={"describe product"} value={describeProduct} onChange={(e)=> setDescribe(e.target.value)}/>
+                    </td>
+                    <td>
+                        <input type={"url"} placeholder={"URL image"} value={urlImage} onChange={(e)=>setUrlImage(e.target.value)}/>
+                    </td>
+                    <td>
+                        <input type={"number"} placeholder={"minimal price"} value={minimalPrice} onChange={(e => setMinimalPrice(e.target.value))}/>
+                    </td>
+                </th>
 
-          </table>
-      )
+            </table>
+        )
     }
     const isAllowToSubmit =()=>{
         return  productName.length == 0 || describeProduct.length == 0 || urlImage.length == 0 || minimalPrice.length == 0;
@@ -185,7 +185,7 @@ function DashboardPage () {
                                     return (
                                         <tr className={"wpos"}>
                                             <Link to={`/product/${auction.id}`}>
-                                            <td>{auction.productName}</td>
+                                                <td>{auction.productName}</td>
                                             </Link>
                                             <td><img src={auction.productImage} width={"100px"} height={"100px"} /></td>
                                             <td>{auction.productDescription}</td>

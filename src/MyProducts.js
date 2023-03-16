@@ -74,38 +74,38 @@ function MyProducts(){
 
             </div>
             <button onClick={logout}> Logout</button>
-                {
-                    links.map((link) => {
-                        return (
-                            <button className={"Buttons"}>
-                                <NavLink to={"../" + link.to}>
-                                    {link.text}
-                                </NavLink>
-                            </button>
-                        )
-                    })
-                }
-           <br/><br/><br/>
+            {
+                links.map((link) => {
+                    return (
+                        <button className={"Buttons"}>
+                            <NavLink to={"../" + link.to}>
+                                {link.text}
+                            </NavLink>
+                        </button>
+                    )
+                })
+            }
+            <br/><br/><br/>
 
-               {
-                   <table className={"statistics"}>
-                       <tr className={"statistics"}>
-                           <th className={"statistics"}>product name</th>
-                           <th className={"statistics"}>max offer</th>
-                           <th className={"statistics"}>auction is open?</th>
-                           <th className={"statistics"}></th>
-                       </tr>
-                       {
-                           auctionForUser.map((auction) => {
-                               return(
-                                   <div>
-                                       <RenderProduct product={auction} closeAuction={closeAuction} />
-                                   </div>
-                               )
-                           })
-                       }
-                   </table>
-               }
+            {
+                <table className={"statistics"}>
+                    <tr className={"statistics"}>
+                        <th className={"statistics"}>product name</th>
+                        <th className={"statistics"}>max offer</th>
+                        <th className={"statistics"}>auction is open?</th>
+                        <th className={"statistics"}></th>
+                    </tr>
+                    {
+                        auctionForUser.map((auction) => {
+                            return(
+                                <div>
+                                    <RenderProduct product={auction} closeAuction={closeAuction} />
+                                </div>
+                            )
+                        })
+                    }
+                </table>
+            }
         </div>
     );
 }

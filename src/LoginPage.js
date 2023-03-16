@@ -119,8 +119,8 @@ function LoginPage () {
                      <input type={"radio"} name={"type"} value={"login"}
                             checked={type == "login"} onChange={typeChanged} />Login
                  </span >
-                 <input type={"radio"} name={"type"} value={"signUp"}
-                               checked={type == "signUp"} onChange={typeChanged}/>Sign Up
+                <input type={"radio"} name={"type"} value={"signUp"}
+                       checked={type == "signUp"} onChange={typeChanged}/>Sign Up
             </div>
             <div style={{alignItems: "center", justifyContent: "center", display: "flex"}}>
                 <table>
