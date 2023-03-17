@@ -35,6 +35,17 @@ function DashboardPage () {
                 setUsername(res.data.username);
             });
         }
+        const sse = new EventSource("http://localhost:8080/sse-handler?token=" + token)
+        sse.onmessage = (message) => {
+            console.log(message.data)
+            const data = message.data;
+            if (data === "NEW_OFFER") {
+                alert("Someone added a new offer!");
+            } else if (data === "CLOSE_AUCTION") {
+                alert("Auction that you offered is closed!");
+            }
+        }
+
     }, []);
 
     useEffect(() => {
