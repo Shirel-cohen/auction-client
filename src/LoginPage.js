@@ -56,6 +56,7 @@ function LoginPage () {
                 }
             })
     } )
+
     useEffect(() => {
         axios.get("http://localhost:8080/get-credits-for-user?username=" + username)
             .then(response => {
@@ -112,16 +113,13 @@ function LoginPage () {
     }
     return (
         <div >
-            <div>
-                <h3>My Credits: {credits}</h3>
-            </div>
             <div style={{alignItems: "center", justifyContent: "center", display: "flex"}}>
                  <span  >
                      <input type={"radio"} name={"type"} value={"login"}
                             checked={type == "login"} onChange={typeChanged} />Login
                  </span >
-                 <input type={"radio"} name={"type"} value={"signUp"}
-                               checked={type == "signUp"} onChange={typeChanged}/>Sign Up
+                <input type={"radio"} name={"type"} value={"signUp"}
+                       checked={type == "signUp"} onChange={typeChanged}/>Sign Up
             </div>
             <div style={{alignItems: "center", justifyContent: "center", display: "flex"}}>
                 <table>

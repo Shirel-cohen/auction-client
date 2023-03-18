@@ -1,4 +1,3 @@
-
 import {useNavigate, useParams} from "react-router-dom";
 import Cookies from "js-cookie";
 import {TextField} from "@mui/material";
@@ -85,7 +84,6 @@ function Product (props){
             else if(res.data.errorCode== 1012) {
                 alert("Your Offer Is Lower Than The Minimal Cost!")
             }
-            debugger
         }));
     }
 
@@ -93,7 +91,7 @@ function Product (props){
         <div style={{marginLeft: "70px"}}>
 
             <div>
-                <h3>My Credits: {credits}</h3>
+                <h3>My Credits: {credits}$</h3>
             </div>
 
             <button onClick={logout}> Logout</button>
@@ -125,8 +123,8 @@ function Product (props){
                         }
                     </ul>
                 </div>
-                    <ul className={"statistics"}>
-                    </ul>
+                <ul className={"statistics"}>
+                </ul>
             </div>
             <div>
                 picture:
