@@ -1,5 +1,10 @@
+import {Alert, Button, Collapse, IconButton} from "@mui/material";
+import {useState} from "react";
+
 function ErrorMessage(props) {
     let message = props.message;
+    let isClickable=props.isClickable;
+    const [open, setOpen] = useState(true);
     switch (message) {
         case 1000:
             message = "Username is required!";
@@ -22,11 +27,23 @@ function ErrorMessage(props) {
             {
                 props.lineBreak ?
                     <div>
-                        {message}
+                        <Collapse in={!isClickable}>
+                            <Alert severity="error"
+                                   action={
+                                       <IconButton aria-label="close" color="inherit" size="small"
+                                                   onClick={() => {
+                                               isClickable=!isClickable;}}>
+                                            </IconButton>}>
+                                {message}
+                            </Alert>
+                        </Collapse>
                     </div>
                     :
                     <span>
-                                            {message}
+                        {message}
+                        <Alert severity="error">
+                            {message}
+                            </Alert>
                     </span>
             }
         </span>

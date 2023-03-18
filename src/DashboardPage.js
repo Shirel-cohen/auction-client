@@ -4,13 +4,14 @@ import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 import {NavLink} from "react-router-dom";
 import {Button} from "@mui/material";
+import {TextField} from "@mui/material";
+import Menu from "./DefaultPage";
+import MenuPage from "./DefaultPage";
+
+
 
 function DashboardPage () {
-    const links=[
-      {to:"ManagePage", text:"Manage"},
-      {to:"MySuggestions", text:"MY-OFFERS"},
-      {to:"MyProducts", text:"MY-PRODUCTS"}
-  ]
+
 
     const[username, setUsername] = useState("");
     const[openAuctions, setOpenAuctions] = useState([]);
@@ -69,10 +70,6 @@ function DashboardPage () {
         setDescribe("");
     }
 
-    const logout = () => {
-        Cookies.remove("token");
-        navigate("../login");
-    }
     const updateProduct = () => {
       return(
           <table>
@@ -121,28 +118,18 @@ function DashboardPage () {
 
     return (
         <div>
+            <MenuPage/>
             <div>
                 <h3>My Credits : {credits}</h3>
             </div>
             <div style={{alignItems: "center", justifyContent: "center", display: "flex"}}>
                 <h3 style={{marginRight: "5px", fontStyle: "italic"}}>Hello <span
                     style={{color: "blueviolet"}}>{username}</span></h3>
-                <button style={{padding: "10px", color: "#000"}} onClick={logout}> Logout</button>
+                {/*<button style={{padding: "10px", color: "#000"}} onClick={logout}> Logout</button>*/}
 
             </div>
-            <ul style={{alignItems: "center", justifyContent: "center", display: "flex"}}>
-                {
-                    links.map((link) => {
-                        return (
-                            <button className={"Buttons"}>
-                                <NavLink to={"../" + link.to}>
-                                    {link.text}
-                                </NavLink>
-                            </button>
-                        )
-                    })
-                }
-            </ul>
+
+
             <div>
                 <div style={{alignItems: "center", justifyContent: "center", display: "flex", marginTop: "70px"}}>
                     <input type={"radio"} value={"update"} name={"option"} checked={option == "update"}
@@ -165,7 +152,9 @@ function DashboardPage () {
                 {
                     option == "showTenders" &&
                     <div style={{justifyContent: "center", marginLeft: "650px"}}>
-                        <input type={"text"} onKeyUp={filterTable} id={"myInput"}/> <br/><br/>
+                        <TextField type={"text"} onKeyUp={filterTable} id="myInput" label="Filter Table" variant="outlined" />
+                        <br/><br/>
+
 
 
                         <table className={"auctionTable"} id={"myTable"}>

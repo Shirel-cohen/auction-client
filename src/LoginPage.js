@@ -3,6 +3,7 @@ import axios from "axios";
 import ErrorMessage from "./ErrorMessage";
 import Cookies from "js-cookie";
 import {useNavigate} from "react-router-dom";
+import {Button, TextField} from "@mui/material";
 
 
 function LoginPage () {
@@ -64,7 +65,6 @@ function LoginPage () {
             })
     })
 
-
     const usernameChanged = (event) => {
         setUsername(event.target.value)
     }
@@ -82,7 +82,6 @@ function LoginPage () {
     }
 
 
-
     const submit = () => {
         if (type == "signUp") {
             axios.post("http://localhost:8080/sign-up", null, {
@@ -90,6 +89,7 @@ function LoginPage () {
             }).then((response) => {
                 if (response.data.success) {
                     setErrorCode(0)
+
                     alert ("OK")
                 } else {
                     setErrorCode(response.data.errorCode);
@@ -110,7 +110,6 @@ function LoginPage () {
 
         }
     }
-
     return (
         <div >
             <div>
@@ -131,7 +130,8 @@ function LoginPage () {
                             Username:
                         </td>
                         <td>
-                            <input type={"text"} value={username} onChange={usernameChanged}/>
+                            <TextField type={"text"} value={username} onChange={usernameChanged}  label="user name" variant="outlined" />
+
                         </td>
                     </tr>
                     <tr>
@@ -139,17 +139,20 @@ function LoginPage () {
                             Password:
                         </td>
                         <td>
-                            <input type={"password"} value={password} onChange={passwordChanged}/>
+                            <TextField type={"password"} value={password} onChange={passwordChanged}  label="password" variant="outlined" />
                         </td>
                     </tr>
                     {
                         type == "signUp" &&
                         <tr>
                             <td>Repeat Password:</td>
-                            <td><input type={"password"} value={password2} onChange={password2Changed}/></td>
+                            <td>
+                                <TextField type={"password"} value={password2} onChange={password2Changed}  id="myInput" label="Repeat password" variant="outlined" />
+
+                            </td>
                             <td>
                                 {
-                                    password != password2 &&
+                                    password !== password2 &&
                                     <ErrorMessage message={"Passwords Don't match"} lineBreak={true}/>
                                 }
                             </td>
@@ -159,16 +162,15 @@ function LoginPage () {
                 </table>
 
             </div>
-
             {
                 errorCode > 0 &&
-                <ErrorMessage message={errorCode} lineBreak={true}/>
+                <ErrorMessage message={errorCode} lineBreak={true} isClickable={ password !== password2} />
             }
             <div   style={{alignItems: "center", justifyContent: "center", display: "flex" ,marginTop:"5px" ,marginBottom:"50px"}}>
-                <button  onClick={submit} disabled={
-                    (password != password2 && type == "signUp") ||
+                <Button  onClick={submit} disabled={
+                    (password !== password2 && type == "signUp") ||
                     username.length == 0
-                }>{type == "signUp" ? "Sign Up" : "Login"}</button>
+                }>{type == "signUp" ? "Sign Up" : "Login"} </Button>
 
             </div>
 
@@ -192,7 +194,6 @@ function LoginPage () {
 
 
     )
-
 
 }
 

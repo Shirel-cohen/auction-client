@@ -3,22 +3,15 @@ import Cookies from "js-cookie";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {useEffect, useState} from "react";
+import MenuPage from "./DefaultPage";
 
 function MySuggestions (){
     const navigate = useNavigate();
-    const links=[
-        {to:"dashboard", text:"Home"},
-        {to:"ManagePage", text:"Manage"},
-        {to:"MyProducts", text:"MY-PRODUCTS"}
-    ]
     const[offersForUser, setOffersForUser] = useState([]);
     const[username, setUsername] = useState("");
     const[credits, setCredits] = useState("");
 
-    const logout = () => {
-        Cookies.remove("token");
-        navigate("../login");
-    }
+
     useEffect(()=>{
         const token = Cookies.get("token");
         if (token == undefined) {
@@ -53,20 +46,8 @@ function MySuggestions (){
             <div>
                 <h3>My Credits : {credits}</h3>
             </div>
-            <button onClick={logout}> Logout</button>
-            <ul>
-                {
-                    links.map((link) => {
-                        return (
-                            <button className={"Buttons"}>
-                                <NavLink to={"../" + link.to}>
-                                    {link.text}
-                                </NavLink>
-                            </button>
-                        )
-                    })
-                }
-            </ul>
+            <MenuPage/>
+
             <div>
                 {
                     <table className={"statistics"}>

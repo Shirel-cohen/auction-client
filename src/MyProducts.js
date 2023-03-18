@@ -5,6 +5,7 @@ import axios from "axios";
 import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import RenderProduct from "./RenderProduct";
+import MenuPage from "./DefaultPage";
 
 
 function MyProducts(){
@@ -62,10 +63,6 @@ function MyProducts(){
         })
     }
 
-    const logout = () => {
-        Cookies.remove("token");
-        navigate("../login");
-    }
 
     return (
         <div>
@@ -73,20 +70,7 @@ function MyProducts(){
                 <h3>My Credits: {credits} </h3>
 
             </div>
-            <button onClick={logout}> Logout</button>
-                {
-                    links.map((link) => {
-                        return (
-                            <button className={"Buttons"}>
-                                <NavLink to={"../" + link.to}>
-                                    {link.text}
-                                </NavLink>
-                            </button>
-                        )
-                    })
-                }
-           <br/><br/><br/>
-
+            <MenuPage/>
                {
                    <table className={"statistics"}>
                        <tr className={"statistics"}>

@@ -3,7 +3,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import {Link, NavLink, useNavigate} from "react-router-dom";
 
-function ManagePage (props) {
+function ManagePage () {
     const links=[
         {to:"dashboard", text:"Home"},
         {to:"MySuggestions", text:"MY-SUGGESTIONS"},
