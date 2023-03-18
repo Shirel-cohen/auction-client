@@ -30,7 +30,7 @@ function ErrorMessage(props) {
                         <Collapse in={!isClickable}>
                             <Alert severity="error"
                                    action={
-                                       <IconButton aria-label="close" color="inherit" size="small"
+                                       <IconButton variant="contained" aria-label="close" color="inherit" size="small"
                                                    onClick={() => {
                                                isClickable=!isClickable;}}>
                                             </IconButton>}>

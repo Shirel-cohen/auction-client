@@ -1,6 +1,6 @@
 import {useNavigate, useParams} from "react-router-dom";
 import Cookies from "js-cookie";
-import {TextField} from "@mui/material";
+import {Button, TextField} from "@mui/material";
 import axios from "axios";
 import {useState,useEffect} from "react";
 function Product (props){
@@ -94,7 +94,7 @@ function Product (props){
                 <h3>My Credits: {credits}$</h3>
             </div>
 
-            <button onClick={logout}> Logout</button>
+            <Button variant="contained" onClick={logout}> Logout</Button>
             <div></div>
             <table className={"statistics"}>
                 <th className={"statistics"}>Product Name</th>
@@ -134,7 +134,7 @@ function Product (props){
                 product.open?             <div>
                     <TextField variant={"filled"} label={"Offer"} type={"number"} value={currentOffer}
                                onChange={(e) => setCurrentOffer(e.target.value)}/>
-                    <button onClick={sendOffer}>Place Offer</button>
+                    <Button variant="contained" onClick={sendOffer}>Place Offer</Button>
                 </div> : "Auction is Closed!"
             }
         </div>

@@ -46,7 +46,7 @@ function MySuggestions (){
             <div>
                 <h3>My Credits : {credits}</h3>
             </div>
-            <MenuPage/>
+            <MenuPage me={"MySuggestions"}/>
 
             <div>
                 {

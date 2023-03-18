@@ -165,10 +165,10 @@ function LoginPage () {
                 <ErrorMessage message={errorCode} lineBreak={true} isClickable={ password !== password2} />
             }
             <div   style={{alignItems: "center", justifyContent: "center", display: "flex" ,marginTop:"5px" ,marginBottom:"50px"}}>
-                <Button  onClick={submit} disabled={
-                    (password !== password2 && type == "signUp") ||
+                <Button variant="contained" onClick={submit} disabled={
+                    (password !== password2 && type === "signUp") ||
                     username.length == 0
-                }>{type == "signUp" ? "Sign Up" : "Login"} </Button>
+                }>{type === "signUp" ? "Sign Up" : "Login"} </Button>
 
             </div>
 

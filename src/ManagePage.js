@@ -2,24 +2,25 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import {Link, NavLink, useNavigate} from "react-router-dom";
+import MenuPage from "./DefaultPage";
+import {Button, TextField} from "@mui/material";
 
-function ManagePage () {
-    const links=[
-        {to:"dashboard", text:"Home"},
-        {to:"MySuggestions", text:"MY-SUGGESTIONS"},
-        {to:"MyProducts", text:"MY-PRODUCTS"}
+function ManagePage() {
+    const links = [
+        {to: "dashboard", text: "Home"},
+        {to: "MySuggestions", text: "MY-SUGGESTIONS"},
+        {to: "MyProducts", text: "MY-PRODUCTS"}
     ]
 
 
-    const[users, setUsers] = useState([]);
-    const[auction, setAuction] = useState([]);
-    const[showUserDetails,setShowUserDetails] = useState("")
-    const[allAuctions, setAllAuctions] = useState([])
-    const[allOffers, setAllOffers] = useState([])
-    const[systemMoney, setSystemMoney] = useState(0)
+    const [users, setUsers] = useState([]);
+    const [auction, setAuction] = useState([]);
+    const [showUserDetails, setShowUserDetails] = useState("")
+    const [allAuctions, setAllAuctions] = useState([])
+    const [allOffers, setAllOffers] = useState([])
+    const [systemMoney, setSystemMoney] = useState(0)
     const [option, setOption] = useState("")
     const navigate = useNavigate();
-
 
 
     useEffect(() => {
@@ -51,7 +52,7 @@ function ManagePage () {
 
                 }
             })
-    } )
+    })
 
     useEffect(() => {
         axios.get("http://localhost:8080/get-all-offers")
@@ -61,12 +62,12 @@ function ManagePage () {
 
                 }
             })
-    } )
+    })
 
     useEffect(() => {
         let systemMoney = 0;
-        allAuctions.map(auction =>{
-            systemMoney = systemMoney + ( 0.05 * auction.maxOfferAmount)
+        allAuctions.map(auction => {
+            systemMoney = systemMoney + (0.05 * auction.maxOfferAmount)
         })
         systemMoney = systemMoney + allOffers.length + (2 * allAuctions.length)
         setSystemMoney(systemMoney)
@@ -90,7 +91,6 @@ function ManagePage () {
 
     return (
         <div>
-            <button onClick={logout}> Logout</button>
             <div style={{textAlign: "center", color: "darkmagenta"}}>
                 <h2 style={{fontStyle: "italic", color: "darkmagenta"}}>Manage Page</h2>
                 <div style={{fontSize: "23px", fontStyle: "oblique"}}>
@@ -102,19 +102,8 @@ function ManagePage () {
                 </span>
                 </div>
             </div>
-            <ul style={{alignItems: "center", justifyContent: "center", display: "flex"}}>
-                {
-                    links.map((link) => {
-                        return (
-                            <button className={"Buttons"}>
-                                <NavLink to={"../" + link.to}>
-                                    {link.text}
-                                </NavLink>
-                            </button>
-                        )
-                    })
-                }
-            </ul>
+            <MenuPage me={"ManagePage"}/>
+
             <div>
                 <h3>Money Earned : {systemMoney}$</h3>
             </div>
@@ -141,11 +130,12 @@ function ManagePage () {
                                         alignItems: "center",
                                         marginTop: "20px"
                                     }}>
-                                        <input type={"radio"} name={"showUserDetails"} value={item.username}
-                                               checked={showUserDetails == item.username}
-                                               onChange={e => setShowUserDetails(e.target.value)}
-                                        />
-                                        {item.username}
+
+                                        <Button type={"radio"} value={item.username} label="showUserDetails"
+                                                checked={showUserDetails == item.username}
+                                                onClick={e => setShowUserDetails(e.target.value)}
+                                                variant="contained"> {item.username}</Button>
+
 
                                         {
                                             showUserDetails == item.username &&
@@ -159,10 +149,10 @@ function ManagePage () {
                                                         <td style={{padding: "20px"}}>{item.amountOfCredits}</td>
                                                         <td>{item.amountOfTenders}</td>
                                                         <td>
-                                                            <input type={"number"}/>
+                                                            <TextField type={"number"}/>
                                                         </td>
                                                         <td>
-                                                            <button>Edit</button>
+                                                            <Button variant="contained" >Edit</Button>
                                                         </td>
 
                                                     </tr>
@@ -173,37 +163,38 @@ function ManagePage () {
                                 );
                             })
                         }
-                    </div>
-                }
             </div>
-
-            {
-                option == "auction" &&
-                <div>
-                    <table>
-                        {
-                            auction.map((item) => {
-                                return (
-                                    <tr>
-                                        <td>
-                                            <Link to={`/product/${item.id}`}>
-                                                <button> {item.productName}</button>
-                                            </Link>
-                                            {/*//onClick={navigate("../Product" , ()=> <Product data={item}/>)}*/}
-                                        </td>
-                                    </tr>
-
-                                );
-                            })
-                        }
-                    </table>
-                </div>
-
             }
-
-
         </div>
-    );
+
+    {
+        option == "auction" &&
+        <div>
+            <table>
+                {
+                    auction.map((item) => {
+                        return (
+                            <tr>
+                                <td>
+                                    <Link to={`/product/${item.id}`}>
+                                        <Button  variant="contained"> {item.productName}</Button>
+                                    </Link>
+                                    {/*//onClick={navigate("../Product" , ()=> <Product data={item}/>)}*/}
+                                </td>
+                            </tr>
+
+                        );
+                    })
+                }
+            </table>
+        </div>
+
+    }
+
+
+</div>
+)
+    ;
 }
 
 export default ManagePage;

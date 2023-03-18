@@ -9,20 +9,19 @@ import Menu from "./DefaultPage";
 import MenuPage from "./DefaultPage";
 
 
+function DashboardPage() {
 
-function DashboardPage () {
 
-
-    const[username, setUsername] = useState("");
-    const[openAuctions, setOpenAuctions] = useState([]);
-    const[token, setToken] = useState("");
-    const[option , setOption] = useState("update")
+    const [username, setUsername] = useState("");
+    const [openAuctions, setOpenAuctions] = useState([]);
+    const [token, setToken] = useState("");
+    const [option, setOption] = useState("update")
     //product inputs from user
-    const[productName , setProductName] = useState("")
-    const[describeProduct , setDescribe] = useState("")
-    const[urlImage , setUrlImage] = useState("")
-    const[minimalPrice , setMinimalPrice] = useState("")
-    const[credits, setCredits] = useState("");
+    const [productName, setProductName] = useState("")
+    const [describeProduct, setDescribe] = useState("")
+    const [urlImage, setUrlImage] = useState("")
+    const [minimalPrice, setMinimalPrice] = useState("")
+    const [credits, setCredits] = useState("");
     const navigate = useNavigate();
     const filter = openAuctions;
 
@@ -57,9 +56,15 @@ function DashboardPage () {
     })
 
     const uploadProduct = () => {
-        axios.post("http://localhost:8080/upload-product" , null ,{
-            params:{owner : username ,productName:productName,img: urlImage , describe:describeProduct, minimalCost: minimalPrice}
-        }).then((response)=>{
+        axios.post("http://localhost:8080/upload-product", null, {
+            params: {
+                owner: username,
+                productName: productName,
+                img: urlImage,
+                describe: describeProduct,
+                minimalCost: minimalPrice
+            }
+        }).then((response) => {
             if (response.data.success) {
                 alert("product uploaded");
             }
@@ -71,28 +76,33 @@ function DashboardPage () {
     }
 
     const updateProduct = () => {
-      return(
-          <table>
-              <th>
-                  <td>
-                      <input type={"text"} placeholder={"Product name"} value={productName} onChange={ (e) => setProductName(e.target.value) }/>
-                  </td>
-                  <td>
-                      <input type={"text"} placeholder={"describe product"} value={describeProduct} onChange={(e)=> setDescribe(e.target.value)}/>
-                  </td>
-                  <td>
-                      <input type={"url"} placeholder={"URL image"} value={urlImage} onChange={(e)=>setUrlImage(e.target.value)}/>
-                  </td>
-                  <td>
-                      <input type={"number"} placeholder={"minimal price"} value={minimalPrice} onChange={(e => setMinimalPrice(e.target.value))}/>
-                  </td>
-              </th>
+        return (
+            <table>
+                <th>
+                    <td>
+                        <TextField type={"text"} value={productName} label="Product name"
+                                   onChange={(e) => setProductName(e.target.value)} variant="outlined"/>
+                    </td>
+                    <td>
+                        <TextField type={"text"} value={describeProduct} label="describe product"
+                                   onChange={(e) => setDescribe(e.target.value)} variant="outlined"/>
+                    </td>
+                    <td>
+                        <TextField type={"url"} value={urlImage} label="URL image"
+                                   onChange={(e) => setUrlImage(e.target.value)} variant="outlined"/>
+                    </td>
+                    <td>
+                        <TextField type={"number"} value={minimalPrice} label="minimal price"
+                                   onChange={(e => setMinimalPrice(e.target.value))} variant="outlined"/>
 
-          </table>
-      )
+                    </td>
+                </th>
+
+            </table>
+        )
     }
-    const isAllowToSubmit =()=>{
-        return  productName.length == 0 || describeProduct.length == 0 || urlImage.length == 0 || minimalPrice.length == 0;
+    const isAllowToSubmit = () => {
+        return productName.length == 0 || describeProduct.length == 0 || urlImage.length == 0 || minimalPrice.length == 0;
     }
 
     const filterTable = () => {
@@ -118,7 +128,7 @@ function DashboardPage () {
 
     return (
         <div>
-            <MenuPage/>
+            <MenuPage me={"dashboard"}/>
             <div>
                 <h3>My Credits : {credits}</h3>
             </div>
@@ -145,16 +155,17 @@ function DashboardPage () {
                     option == "update" &&
                     <div style={{alignItems: "center", justifyContent: "center", display: "flex"}}>
                         {updateProduct()}
-                        <Button variant="contained" color="success"  onClick={uploadProduct} disabled={isAllowToSubmit()}>Upload</Button>
+                        <Button variant="contained" color="success" onClick={uploadProduct}
+                                disabled={isAllowToSubmit()}>Upload</Button>
                     </div>
                 }
 
                 {
                     option == "showTenders" &&
                     <div style={{justifyContent: "center", marginLeft: "650px"}}>
-                        <TextField type={"text"} onKeyUp={filterTable} id="myInput" label="Filter Table" variant="outlined" />
+                        <TextField type={"text"} onKeyUp={filterTable} id="myInput" label="Filter Table"
+                                   variant="outlined"/>
                         <br/><br/>
-
 
 
                         <table className={"auctionTable"} id={"myTable"}>
@@ -174,9 +185,9 @@ function DashboardPage () {
                                     return (
                                         <tr className={"wpos"}>
                                             <Link to={`/product/${auction.id}`}>
-                                            <td>{auction.productName}</td>
+                                                <td>{auction.productName}</td>
                                             </Link>
-                                            <td><img src={auction.productImage} width={"100px"} height={"100px"} /></td>
+                                            <td><img src={auction.productImage} width={"100px"} height={"100px"}/></td>
                                             <td>{auction.productDescription}</td>
                                             <td>{auction.dateOpening}</td>
                                             <td>{auction.amountOfOffers}</td>

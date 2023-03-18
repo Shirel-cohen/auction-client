@@ -2,15 +2,18 @@ import {Link, NavLink, useNavigate} from "react-router-dom";
 import {Button, TextField} from "@mui/material";
 import Cookies from "js-cookie";
 
-function MenuPage(){
+function MenuPage(props){
 
     const links=[
         {to:"dashboard", text:"Home"},
         {to:"ManagePage", text:"Manage"},
         {to:"MySuggestions", text:"MY-SUGGESTIONS"},
         {to:"MyProducts", text:"MY-PRODUCTS"},
-        {to:"product", text:"PRODUCT"},
     ]
+      // links.filter((item)=>{
+      //     return item.to===props.disable
+      //     alert(links)
+      // })
     const navigate=useNavigate();
 
     const logout = () => {
@@ -24,17 +27,21 @@ function MenuPage(){
             <ul style={{alignItems: "center", justifyContent: "center", display: "flex"}}>
 
                 {
-                    links.map((link) => {
+                    links.filter((item)=>{
+                        return item.to!==props.me
+                    }).map((link) => {
                         return (
-                            <button className={"Buttons"}>
+
+                            <Button variant="contained" className={"Buttons"}>
                                 <NavLink to={"../" + link.to}>
                                     {link.text}
                                 </NavLink>
-                            </button>
+                            </Button>
                         )
                     })
+
                 }
-                <button style={{padding: "10px", color: "#000"}} onClick={logout}> Logout</button>
+                <Button variant="contained" onClick={logout}> Logout</Button>
 
             </ul>
 

@@ -70,7 +70,7 @@ function MyProducts(){
                 <h3>My Credits: {credits} </h3>
 
             </div>
-            <MenuPage/>
+            <MenuPage me={"MySuggestions"}/>
                {
                    <table className={"statistics"}>
                        <tr className={"statistics"}>
