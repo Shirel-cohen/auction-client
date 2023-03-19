@@ -8,6 +8,7 @@ import MenuPage from "./DefaultPage";
 function MySuggestions (){
     const navigate = useNavigate();
     const[offersForUser, setOffersForUser] = useState([]);
+    const[auctions, setAuctions] = useState([]);
     const[username, setUsername] = useState("");
     const[credits, setCredits] = useState("");
 
@@ -33,6 +34,16 @@ function MySuggestions (){
     })
 
     useEffect(() => {
+        axios.get("http://localhost:8080/get-all-auctions")
+            .then(response => {
+                if (response.data.success) {
+                    setAuctions(response.data.auctions)
+
+                }
+            })
+    } )
+
+    useEffect(() => {
         axios.get("http://localhost:8080/get-credits-for-user?username=" + username)
             .then(response => {
                 if (response.data.success) {
@@ -44,7 +55,7 @@ function MySuggestions (){
     return (
         <div>
             <div>
-                <h3>My Credits : {credits}</h3>
+                <h3>My Credits : {credits}$</h3>
             </div>
             <MenuPage me={"MySuggestions"}/>
 
@@ -62,10 +73,10 @@ function MySuggestions (){
                                 return(
                                     <tr className={"statistics"}>
                                         <Link to={`/product/${offers.auctionId}`}>
-                                        <td className={"statistics"}>{offers.productName}</td>
+                                            <td className={"statistics"}>{offers.productName}</td>
                                         </Link>
                                         <td className={"statistics"}>{offers.amountOfOffer}</td>
-                                        <td className={"statistics"}>{}</td>
+                                        <td className={"statistics"}>{auctions[offers.auctionId - 1].open? "Yes" : "No" }</td>
                                         <td className={"statistics"}>{offers.chosen?"Yes":"No"}</td>
                                     </tr>
                                 )

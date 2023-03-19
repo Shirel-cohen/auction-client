@@ -1,9 +1,7 @@
 import Cookies from "js-cookie";
-import {NavLink} from "react-router-dom";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
 import RenderProduct from "./RenderProduct";
 import MenuPage from "./DefaultPage";
 
@@ -67,7 +65,7 @@ function MyProducts(){
     return (
         <div>
             <div>
-                <h3>My Credits: {credits} </h3>
+                <h3>My Credits: {credits}$ </h3>
 
             </div>
             <MenuPage me={"MySuggestions"}/>

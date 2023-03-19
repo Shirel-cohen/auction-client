@@ -35,6 +35,16 @@ function DashboardPage() {
                 setUsername(res.data.username);
             });
         }
+        const sse = new EventSource("http://localhost:8080/sse-handler?token=" + token)
+        sse.onmessage = (message) => {
+            console.log(message.data)
+            const data = message.data;
+            if (data === "NEW_OFFER") {
+                alert("Someone added a new offer to your product!");
+            } else if (data === "CLOSE_AUCTION") {
+                alert("An Auction that you have an offer in is closed!");
+            }
+        }
     }, []);
 
     useEffect(() => {
@@ -130,7 +140,7 @@ function DashboardPage() {
         <div>
             <MenuPage me={"dashboard"}/>
             <div>
-                <h3>My Credits : {credits}</h3>
+                <h3>My Credits : {credits}$</h3>
             </div>
             <div style={{alignItems: "center", justifyContent: "center", display: "flex"}}>
                 <h3 style={{marginRight: "5px", fontStyle: "italic"}}>Hello <span
