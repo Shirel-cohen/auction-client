@@ -156,7 +156,7 @@ function DashboardPage() {
                            onChange={event => setOption(event.target.value)}/> Product upload
 
                     <input type={"radio"} value={"showTenders"} name={"option"} checked={option == "showTenders"}
-                           onChange={event => setOption(event.target.value)}/> Presentation of tenders
+                           onChange={event => setOption(event.target.value)}/> Presentation of Auctions
 
                 </div>
                 <br/> <br/> <br/>

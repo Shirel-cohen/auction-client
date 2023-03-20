@@ -42,15 +42,11 @@ function Product (props){
             })
     })
 
-    const offerChanged = (event) => {
-        setCurrentOffer(event.target.value)
-    }
-
     useEffect(() => {
         axios.get("http://localhost:8080/get-product-by-id?id=" + id)
             .then(response => {
                 if (response.data.success) {
-                    setProduct(response.data.auction)
+                    setProduct(response.data.productPage)
                 }
             })
     })
@@ -70,8 +66,8 @@ function Product (props){
                 ownOfOffer: username,
                 productName: product.productName,
                 amountOfOffer: currentOffer,
-                ownOfProduct: product.ownerOfTheProduct,
-                amountOfOffering : product.amountOfOffering + 1
+                ownOfProduct: product.ownerOfProduct,
+                amountOfOffering : product.amountOfOfferingOnProduct + 1
             }}).then((res => {
             if(res.data.errorCode==null){
                 alert("Offer Uploaded")
@@ -106,10 +102,10 @@ function Product (props){
                 <tr className={"statistics"}>
                     <td className={"statistics"} >{product.productName}</td>
                     <td className={"statistics"}>{product.productDescription}</td>
-                    <td className={"statistics"}>{product.dateOpenTender}</td>
-                    <td className={"statistics"} >{product.ownerOfTheProduct}</td>
-                    <td className={"statistics"}>{product.amountOfOffering}</td>
-                    <td className={"statistics"}>{product.minCost}</td>
+                    <td className={"statistics"}>{product.auctionOpeningDate}</td>
+                    <td className={"statistics"} >{product.ownerOfProduct}</td>
+                    <td className={"statistics"}>{product.amountOfOfferingOnProduct}</td>
+                    <td className={"statistics"}>{product.minimalCost}</td>
                 </tr>
             </table>
             <div>
@@ -129,7 +125,7 @@ function Product (props){
             <div>
                 picture:
             </div>
-            <img src={product.productImage} width={"400px"} height={"400px"} />
+            <img src={product.image} width={"400px"} height={"400px"} />
             {
                 product.open?             <div>
                     <TextField variant={"filled"} label={"Offer"} type={"number"} value={currentOffer}

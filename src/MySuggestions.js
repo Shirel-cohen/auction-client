@@ -72,11 +72,11 @@ function MySuggestions (){
                             offersForUser.map((offers) => {
                                 return(
                                     <tr className={"statistics"}>
-                                        <Link to={`/product/${offers.auctionId}`}>
-                                            <td className={"statistics"}>{offers.productName}</td>
+                                        <Link to={`/product/${offers.auction.id}`}>
+                                            <td className={"statistics"}>{offers.auction.productName}</td>
                                         </Link>
                                         <td className={"statistics"}>{offers.amountOfOffer}</td>
-                                        <td className={"statistics"}>{auctions[offers.auctionId - 1].open? "Yes" : "No" }</td>
+                                        <td className={"statistics"}>{auctions[offers.auction.id - 1].open? "Yes" : "No" }</td>
                                         <td className={"statistics"}>{offers.chosen?"Yes":"No"}</td>
                                     </tr>
                                 )
