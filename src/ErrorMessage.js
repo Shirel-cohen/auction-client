@@ -21,6 +21,10 @@ function ErrorMessage(props) {
         case 1004:
             message = "Wrong username or password";
             break;
+        case 1014:
+            message = "Invalid Credit";
+            break;
+
     }
     return (
         <span style={{color: "red"}}>
@@ -32,8 +36,9 @@ function ErrorMessage(props) {
                                    action={
                                        <IconButton variant="contained" aria-label="close" color="inherit" size="small"
                                                    onClick={() => {
-                                               isClickable=!isClickable;}}>
-                                            </IconButton>}>
+                                                       isClickable = !isClickable;
+                                                   }}>
+                                       </IconButton>}>
                                 {message}
                             </Alert>
                         </Collapse>
@@ -47,7 +52,7 @@ function ErrorMessage(props) {
                     </span>
             }
         </span>
-    )
+    );
 }
 
 export default ErrorMessage;

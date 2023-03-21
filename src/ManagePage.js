@@ -3,7 +3,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import {Link, NavLink, useNavigate} from "react-router-dom";
 import MenuPage from "./DefaultPage";
-import {Button, TextField} from "@mui/material";
+import {Button, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
+import ErrorMessage from "./ErrorMessage";
 
 function ManagePage() {
     const links = [
@@ -20,22 +21,17 @@ function ManagePage() {
     const [allOffers, setAllOffers] = useState([])
     const [systemMoney, setSystemMoney] = useState(0)
     const [option, setOption] = useState("")
+    const [creditToEdit, setCreditToEdit] = useState("");
+    const [productId, setProductId] = useState(-1);
+    const[errorCode, setErrorCode] = useState(0);
     const navigate = useNavigate();
-
 
     useEffect(() => {
         const token = Cookies.get("token");
         if (token == undefined) {
             navigate("../login")
         }
-
-        axios.get("http://localhost:8080/get-all-users")
-            .then(response => {
-                if (response.data.success) {
-                    setUsers(response.data.users);
-                }
-            });
-
+        apiRequestGetUsers();
         axios.get("http://localhost:8080/get-all-open-auctions")
             .then(response => {
                 if (response.data.success) {
@@ -49,6 +45,12 @@ function ManagePage() {
             .then(response => {
                 if (response.data.success) {
                     setAllAuctions(response.data.auctions)
+                    let systemMoney = 0;
+                    allAuctions.map(auction => {
+                        systemMoney = systemMoney + (0.05 * auction.maxOfferAmount)
+                    })
+                    systemMoney = systemMoney + allOffers.length + (2 * allAuctions.length)
+                    setSystemMoney(systemMoney)
 
                 }
             })
@@ -64,14 +66,6 @@ function ManagePage() {
             })
     })
 
-    useEffect(() => {
-        let systemMoney = 0;
-        allAuctions.map(auction => {
-            systemMoney = systemMoney + (0.05 * auction.maxOfferAmount)
-        })
-        systemMoney = systemMoney + allOffers.length + (2 * allAuctions.length)
-        setSystemMoney(systemMoney)
-    })
 
     const loginAs = (token) => {
         Cookies.set("token", token);
@@ -86,6 +80,41 @@ function ManagePage() {
     const optionChangedToTenders = (e) => {
         setOption(e.target.value);
         setShowUserDetails("")
+    }
+
+    const handleUserChanged = (e) => {
+        setShowUserDetails(e.target.value);
+        setCreditToEdit("");
+        setErrorCode(0)
+    }
+
+    const updateCredit = (token) => {
+        axios.post("http://localhost:8080/update-credit", null,{
+            params:{token:token, newCredit: creditToEdit}
+            }
+        ).then((response)=>{
+            if (response.data.success) {
+                apiRequestGetUsers();
+                setErrorCode(0)
+
+            } else {
+               setErrorCode(response.data.errorCode)
+            }
+
+        })
+
+        setCreditToEdit("");
+    }
+    const apiRequestGetUsers = () => {
+        axios.get("http://localhost:8080/get-all-users")
+            .then(response => {
+                if (response.data.success) {
+                    setUsers(response.data.users);
+                }
+            });
+    }
+    const handleProductChanged = (e) => {
+        setProductId(e.target.value);
     }
 
 
@@ -124,77 +153,126 @@ function ManagePage() {
                             users.map((item) => {
                                 return (
 
-                                    <td style={{
+                                    <div style={{
                                         display: "flex",
                                         justifyContent: "center",
                                         alignItems: "center",
-                                        marginTop: "20px"
+                                        marginTop: "20px",
+                                        padding: "5px",
                                     }}>
 
-                                        <Button type={"radio"} value={item.username} label="showUserDetails"
-                                                checked={showUserDetails == item.username}
-                                                onClick={e => setShowUserDetails(e.target.value)}
-                                                variant="contained"> {item.username}</Button>
 
+                                        <Button value={item.username} label="showUserDetails"
+                                                checked={showUserDetails == item.username}
+                                                onClick={handleUserChanged}
+                                                variant="contained"> {item.username}
+
+                                        </Button>
 
                                         {
                                             showUserDetails == item.username &&
 
                                             <div style={{margin: "20px"}}>
                                                 <table>
-                                                    <th>Credit</th>
-                                                    <th>Auctions</th>
-                                                    <th>edit Credit</th>
+                                                    <th style={{padding:"10px"}}>Auctions</th>
+                                                    <th style={{padding:"10px"}}>edit Credit</th>
+                                                    <th style={{padding:"10px"}} >click to Update</th>
+                                                    {errorCode > 0 &&  <th>alert</th>}
                                                     <tr>
-                                                        <td style={{padding: "20px"}}>{item.amountOfCredits}</td>
-                                                        <td>{item.amountOfTenders}</td>
-                                                        <td>
-                                                            <TextField type={"number"}/>
+
+                                                        <td style={{
+                                                            color: item.amountOfAuctions == 0 ? "orangered" : "purple",
+                                                            fontSize: "25px",
+                                                            padding:"10px"
+
+
+                                                        }}>{item.amountOfAuctions == 0 ? "None" : item.amountOfAuctions}</td>
+
+                                                        <td style={{padding:"10px"}} >
+                                                            <TextField color={"secondary"} size={"small"}
+                                                                       variant={"filled"}
+                                                                       label={"Current Credit " + item.amountOfCredits}
+                                                                       type={"number"} value={creditToEdit}
+                                                                       onChange={event => setCreditToEdit(event.target.value)}
+                                                            />
+
+                                                        </td >
+
+                                                        <td style={{ padding:"10px"}}>
+                                                            <Button color={"secondary"} size={"large"}
+                                                                    disabled={creditToEdit == ""}
+                                                                    onClick={() => updateCredit(item.token)}
+                                                                    variant="contained">Edit</Button>
                                                         </td>
-                                                        <td>
-                                                            <Button variant="contained" >Edit</Button>
-                                                        </td>
+                                                        {
+                                                            errorCode > 0 &&
+                                                            <td style={{ padding:"10px"}}>
+                                                            <ErrorMessage  message={errorCode}  lineBreak={true} />
+                                                            </td>
+
+                                                        }
+
 
                                                     </tr>
                                                 </table>
                                             </div>
                                         }
-                                    </td>
+                                    </div>
                                 );
                             })
                         }
-            </div>
-            }
-        </div>
-
-    {
-        option == "auction" &&
-        <div>
-            <table>
-                {
-                    auction.map((item) => {
-                        return (
-                            <tr>
-                                <td>
-                                    <Link to={`/product/${item.id}`}>
-                                        <Button  variant="contained"> {item.productName}</Button>
-                                    </Link>
-                                    {/*//onClick={navigate("../Product" , ()=> <Product data={item}/>)}*/}
-                                </td>
-                            </tr>
-
-                        );
-                    })
+                    </div>
                 }
-            </table>
+            </div>
+
+            {
+                option == "auction" &&
+                <div style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: "50px",
+                    backgroundColor:"floralwhite"
+                }}
+
+                >
+
+                    <FormControl fullWidth>
+                        <InputLabel style={{color:"purple",fontStyle:"italic",fontSize:"30px"}}>Products</InputLabel>
+                        <Select
+
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                              value={productId}
+                            label="Products"
+                            color={"secondary"}
+                            variant={"filled"}
+                             onChange={handleProductChanged}
+                        >
+                            {
+                                auction.map((item) => {
+                                    return (
+                                        <Link to={`/product/${item.id}`}>
+                                         {/*   <Button  variant="contained"> {item.productName}</Button>*/}
+                                            <MenuItem value={item.id}>{item.productName}</MenuItem>
+                                        </Link>
+
+
+                                    )
+                                })
+                            }
+
+                        </Select>
+                    </FormControl>
+
+                </div>
+
+            }
+
+
         </div>
-
-    }
-
-
-</div>
-)
-    ;
+    )
+        ;
 }
 
 export default ManagePage;
