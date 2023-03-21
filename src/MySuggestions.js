@@ -8,7 +8,7 @@ import MenuPage from "./DefaultPage";
 function MySuggestions (){
     const navigate = useNavigate();
     const[offersForUser, setOffersForUser] = useState([]);
-    const[auctions, setAuctions] = useState([]);
+   // const[auctions, setAuctions] = useState([]);
     const[username, setUsername] = useState("");
     const[credits, setCredits] = useState("");
 
@@ -33,15 +33,15 @@ function MySuggestions (){
             })
     })
 
-    useEffect(() => {
-        axios.get("http://localhost:8080/get-all-auctions")
-            .then(response => {
-                if (response.data.success) {
-                    setAuctions(response.data.auctions)
-
-                }
-            })
-    } )
+    // useEffect(() => {
+    //     axios.get("http://localhost:8080/get-all-auctions")
+    //         .then(response => {
+    //             if (response.data.success) {
+    //                 setAuctions(response.data.auctions)
+    //
+    //             }
+    //         })
+    // } )
 
     useEffect(() => {
         axios.get("http://localhost:8080/get-credits-for-user?username=" + username)
@@ -58,6 +58,7 @@ function MySuggestions (){
                 <h3>My Credits : {credits}$</h3>
             </div>
             <MenuPage me={"MySuggestions"}/>
+            {offersForUser.length>0?
 
             <div>
                 {
@@ -65,19 +66,19 @@ function MySuggestions (){
                         <tr className={"statistics"}>
                             <th className={"statistics"}>product name</th>
                             <th className={"statistics"}>amount of offer</th>
-                            <th className={"statistics"}>auction is open?</th>
-                            <th className={"statistics"}>offer won?</th>
+                            <th className={"statistics"}>auction status</th>
+                            <th className={"statistics"}>offer status</th>
                         </tr>
                         {
                             offersForUser.map((offers) => {
                                 return(
                                     <tr className={"statistics"}>
-                                        <Link to={`/product/${offers.auction.id}`}>
-                                            <td className={"statistics"}>{offers.auction.productName}</td>
+                                        <Link to={`/product/${offers.auctionId}`}>
+                                            <td className={"statistics"}>{offers.productName}</td>
                                         </Link>
                                         <td className={"statistics"}>{offers.amountOfOffer}</td>
-                                        <td className={"statistics"}>{auctions[offers.auction.id - 1].open? "Yes" : "No" }</td>
-                                        <td className={"statistics"}>{offers.chosen?"Yes":"No"}</td>
+                                        <td className={"statistics"}>{offers.auctionStatus? "Open" : "Close" }</td>
+                                        <td className={"statistics"}>{offers.offerStatus?"Won":"Lost"}</td>
                                     </tr>
                                 )
                             })
@@ -86,9 +87,9 @@ function MySuggestions (){
 
                     </table>
                 }
-            </div>
+            </div>  : <h1>There is no offers yet</h1>
 
-
+            }
         </div>
     );
 

@@ -24,6 +24,8 @@ function DashboardPage() {
     const [credits, setCredits] = useState("");
     const navigate = useNavigate();
     const filter = openAuctions;
+    const[myOffers, setMyOffers]= useState("");
+
 
     useEffect(() => {
         const token = Cookies.get("token");
@@ -61,6 +63,14 @@ function DashboardPage() {
             .then(response => {
                 if (response.data.success) {
                     setCredits(response.data.credits)
+                }
+            })
+    })
+    useEffect(() => {
+        axios.get("http://localhost:8080/get-my-offers-on-product?username=" +username +"&productName="+ productName )
+            .then(response => {
+                if (response.data.success) {
+                    setMyOffers(response.data.offers.length)
                 }
             })
     })
@@ -198,10 +208,10 @@ function DashboardPage() {
                                                 <td>{auction.productName}</td>
                                             </Link>
                                             <td><img src={auction.productImage} width={"100px"} height={"100px"}/></td>
-                                            <td>{auction.productDescription}</td>
+                                            <td>{auction.productDescription }</td>
                                             <td>{auction.dateOpening}</td>
                                             <td>{auction.amountOfOffers}</td>
-                                            <td>{auction.amountOfOfferingForUser}</td>
+                                            <td> {auction.ownerOfTheProduct == username? "This is your product" : myOffers }</td>
                                         </tr>
 
                                     );

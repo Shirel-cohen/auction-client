@@ -68,9 +68,12 @@ function MyProducts(){
                 <h3>My Credits: {credits}$ </h3>
 
             </div>
-            <MenuPage me={"MySuggestions"}/>
+            <MenuPage me={"MyProducts"}/>
+            {auctionForUser.length>0?
+           <div>
                {
-                   <table className={"statistics"}>
+
+                <table className={"statistics"}>
                        <tr className={"statistics"}>
                            <th className={"statistics"}>product name</th>
                            <th className={"statistics"}>max offer</th>
@@ -87,7 +90,8 @@ function MyProducts(){
                            })
                        }
                    </table>
-               }
+
+            }  </div> : <h1>There is no product yet</h1> }
         </div>
     );
 }

@@ -68,6 +68,7 @@ function Product (props){
                 amountOfOffer: currentOffer,
                 ownOfProduct: product.ownerOfProduct,
                 amountOfOffering : product.amountOfOfferingOnProduct + 1
+               // amountOfOfferingForUser: product.amountOfOfferingOnProductForUser+1
             }}).then((res => {
             if(res.data.errorCode==null){
                 alert("Offer Uploaded")
@@ -79,6 +80,9 @@ function Product (props){
             }
             else if(res.data.errorCode== 1012) {
                 alert("Your Offer Is Lower Than The Minimal Cost!")
+            }
+            else if(res.data.errorCode==1013){
+                alert("You are the owner of the product, you can't make an offer")
             }
         }));
     }
@@ -130,7 +134,7 @@ function Product (props){
                 product.open?             <div>
                     <TextField variant={"filled"} label={"Offer"} type={"number"} value={currentOffer}
                                onChange={(e) => setCurrentOffer(e.target.value)}/>
-                    <Button variant="contained" onClick={sendOffer}>Place Offer</Button>
+                    <Button variant="contained" onClick={sendOffer} disabled={currentOffer.length==0}>Place Offer</Button>
                 </div> : "Auction is Closed!"
             }
         </div>
