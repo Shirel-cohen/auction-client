@@ -2,14 +2,12 @@ import Cookies from "js-cookie";
 import {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
-import {NavLink} from "react-router-dom";
 import {Button} from "@mui/material";
 import {TextField} from "@mui/material";
-import Menu from "./DefaultPage";
 import MenuPage from "./DefaultPage";
 
 
-function DashboardPage() {
+function DashboardPage(props) {
 
 
     const [username, setUsername] = useState("");
@@ -22,9 +20,10 @@ function DashboardPage() {
     const [urlImage, setUrlImage] = useState("")
     const [minimalPrice, setMinimalPrice] = useState("")
     const [credits, setCredits] = useState("");
+    const [myOffers,setMyOffers] = useState([]);
     const navigate = useNavigate();
     const filter = openAuctions;
-    const[myOffers, setMyOffers]= useState("");
+
 
 
     useEffect(() => {
@@ -66,14 +65,16 @@ function DashboardPage() {
                 }
             })
     })
-    useEffect(() => {
+
+    const getNumberOfMyOffersOnProduct = (productName) => {
         axios.get("http://localhost:8080/get-my-offers-on-product?username=" +username +"&productName="+ productName )
             .then(response => {
                 if (response.data.success) {
-                    setMyOffers(response.data.offers.length)
+                    setMyOffers(response.data.offers)
                 }
             })
-    })
+        return myOffers.length;
+    }
 
     const uploadProduct = () => {
         axios.post("http://localhost:8080/upload-product", null, {
@@ -182,12 +183,14 @@ function DashboardPage() {
 
                 {
                     option == "showTenders" &&
+
+
                     <div style={{justifyContent: "center", marginLeft: "650px"}}>
                         <TextField type={"text"} onKeyUp={filterTable} id="myInput" label="Filter Table"
                                    variant="outlined"/>
                         <br/><br/>
 
-
+                        {openAuctions.length > 0?
                         <table className={"auctionTable"} id={"myTable"}>
                             <tr>
 
@@ -211,7 +214,7 @@ function DashboardPage() {
                                             <td>{auction.productDescription }</td>
                                             <td>{auction.dateOpening}</td>
                                             <td>{auction.amountOfOffers}</td>
-                                            <td> {auction.ownerOfTheProduct == username? "This is your product" : myOffers }</td>
+                                            <td> {auction.ownerOfTheProduct === username? "This is your product" : getNumberOfMyOffersOnProduct(auction.productName)}</td>
                                         </tr>
 
                                     );
@@ -219,7 +222,7 @@ function DashboardPage() {
 
                                 })
                             }
-                        </table>
+                        </table> : <h1> There Are No Open Auctions </h1> }
 
                     </div>
                 }

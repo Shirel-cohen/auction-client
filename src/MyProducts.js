@@ -91,7 +91,7 @@ function MyProducts(){
                        }
                    </table>
 
-            }  </div> : <h1>There is no product yet</h1> }
+            }  </div> : <h1>You Have No Products Yet</h1> }
         </div>
     );
 }

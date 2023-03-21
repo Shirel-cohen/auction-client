@@ -33,16 +33,6 @@ function MySuggestions (){
             })
     })
 
-    // useEffect(() => {
-    //     axios.get("http://localhost:8080/get-all-auctions")
-    //         .then(response => {
-    //             if (response.data.success) {
-    //                 setAuctions(response.data.auctions)
-    //
-    //             }
-    //         })
-    // } )
-
     useEffect(() => {
         axios.get("http://localhost:8080/get-credits-for-user?username=" + username)
             .then(response => {
@@ -78,7 +68,7 @@ function MySuggestions (){
                                         </Link>
                                         <td className={"statistics"}>{offers.amountOfOffer}</td>
                                         <td className={"statistics"}>{offers.auctionStatus? "Open" : "Close" }</td>
-                                        <td className={"statistics"}>{offers.offerStatus?"Won":"Lost"}</td>
+                                        <td className={"statistics"}>{offers.offerStatus?"Won":"Didn't Win"}</td>
                                     </tr>
                                 )
                             })
@@ -87,7 +77,7 @@ function MySuggestions (){
 
                     </table>
                 }
-            </div>  : <h1>There is no offers yet</h1>
+            </div>  : <h1>You Didn't Place Any Offers Yet</h1>
 
             }
         </div>
