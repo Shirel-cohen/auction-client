@@ -3,23 +3,16 @@ import Cookies from "js-cookie";
 import {Button, TextField} from "@mui/material";
 import axios from "axios";
 import {useState,useEffect} from "react";
+import MenuPage from "./DefaultPage";
+
 function Product (props){
+
     const navigate = useNavigate();
-
-
-
-    const logout = () => {
-        Cookies.remove("token");
-        navigate("../login");
-    }
     const{id} = useParams();
     const[product, setProduct] = useState({});
     const[username, setUsername] = useState("");
     const[myOffers, setMyOffers]= useState([]);
     const[currentOffer, setCurrentOffer] = useState("");
-    const[credits, setCredits] = useState("");
-
-
 
 
     useEffect(()=>{
@@ -32,15 +25,6 @@ function Product (props){
             });
         }
     },[])
-
-    useEffect(() => {
-        axios.get("http://localhost:8080/get-credits-for-user?username=" + username)
-            .then(response => {
-                if (response.data.success) {
-                    setCredits(response.data.credits)
-                }
-            })
-    })
 
     useEffect(() => {
         axios.get("http://localhost:8080/get-product-by-id?id=" + id)
@@ -91,10 +75,9 @@ function Product (props){
         <div style={{marginLeft: "70px"}}>
 
             <div>
-                <h3>My Credits: {credits}$</h3>
+                <MenuPage me={""} username = {username}/>
             </div>
 
-            <Button variant="contained" onClick={logout}> Logout</Button>
             <div></div>
             <table className={"statistics"}>
                 <th className={"statistics"}>Product Name</th>
@@ -131,7 +114,7 @@ function Product (props){
             </div>
             <img src={product.image} width={"400px"} height={"400px"} />
             {
-                product.open?             <div>
+                product.open?      <div>
                     <TextField variant={"filled"} label={"Offer"} type={"number"} value={currentOffer}
                                onChange={(e) => setCurrentOffer(e.target.value)}/>
                     <Button variant="contained" onClick={sendOffer} disabled={currentOffer.length==0}>Place Offer</Button>

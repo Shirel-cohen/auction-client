@@ -4,13 +4,15 @@ import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {useEffect, useState} from "react";
 import MenuPage from "./DefaultPage";
+import {toast, ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import {Button, Zoom} from "@mui/material";
 
 function MySuggestions (){
+
     const navigate = useNavigate();
     const[offersForUser, setOffersForUser] = useState([]);
-   // const[auctions, setAuctions] = useState([]);
     const[username, setUsername] = useState("");
-    const[credits, setCredits] = useState("");
 
 
     useEffect(()=>{
@@ -33,23 +35,18 @@ function MySuggestions (){
             })
     })
 
-    useEffect(() => {
-        axios.get("http://localhost:8080/get-credits-for-user?username=" + username)
-            .then(response => {
-                if (response.data.success) {
-                    setCredits(response.data.credits)
-                }
-            })
-    })
+
+    //     const notify = () => {
+    //     toast.success("hello",{ className : "toast-su", position: toast.POSITION.TOP_CENTER,theme: "colored"});
+    // }
+
 
     return (
         <div>
-            <div>
-                <h3>My Credits : {credits}$</h3>
-            </div>
-            <MenuPage me={"MySuggestions"}/>
+            <MenuPage me={"MySuggestions"} username = {username}/>
+            {/*<Button  onClick={notify}>App</Button>*/}
+            {/*<ToastContainer/>*/}
             {offersForUser.length>0?
-
             <div>
                 {
                     <table className={"statistics"}>

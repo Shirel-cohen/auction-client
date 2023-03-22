@@ -24,12 +24,17 @@ function ManagePage() {
     const [creditToEdit, setCreditToEdit] = useState("");
     const [productId, setProductId] = useState(-1);
     const[errorCode, setErrorCode] = useState(0);
+    const [username, setUsername] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
         const token = Cookies.get("token");
         if (token == undefined) {
             navigate("../login")
+        }else{
+            axios.get("http://localhost:8080/get-username?token=" + token).then((res) => {
+                setUsername(res.data.username);
+            });
         }
         apiRequestGetUsers();
         axios.get("http://localhost:8080/get-all-open-auctions")
@@ -120,153 +125,162 @@ function ManagePage() {
 
     return (
         <div>
-            <div style={{textAlign: "center", color: "darkmagenta"}}>
-                <h2 style={{fontStyle: "italic", color: "darkmagenta"}}>Manage Page</h2>
-                <div style={{fontSize: "23px", fontStyle: "oblique"}}>
+            <MenuPage me={"ManagePage"}/>
+            {username === "Admin" ?
+                <div>
+                    <div style={{textAlign: "center", color: "darkmagenta"}}>
+                        <h2 style={{fontStyle: "italic", color: "darkmagenta"}}>Manage Page</h2>
+                        <div style={{fontSize: "23px", fontStyle: "oblique"}}>
                       <span>
                       Users: {users.length}
                 </span>
-                    <span style={{marginLeft: "20px"}}>
+                            <span style={{marginLeft: "20px"}}>
                          Auctions: {auction.length}
                 </span>
-                </div>
-            </div>
-            <MenuPage me={"ManagePage"}/>
+                        </div>
+                    </div>
 
-            <div>
-                <h3>Money Earned : {systemMoney}$</h3>
-            </div>
 
-            <div style={{alignItems: "center", justifyContent: "center", display: "flex", marginTop: "70px "}}>
-                <input type={"radio"} name={"option"} value={"users"} checked={option == "users"}
-                       onChange={event => setOption(event.target.value)}/> Show Users
-
-                <input type={"radio"} name={"option"} value={"auction"} checked={option == "auction"}
-                       onChange={optionChangedToTenders}/> Show Auctions
-            </div>
-            <div>
-
-                {
-                    option == "users" &&
                     <div>
+                        <h3>Money Earned : {systemMoney}$</h3>
+                    </div>
+
+                    <div style={{alignItems: "center", justifyContent: "center", display: "flex", marginTop: "70px "}}>
+                        <input type={"radio"} name={"option"} value={"users"} checked={option == "users"}
+                               onChange={event => setOption(event.target.value)}/> Show Users
+
+                        <input type={"radio"} name={"option"} value={"auction"} checked={option == "auction"}
+                               onChange={optionChangedToTenders}/> Show Auctions
+                    </div>
+                    <div>
+
                         {
-                            users.map((item) => {
-                                return (
+                            option == "users" &&
+                            <div>
+                                {
+                                    users.map((item) => {
+                                        return (
 
-                                    <div style={{
-                                        display: "flex",
-                                        justifyContent: "center",
-                                        alignItems: "center",
-                                        marginTop: "20px",
-                                        padding: "5px",
-                                    }}>
-
-
-                                        <Button value={item.username} label="showUserDetails"
-                                                checked={showUserDetails == item.username}
-                                                onClick={handleUserChanged}
-                                                variant="contained"> {item.username}
-
-                                        </Button>
-
-                                        {
-                                            showUserDetails == item.username &&
-
-                                            <div style={{margin: "20px"}}>
-                                                <table>
-                                                    <th style={{padding:"10px"}}>Auctions</th>
-                                                    <th style={{padding:"10px"}}>edit Credit</th>
-                                                    <th style={{padding:"10px"}} >click to Update</th>
-                                                    {errorCode > 0 &&  <th>alert</th>}
-                                                    <tr>
-
-                                                        <td style={{
-                                                            color: item.amountOfAuctions == 0 ? "orangered" : "purple",
-                                                            fontSize: "25px",
-                                                            padding:"10px"
+                                            <div style={{
+                                                display: "flex",
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                                marginTop: "20px",
+                                                padding: "5px",
+                                            }}>
 
 
-                                                        }}>{item.amountOfAuctions == 0 ? "None" : item.amountOfAuctions}</td>
+                                                <Button value={item.username} label="showUserDetails"
+                                                        checked={showUserDetails == item.username}
+                                                        onClick={handleUserChanged}
+                                                        variant="contained"> {item.username}
 
-                                                        <td style={{padding:"10px"}} >
-                                                            <TextField color={"secondary"} size={"small"}
-                                                                       variant={"filled"}
-                                                                       label={"Current Credit " + item.amountOfCredits}
-                                                                       type={"number"} value={creditToEdit}
-                                                                       onChange={event => setCreditToEdit(event.target.value)}
-                                                            />
+                                                </Button>
 
-                                                        </td >
+                                                {
+                                                    showUserDetails == item.username &&
 
-                                                        <td style={{ padding:"10px"}}>
-                                                            <Button color={"secondary"} size={"large"}
-                                                                    disabled={creditToEdit == ""}
-                                                                    onClick={() => updateCredit(item.token)}
-                                                                    variant="contained">Edit</Button>
-                                                        </td>
-                                                        {
-                                                            errorCode > 0 &&
-                                                            <td style={{ padding:"10px"}}>
-                                                            <ErrorMessage  message={errorCode}  lineBreak={true} />
-                                                            </td>
+                                                    <div style={{margin: "20px"}}>
+                                                        <table>
+                                                            <th style={{padding: "10px"}}>Auctions</th>
+                                                            <th style={{padding: "10px"}}>edit Credit</th>
+                                                            <th style={{padding: "10px"}}>click to Update</th>
+                                                            {errorCode > 0 && <th>alert</th>}
+                                                            <tr>
 
-                                                        }
+                                                                <td style={{
+                                                                    color: item.amountOfAuctions == 0 ? "orangered" : "purple",
+                                                                    fontSize: "25px",
+                                                                    padding: "10px"
 
 
-                                                    </tr>
-                                                </table>
+                                                                }}>{item.amountOfAuctions == 0 ? "None" : item.amountOfAuctions}</td>
+
+                                                                <td style={{padding: "10px"}}>
+                                                                    <TextField color={"secondary"} size={"small"}
+                                                                               variant={"filled"}
+                                                                               label={"Current Credit " + item.amountOfCredits}
+                                                                               type={"number"} value={creditToEdit}
+                                                                               onChange={event => setCreditToEdit(event.target.value)}
+                                                                    />
+
+                                                                </td>
+
+                                                                <td style={{padding: "10px"}}>
+                                                                    <Button color={"secondary"} size={"large"}
+                                                                            disabled={creditToEdit == ""}
+                                                                            onClick={() => updateCredit(item.token)}
+                                                                            variant="contained">Edit</Button>
+                                                                </td>
+                                                                {
+                                                                    errorCode > 0 &&
+                                                                    <td style={{padding: "10px"}}>
+                                                                        <ErrorMessage message={errorCode}
+                                                                                      lineBreak={true}/>
+                                                                    </td>
+
+                                                                }
+
+
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                }
                                             </div>
-                                        }
-                                    </div>
-                                );
-                            })
+                                        );
+                                    })
+                                }
+                            </div>
                         }
                     </div>
-                }
-            </div>
 
-            {
-                option == "auction" &&
-                <div style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: "50px",
-                    backgroundColor:"floralwhite"
-                }}
+                    {
+                        option == "auction" &&
+                        <div style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            marginTop: "50px",
+                            backgroundColor: "floralwhite"
+                        }}
 
-                >
-
-                    <FormControl fullWidth>
-                        <InputLabel style={{color:"purple",fontStyle:"italic",fontSize:"30px"}}>Products</InputLabel>
-                        <Select
-
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                              value={productId}
-                            label="Products"
-                            color={"secondary"}
-                            variant={"filled"}
-                             onChange={handleProductChanged}
                         >
-                            {
-                                auction.map((item) => {
-                                    return (
-                                        <Link to={`/product/${item.id}`}>
-                                         {/*   <Button  variant="contained"> {item.productName}</Button>*/}
-                                            <MenuItem value={item.id}>{item.productName}</MenuItem>
-                                        </Link>
+
+                            <FormControl fullWidth>
+                                <InputLabel style={{
+                                    color: "purple",
+                                    fontStyle: "italic",
+                                    fontSize: "30px"
+                                }}>Products</InputLabel>
+                                <Select
+
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={productId}
+                                    label="Products"
+                                    color={"secondary"}
+                                    variant={"filled"}
+                                    onChange={handleProductChanged}
+                                >
+                                    {
+                                        auction.map((item) => {
+                                            return (
+                                                <Link to={`/product/${item.id}`}>.
+                                                    <MenuItem value={item.id}>{item.productName}</MenuItem>
+                                                </Link>
 
 
-                                    )
-                                })
-                            }
+                                            )
+                                        })
+                                    }
 
-                        </Select>
-                    </FormControl>
+                                </Select>
+                            </FormControl>
 
-                </div>
+                        </div>
 
+                    }
+                </div> : "You Are Not Allowed In This Page"
             }
 
 

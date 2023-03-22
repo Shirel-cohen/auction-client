@@ -10,14 +10,7 @@ function MyProducts(){
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [auctionForUser, setAuctionForUser] = useState([]);
-    const [credits, setCredits] = useState("");
 
-
-    const links=[
-        {to:"dashboard", text:"Home"},
-        {to:"ManagePage", text:"Manage"},
-        {to:"MySuggestions", text:"MY-SUGGESTIONS"},
-    ]
     useEffect(()=>{
         const token = Cookies.get("token");
         if (token == undefined) {
@@ -28,15 +21,6 @@ function MyProducts(){
             });
         }
     },[])
-
-    useEffect(() => {
-        axios.get("http://localhost:8080/get-credits-for-user?username=" + username)
-            .then(response => {
-                if (response.data.success) {
-                    setCredits(response.data.credits)
-                }
-            })
-    })
 
     useEffect(() => {
         axios.get("http://localhost:8080/get-all-auction-for-user?username=" + username)
@@ -64,11 +48,7 @@ function MyProducts(){
 
     return (
         <div>
-            <div>
-                <h3>My Credits: {credits}$ </h3>
-
-            </div>
-            <MenuPage me={"MyProducts"}/>
+            <MenuPage me={"MyProducts"} username = {username}/>
             {auctionForUser.length>0?
            <div>
                {

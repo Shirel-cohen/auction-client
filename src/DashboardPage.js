@@ -19,7 +19,6 @@ function DashboardPage(props) {
     const [describeProduct, setDescribe] = useState("")
     const [urlImage, setUrlImage] = useState("")
     const [minimalPrice, setMinimalPrice] = useState("")
-    const [credits, setCredits] = useState("");
     const [myOffers,setMyOffers] = useState([]);
     const navigate = useNavigate();
     const filter = openAuctions;
@@ -53,15 +52,6 @@ function DashboardPage(props) {
             .then(response => {
                 if (response.data.success) {
                     setOpenAuctions(response.data.auctions)
-                }
-            })
-    })
-
-    useEffect(() => {
-        axios.get("http://localhost:8080/get-credits-for-user?username=" + username)
-            .then(response => {
-                if (response.data.success) {
-                    setCredits(response.data.credits)
                 }
             })
     })
@@ -149,10 +139,7 @@ function DashboardPage(props) {
 
     return (
         <div>
-            <MenuPage me={"dashboard"}/>
-            <div>
-                <h3>My Credits : {credits}$</h3>
-            </div>
+            <MenuPage me={"dashboard"} username = {username}/>
             <div style={{alignItems: "center", justifyContent: "center", display: "flex"}}>
                 <h3 style={{marginRight: "5px", fontStyle: "italic"}}>Hello <span
                     style={{color: "blueviolet"}}>{username}</span></h3>
