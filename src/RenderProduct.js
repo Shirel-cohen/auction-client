@@ -9,7 +9,7 @@ const product = props.product;
 return(
 
     <div className={"background"}>
-        <div>
+
 
       <table className={"rwd-table"}>
           <tr>
@@ -43,7 +43,7 @@ return(
 
 
       </table>
-        </div>
+
     </div>
 )
 }
