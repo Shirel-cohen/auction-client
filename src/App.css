@@ -1,3 +1,4 @@
+
 .App {
   text-align: center;
 }
@@ -142,6 +143,9 @@ background-color:lightgreen;
 
   color: #070533;
 
+}
+
+.toast-su {
 }
 
 .Buttons:hover {
