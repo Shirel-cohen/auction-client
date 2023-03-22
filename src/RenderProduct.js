@@ -8,7 +8,7 @@ const product = props.product;
 
 return(
 
-    <div>
+    <div  style={{alignItems: "center", justifyContent: "center", display: "flex"} }>
       <table className={"statistics"}>
           <tr className={"statistics"}>
               <Link to={`/product/${product.id}`}>
@@ -16,7 +16,7 @@ return(
               </Link>
               <td className={"statistics"}>{product.maxOfferAmount} </td>
               <td className={"statistics"}>{product.open?"Yes":"No"}</td>
-              <td className={"statistics"}><Button variant="contained" disabled={product.open===false} onClick={() => {
+              <td className={"statistics"}><Button size="large" color="success" variant="contained" disabled={product.open===false} onClick={() => {
                   props.closeAuction(product.id)
               }}>close auction</Button></td>
 

@@ -4,6 +4,7 @@ import ErrorMessage from "./ErrorMessage";
 import Cookies from "js-cookie";
 import {useNavigate} from "react-router-dom";
 import {Button, TextField} from "@mui/material";
+import image from "./image/background.jpg";
 
 
 function LoginPage () {
@@ -112,45 +113,47 @@ function LoginPage () {
         }
     }
     return (
-        <div >
-            <div style={{alignItems: "center", justifyContent: "center", display: "flex"}}>
+        <div className={"background"} >
+            <div style={ { paddingTop:"20px",alignItems: "center", justifyContent: "center", display: "flex"}}>
                  <span  >
-                     <input type={"radio"} name={"type"} value={"login"}
+                     <input type={"radio"} name={"type"} value={"login"}  style={{color: 'white'}}
                             checked={type == "login"} onChange={typeChanged} />Login
                  </span >
-                <input type={"radio"} name={"type"} value={"signUp"}
+                <input style={{ paddingLeft:"40px"}} type={"radio"} name={"type"} value={"signUp"}
                        checked={type == "signUp"} onChange={typeChanged}/>Sign Up
             </div>
-            <div style={{alignItems: "center", justifyContent: "center", display: "flex"}}>
-                <table>
+            <div style={{ justifyContent: "center", display: "flex"}}>
+                <table >
                     <tr>
-                        <td>
+                        <td  style={{color:"lightgreen"}}>
                             Username:
                         </td>
-                        <td>
-                            <TextField type={"text"} value={username} onChange={usernameChanged}  label="user name" variant="outlined" />
+                        <td >
+                            <TextField style={{backgroundColor:"lightgreen"}}  type={"text"} value={username}
+                            onChange={usernameChanged}  label="user name" variant="outlined" />
 
                         </td>
                     </tr>
-                    <tr>
-                        <td>
+                    <tr >
+                        <td style={{color:"lightgreen"}}>
                             Password:
                         </td>
                         <td>
-                            <TextField type={"password"} value={password} onChange={passwordChanged}  label="password" variant="outlined" />
+                            <TextField style={{backgroundColor:"lightgreen"}}  type={"password"} value={password} onChange={passwordChanged}  label="password" variant="outlined" />
                         </td>
                     </tr>
                     {
                         type == "signUp" &&
                         <tr>
-                            <td>Repeat Password:</td>
+                            <td style={{color:"lightgreen"}}>Repeat Password:</td>
                             <td>
-                                <TextField type={"password"} value={password2} onChange={password2Changed}  id="myInput" label="Repeat password" variant="outlined" />
+                                <TextField style={{backgroundColor:"lightgreen"}}  type={"password"} value={password2} onChange={password2Changed}  id="myInput" label="Repeat password" variant="outlined" />
 
                             </td>
                             <td>
                                 {
                                     password !== password2 &&
+
                                     <ErrorMessage message={"Passwords Don't match"} lineBreak={true}/>
                                 }
                             </td>
@@ -164,8 +167,8 @@ function LoginPage () {
                 errorCode > 0 &&
                 <ErrorMessage message={errorCode} lineBreak={true} isClickable={ password !== password2} />
             }
-            <div   style={{alignItems: "center", justifyContent: "center", display: "flex" ,marginTop:"5px" ,marginBottom:"50px"}}>
-                <Button variant="contained" onClick={submit} disabled={
+            <div   style={{alignItems: "center", justifyContent: "center", display: "flex" ,marginTop:"5px" ,marginBottom:"50px" }}>
+                <Button size="large"color="success" variant="contained" onClick={submit} disabled={
                     (password !== password2 && type === "signUp") ||
                     username.length == 0
                 }>{type === "signUp" ? "Sign Up" : "Login"} </Button>
@@ -174,13 +177,14 @@ function LoginPage () {
 
             <div  style={{alignItems: "center", justifyContent: "center", display: "flex"} }>
 
-                <table className={"statistics"}>
+                <table   style={{ backgroundColor:"lightsalmon"}} className={"statistics"}>
                     <tr className={"statistics"}>
                         <th className={"statistics"}>users</th>
                         <th className={"statistics"}>auctions</th>
                         <th className={"statistics"}>Offers made</th>
                     </tr>
-                    <tr className={"statistics"}>
+                    <tr style={{
+                    fontSize:"20px"}} className={"statistics"}>
                         <td className={"statistics"}>{amountOfUsers}</td>
                         <td className={"statistics"}>{amountOfAuctions}</td>
                         <td className={"statistics"}>{amountOfOffers}</td>

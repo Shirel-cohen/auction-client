@@ -7,11 +7,6 @@ import {Button, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui
 import ErrorMessage from "./ErrorMessage";
 
 function ManagePage() {
-    const links = [
-        {to: "dashboard", text: "Home"},
-        {to: "MySuggestions", text: "MY-SUGGESTIONS"},
-        {to: "MyProducts", text: "MY-PRODUCTS"}
-    ]
 
 
     const [users, setUsers] = useState([]);
@@ -23,13 +18,18 @@ function ManagePage() {
     const [option, setOption] = useState("")
     const [creditToEdit, setCreditToEdit] = useState("");
     const [productId, setProductId] = useState(-1);
-    const[errorCode, setErrorCode] = useState(0);
+    const [errorCode, setErrorCode] = useState(0);
+    const [username, setUsername] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
         const token = Cookies.get("token");
         if (token == undefined) {
             navigate("../login")
+        } else {
+            axios.get("http://localhost:8080/get-username?token=" + token).then((res) => {
+                setUsername(res.data.username);
+            });
         }
         apiRequestGetUsers();
         axios.get("http://localhost:8080/get-all-open-auctions")
@@ -89,16 +89,16 @@ function ManagePage() {
     }
 
     const updateCredit = (token) => {
-        axios.post("http://localhost:8080/update-credit", null,{
-            params:{token:token, newCredit: creditToEdit}
+        axios.post("http://localhost:8080/update-credit", null, {
+                params: {token: token, newCredit: creditToEdit}
             }
-        ).then((response)=>{
+        ).then((response) => {
             if (response.data.success) {
                 apiRequestGetUsers();
                 setErrorCode(0)
 
             } else {
-               setErrorCode(response.data.errorCode)
+                setErrorCode(response.data.errorCode)
             }
 
         })
@@ -119,30 +119,36 @@ function ManagePage() {
 
 
     return (
-        <div>
-            <div style={{textAlign: "center", color: "darkmagenta"}}>
-                <h2 style={{fontStyle: "italic", color: "darkmagenta"}}>Manage Page</h2>
-                <div style={{fontSize: "23px", fontStyle: "oblique"}}>
+        <div className={"background"}>
+
+            <div>
+                <div style={{justifyContent: "center", display: "flex"}}>
+                    <MenuPage me={"ManagePage"}/>
+                </div>
+
+            </div>
+
+            {username==="Admin"?
+               <div>
+                <h2 style={{justifyContent: "center", display: "flex",marginInlineEnd: "20px", fontStyle: "italic", color: "lightgreen"}}>Manager Page</h2>
+            <div style={{color: "darkmagenta", textAlign: "center", fontSize: "30px", fontStyle: "oblique"}}>
+
                       <span>
                       Users: {users.length}
                 </span>
-                    <span style={{marginLeft: "20px"}}>
+                <span style={{marginLeft: "20px"}}>
                          Auctions: {auction.length}
                 </span>
-                </div>
-            </div>
-            <MenuPage me={"ManagePage"}/>
-
-            <div>
-                <h3>Money Earned : {systemMoney}$</h3>
+                <span><h3>Money Earned : {systemMoney}$</h3>
+                    </span>
             </div>
 
             <div style={{alignItems: "center", justifyContent: "center", display: "flex", marginTop: "70px "}}>
-                <input type={"radio"} name={"option"} value={"users"} checked={option == "users"}
-                       onChange={event => setOption(event.target.value)}/> Show Users
+                <input size={"50px"} type={"radio"} name={"option"} value={"users"} checked={option == "users"}
+                       onChange={event => setOption(event.target.value)}/>  <h3>Show Users </h3>
 
                 <input type={"radio"} name={"option"} value={"auction"} checked={option == "auction"}
-                       onChange={optionChangedToTenders}/> Show Auctions
+                       onChange={optionChangedToTenders}/>  <h3>Show Auctions </h3>
             </div>
             <div>
 
@@ -161,11 +167,11 @@ function ManagePage() {
                                         padding: "5px",
                                     }}>
 
-
-                                        <Button value={item.username} label="showUserDetails"
+                                        <Button size="large" color="success" variant="contained" value={item.username}
+                                                label="showUserDetails"
                                                 checked={showUserDetails == item.username}
                                                 onClick={handleUserChanged}
-                                                variant="contained"> {item.username}
+                                        > {item.username}
 
                                         </Button>
 
@@ -174,45 +180,40 @@ function ManagePage() {
 
                                             <div style={{margin: "20px"}}>
                                                 <table>
-                                                    <th style={{padding:"10px"}}>Auctions</th>
-                                                    <th style={{padding:"10px"}}>edit Credit</th>
-                                                    <th style={{padding:"10px"}} >click to Update</th>
-                                                    {errorCode > 0 &&  <th>alert</th>}
+                                                    <th style={{padding: "10px"}}>Auctions</th>
+                                                    <th style={{padding: "10px"}}>edit Credit</th>
+                                                    <th style={{padding: "10px"}}>click to Update</th>
+                                                    {errorCode > 0 && <th>alert</th>}
                                                     <tr>
 
                                                         <td style={{
                                                             color: item.amountOfAuctions == 0 ? "orangered" : "purple",
                                                             fontSize: "25px",
-                                                            padding:"10px"
+                                                            padding: "10px"
 
 
                                                         }}>{item.amountOfAuctions == 0 ? "None" : item.amountOfAuctions}</td>
 
-                                                        <td style={{padding:"10px"}} >
-                                                            <TextField color={"secondary"} size={"small"}
+                                                        <td style={{padding: "10px"}}>
+                                                            <TextField style={{backgroundColor: "lightgreen"}}
+                                                                       color={"secondary"} size={"small"}
                                                                        variant={"filled"}
                                                                        label={"Current Credit " + item.amountOfCredits}
                                                                        type={"number"} value={creditToEdit}
-                                                                       onChange={event => setCreditToEdit(event.target.value)}
-                                                            />
-
-                                                        </td >
-
-                                                        <td style={{ padding:"10px"}}>
-                                                            <Button color={"secondary"} size={"large"}
+                                                                       onChange={event => setCreditToEdit(event.target.value)}/>
+                                                        </td>
+                                                        <td style={{padding: "10px"}}>
+                                                            <Button color={"secondary"} size="large" color="success"
                                                                     disabled={creditToEdit == ""}
                                                                     onClick={() => updateCredit(item.token)}
                                                                     variant="contained">Edit</Button>
                                                         </td>
                                                         {
                                                             errorCode > 0 &&
-                                                            <td style={{ padding:"10px"}}>
-                                                            <ErrorMessage  message={errorCode}  lineBreak={true} />
+                                                            <td style={{padding: "10px"}}>
+                                                                <ErrorMessage message={errorCode} lineBreak={true}/>
                                                             </td>
-
                                                         }
-
-
                                                     </tr>
                                                 </table>
                                             </div>
@@ -232,28 +233,24 @@ function ManagePage() {
                     justifyContent: "center",
                     alignItems: "center",
                     marginTop: "50px",
-                    backgroundColor:"floralwhite"
-                }}
-
-                >
-
+                    backgroundColor: "floralwhite"
+                }}>
                     <FormControl fullWidth>
-                        <InputLabel style={{color:"purple",fontStyle:"italic",fontSize:"30px"}}>Products</InputLabel>
+                        <InputLabel
+                            style={{color: "purple", fontStyle: "italic", fontSize: "30px"}}>Products</InputLabel>
                         <Select
 
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                              value={productId}
+                            value={productId}
                             label="Products"
                             color={"secondary"}
                             variant={"filled"}
-                             onChange={handleProductChanged}
-                        >
+                            onChange={handleProductChanged}>
                             {
                                 auction.map((item) => {
                                     return (
                                         <Link to={`/product/${item.id}`}>
-                                         {/*   <Button  variant="contained"> {item.productName}</Button>*/}
                                             <MenuItem value={item.id}>{item.productName}</MenuItem>
                                         </Link>
 
@@ -261,18 +258,14 @@ function ManagePage() {
                                     )
                                 })
                             }
-
                         </Select>
                     </FormControl>
-
                 </div>
 
             }
-
-
+               </div> :<h2>You Are Not Allowed  To This Page</h2>}
         </div>
-    )
-        ;
+    );
 }
 
 export default ManagePage;

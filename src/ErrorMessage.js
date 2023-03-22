@@ -4,7 +4,6 @@ import {useState} from "react";
 function ErrorMessage(props) {
     let message = props.message;
     let isClickable=props.isClickable;
-    const [open, setOpen] = useState(true);
     switch (message) {
         case 1000:
             message = "Username is required!";
@@ -31,22 +30,13 @@ function ErrorMessage(props) {
             {
                 props.lineBreak ?
                     <div>
-                        <Collapse in={!isClickable}>
-                            <Alert severity="error"
-                                   action={
-                                       <IconButton variant="contained" aria-label="close" color="inherit" size="small"
-                                                   onClick={() => {
-                                                       isClickable = !isClickable;
-                                                   }}>
-                                       </IconButton>}>
+                            <Alert severity="error"  variant="outlined"
+                                   >
                                 {message}
                             </Alert>
-                        </Collapse>
-                    </div>
-                    :
+                </div>  :
                     <span>
-                        {message}
-                        <Alert severity="error">
+                        <Alert  variant="outlined" severity="error">
                             {message}
                             </Alert>
                     </span>

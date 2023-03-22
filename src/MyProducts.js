@@ -1,23 +1,18 @@
 import Cookies from "js-cookie";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import RenderProduct from "./RenderProduct";
 import MenuPage from "./DefaultPage";
+import {Button} from "@mui/material";
 
 
 function MyProducts(){
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [auctionForUser, setAuctionForUser] = useState([]);
-    const [credits, setCredits] = useState("");
 
 
-    const links=[
-        {to:"dashboard", text:"Home"},
-        {to:"ManagePage", text:"Manage"},
-        {to:"MySuggestions", text:"MY-SUGGESTIONS"},
-    ]
     useEffect(()=>{
         const token = Cookies.get("token");
         if (token == undefined) {
@@ -29,14 +24,7 @@ function MyProducts(){
         }
     },[])
 
-    useEffect(() => {
-        axios.get("http://localhost:8080/get-credits-for-user?username=" + username)
-            .then(response => {
-                if (response.data.success) {
-                    setCredits(response.data.credits)
-                }
-            })
-    })
+
 
     useEffect(() => {
         axios.get("http://localhost:8080/get-all-auction-for-user?username=" + username)
@@ -63,14 +51,13 @@ function MyProducts(){
 
 
     return (
-        <div>
+        <div className={"background"}>
             <div>
-                <h3>My Credits: {credits}$ </h3>
+                <MenuPage me={"MyProducts"} username = {username}/>
 
             </div>
-            <MenuPage me={"MyProducts"}/>
             {auctionForUser.length>0?
-           <div>
+           <div  style={{alignItems: "center", justifyContent: "center", display: "flex"} }>
                {
 
                 <table className={"statistics"}>
@@ -84,7 +71,7 @@ function MyProducts(){
                            auctionForUser.map((auction) => {
                                return(
                                    <div>
-                                       <RenderProduct product={auction} closeAuction={closeAuction} />
+                                        <RenderProduct product={auction} closeAuction={closeAuction} />
                                    </div>
                                )
                            })

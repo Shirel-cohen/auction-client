@@ -2,7 +2,7 @@ import Cookies from "js-cookie";
 import {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
-import {Button} from "@mui/material";
+import {Alert, Button} from "@mui/material";
 import {TextField} from "@mui/material";
 import MenuPage from "./DefaultPage";
 
@@ -19,7 +19,6 @@ function DashboardPage(props) {
     const [describeProduct, setDescribe] = useState("")
     const [urlImage, setUrlImage] = useState("")
     const [minimalPrice, setMinimalPrice] = useState("")
-    const [credits, setCredits] = useState("");
     const [myOffers,setMyOffers] = useState([]);
     const navigate = useNavigate();
     const filter = openAuctions;
@@ -36,16 +35,6 @@ function DashboardPage(props) {
                 setUsername(res.data.username);
             });
         }
-        const sse = new EventSource("http://localhost:8080/sse-handler?token=" + token)
-        sse.onmessage = (message) => {
-            console.log(message.data)
-            const data = message.data;
-            if (data === "NEW_OFFER") {
-                alert("Someone added a new offer to your product!");
-            } else if (data === "CLOSE_AUCTION") {
-                alert("An Auction that you have an offer in is closed!");
-            }
-        }
     }, []);
 
     useEffect(() => {
@@ -57,14 +46,6 @@ function DashboardPage(props) {
             })
     })
 
-    useEffect(() => {
-        axios.get("http://localhost:8080/get-credits-for-user?username=" + username)
-            .then(response => {
-                if (response.data.success) {
-                    setCredits(response.data.credits)
-                }
-            })
-    })
 
     const getNumberOfMyOffersOnProduct = (productName) => {
         axios.get("http://localhost:8080/get-my-offers-on-product?username=" +username +"&productName="+ productName )
@@ -101,19 +82,19 @@ function DashboardPage(props) {
             <table>
                 <th>
                     <td>
-                        <TextField type={"text"} value={productName} label="Product name"
+                        <TextField  style={{backgroundColor:"lightgreen"}} type={"text"} value={productName} label="Product name"
                                    onChange={(e) => setProductName(e.target.value)} variant="outlined"/>
                     </td>
                     <td>
-                        <TextField type={"text"} value={describeProduct} label="describe product"
+                        <TextField style={{backgroundColor:"lightgreen"}} type={"text"} value={describeProduct} label="describe product"
                                    onChange={(e) => setDescribe(e.target.value)} variant="outlined"/>
                     </td>
                     <td>
-                        <TextField type={"url"} value={urlImage} label="URL image"
+                        <TextField  style={{backgroundColor:"lightgreen"}} type={"url"} value={urlImage} label="URL image"
                                    onChange={(e) => setUrlImage(e.target.value)} variant="outlined"/>
                     </td>
                     <td>
-                        <TextField type={"number"} value={minimalPrice} label="minimal price"
+                        <TextField style={{backgroundColor:"lightgreen"}}  type={"number"} value={minimalPrice} label="minimal price"
                                    onChange={(e => setMinimalPrice(e.target.value))} variant="outlined"/>
 
                     </td>
@@ -148,47 +129,44 @@ function DashboardPage(props) {
 
 
     return (
-        <div>
-            <MenuPage me={"dashboard"}/>
-            <div>
-                <h3>My Credits : {credits}$</h3>
-            </div>
-            <div style={{alignItems: "center", justifyContent: "center", display: "flex"}}>
-                <h3 style={{marginRight: "5px", fontStyle: "italic"}}>Hello <span
-                    style={{color: "blueviolet"}}>{username}</span></h3>
-                {/*<button style={{padding: "10px", color: "#000"}} onClick={logout}> Logout</button>*/}
+        <div className={"background"} >
+
+            <div style={{ justifyContent: "center", display: "flex"}}>
+                <MenuPage me={"dashboard"} username = {username}/>
+                <h2 style={{marginInlineEnd:"20px", fontStyle: "italic",color: "lightgreen"}}>Hello <span
+                    style={{fontStyle: "oblique",color: "lightgreen"}}>{username}</span></h2>
 
             </div>
 
 
+
             <div>
-                <div style={{alignItems: "center", justifyContent: "center", display: "flex", marginTop: "70px"}}>
+                <div style={{ fontSize:"20px",alignItems: "center", justifyContent: "center", display: "flex", marginTop: "40px"}}>
                     <input type={"radio"} value={"update"} name={"option"} checked={option == "update"}
-                           onChange={event => setOption(event.target.value)}/> Product upload
-
-                    <input type={"radio"} value={"showTenders"} name={"option"} checked={option == "showTenders"}
-                           onChange={event => setOption(event.target.value)}/> Presentation of Auctions
+                          onChange={event => setOption(event.target.value)}/> <h3> Product upload </h3>
+                <input type={"radio"} value={"showTenders"} name={"option"} checked={option == "showTenders"}
+                           onChange={event => setOption(event.target.value)}/> <h3>Presentation of Auctions</h3>
 
                 </div>
-                <br/> <br/> <br/>
+                <br/> <br/>
 
                 {
                     option == "update" &&
                     <div style={{alignItems: "center", justifyContent: "center", display: "flex"}}>
                         {updateProduct()}
-                        <Button variant="contained" color="success" onClick={uploadProduct}
-                                disabled={isAllowToSubmit()}>Upload</Button>
+                        <Button size="large" variant="contained" color="success" onClick={uploadProduct}
+                                disabled={isAllowToSubmit()}><h3>Upload</h3></Button>
                     </div>
                 }
 
                 {
                     option == "showTenders" &&
 
-
-                    <div style={{justifyContent: "center", marginLeft: "650px"}}>
-                        <TextField type={"text"} onKeyUp={filterTable} id="myInput" label="Filter Table"
-                                   variant="outlined"/>
-                        <br/><br/>
+                    <div>
+                        <TextField   style={{backgroundColor:"lightgreen",  marginLeft:"700px",
+                            marginBottom:"20px"}}type={"text"} onKeyUp={filterTable} id="myInput" label="Filter Table By Name"
+                                  color="success"  variant="outlined"/>
+                        <br/>
 
                         {openAuctions.length > 0?
                         <table className={"auctionTable"} id={"myTable"}>
@@ -222,7 +200,11 @@ function DashboardPage(props) {
 
                                 })
                             }
-                        </table> : <h1> There Are No Open Auctions </h1> }
+                        </table> :
+                            <Alert  variant="outlined" severity="error">
+                                <h1 style={{marginLeft:"600px"}}> There Are No Open Auctions </h1>
+                            </Alert>
+                            }
 
                     </div>
                 }

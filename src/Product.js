@@ -3,21 +3,15 @@ import Cookies from "js-cookie";
 import {Button, TextField} from "@mui/material";
 import axios from "axios";
 import {useState,useEffect} from "react";
-function Product (props){
-    const navigate = useNavigate();
+import MenuPage from "./DefaultPage";
+function Product (){
 
-
-
-    const logout = () => {
-        Cookies.remove("token");
-        navigate("../login");
-    }
     const{id} = useParams();
     const[product, setProduct] = useState({});
     const[username, setUsername] = useState("");
     const[myOffers, setMyOffers]= useState([]);
     const[currentOffer, setCurrentOffer] = useState("");
-    const[credits, setCredits] = useState("");
+    const navigate = useNavigate();
 
 
 
@@ -33,14 +27,7 @@ function Product (props){
         }
     },[])
 
-    useEffect(() => {
-        axios.get("http://localhost:8080/get-credits-for-user?username=" + username)
-            .then(response => {
-                if (response.data.success) {
-                    setCredits(response.data.credits)
-                }
-            })
-    })
+
 
     useEffect(() => {
         axios.get("http://localhost:8080/get-product-by-id?id=" + id)
@@ -88,13 +75,12 @@ function Product (props){
     }
 
     return (
-        <div style={{marginLeft: "70px"}}>
+        <div style={{marginLeft: "70px"}} className={"background"}>
 
             <div>
-                <h3>My Credits: {credits}$</h3>
+                <MenuPage me={""} username = {username}/>
             </div>
 
-            <Button variant="contained" onClick={logout}> Logout</Button>
             <div></div>
             <table className={"statistics"}>
                 <th className={"statistics"}>Product Name</th>
@@ -132,9 +118,9 @@ function Product (props){
             <img src={product.image} width={"400px"} height={"400px"} />
             {
                 product.open?             <div>
-                    <TextField variant={"filled"} label={"Offer"} type={"number"} value={currentOffer}
+                    <TextField style={{backgroundColor:"lightgreen"}}  variant={"filled"} label={"Offer"} type={"number"} value={currentOffer}
                                onChange={(e) => setCurrentOffer(e.target.value)}/>
-                    <Button variant="contained" onClick={sendOffer} disabled={currentOffer.length==0}>Place Offer</Button>
+                    <Button size="large" color="success" variant="contained" onClick={sendOffer} disabled={currentOffer.length==0}>Place Offer</Button>
                 </div> : "Auction is Closed!"
             }
         </div>

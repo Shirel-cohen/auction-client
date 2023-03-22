@@ -4,14 +4,16 @@ import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {useEffect, useState} from "react";
 import MenuPage from "./DefaultPage";
+import {Alert} from "@mui/material";
+import {toast, ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import {Button, Zoom} from "@mui/material";
 
 function MySuggestions (){
     const navigate = useNavigate();
     const[offersForUser, setOffersForUser] = useState([]);
    // const[auctions, setAuctions] = useState([]);
     const[username, setUsername] = useState("");
-    const[credits, setCredits] = useState("");
-
 
     useEffect(()=>{
         const token = Cookies.get("token");
@@ -33,23 +35,19 @@ function MySuggestions (){
             })
     })
 
-    useEffect(() => {
-        axios.get("http://localhost:8080/get-credits-for-user?username=" + username)
-            .then(response => {
-                if (response.data.success) {
-                    setCredits(response.data.credits)
-                }
-            })
-    })
+
+    //     const notify = () => {
+    //     toast.success("hello",{ className : "toast-su", position: toast.POSITION.TOP_CENTER,theme: "colored"});
+    // }
 
     return (
-        <div>
+        <div className={"background"}>
             <div>
-                <h3>My Credits : {credits}$</h3>
+                <MenuPage me={"MySuggestions"} username = {username}/>
+                {/*<Button  onClick={notify}>App</Button>*/}
+                {/*<ToastContainer/>*/}
             </div>
-            <MenuPage me={"MySuggestions"}/>
             {offersForUser.length>0?
-
             <div>
                 {
                     <table className={"statistics"}>
@@ -77,7 +75,10 @@ function MySuggestions (){
 
                     </table>
                 }
-            </div>  : <h1>You Didn't Place Any Offers Yet</h1>
+            </div>  :
+                <Alert  variant="outlined" severity="error">
+                    <h1 style={{marginLeft:"600px"}}> You Didn't Place Any Offers Yet </h1>
+                </Alert>
 
             }
         </div>

@@ -6,6 +6,8 @@ import ManagePage from "./ManagePage";
 import Product from "./Product";
 import MySuggestions from "./MySuggestions";
 import MyProducts from "./MyProducts";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
