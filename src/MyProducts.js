@@ -60,23 +60,28 @@ function MyProducts(){
            <div  style={{alignItems: "center", justifyContent: "center", display: "flex"} }>
                {
 
-                <table className={"statistics"}>
-                       <tr className={"statistics"}>
-                           <th className={"statistics"}>product name</th>
-                           <th className={"statistics"}>max offer</th>
-                           <th className={"statistics"}>auction is open?</th>
-                           <th className={"statistics"}></th>
-                       </tr>
-                       {
-                           auctionForUser.map((auction) => {
-                               return(
-                                   <div>
-                                        <RenderProduct product={auction} closeAuction={closeAuction} />
-                                   </div>
-                               )
-                           })
-                       }
-                   </table>
+                // <table style={{backgroundColor:"whitesmoke"}}>
+                //        <tr >
+                //            <th >product name</th>
+                //            <th>max offer</th>
+                //            <th>auction is open?</th>
+                //            <th></th>
+                //        </tr>
+                //        {
+                //            auctionForUser.map((auction) => {
+                //                return(
+                //                    <div>
+                //                         <RenderProduct product={auction} closeAuction={closeAuction} />
+                //                    </div>
+                //                )
+                //            })
+                //        }
+                //    </table>
+
+
+                                      <div>
+                                           <RenderProduct product={auctionForUser} closeAuction={closeAuction} />
+                                      </div>
 
             }  </div> : <h1>You Have No Products Yet</h1> }
         </div>

@@ -75,27 +75,28 @@ function Product (){
     }
 
     return (
-        <div style={{marginLeft: "70px"}} className={"background"}>
+        <div className={"background"}>
 
             <div>
                 <MenuPage me={""} username = {username}/>
             </div>
 
-            <div></div>
-            <table className={"statistics"}>
-                <th className={"statistics"}>Product Name</th>
-                <th className={"statistics"}>Product Description</th>
-                <th className={"statistics"}>Date Of Auction Opening</th>
-                <th className={"statistics"}>Owner Of The Product</th>
-                <th className={"statistics"}>Amount Of Offerings</th>
-                <th className={"statistics"}>Minimal Cost</th>
-                <tr className={"statistics"}>
-                    <td className={"statistics"} >{product.productName}</td>
-                    <td className={"statistics"}>{product.productDescription}</td>
-                    <td className={"statistics"}>{product.auctionOpeningDate}</td>
-                    <td className={"statistics"} >{product.ownerOfProduct}</td>
-                    <td className={"statistics"}>{product.amountOfOfferingOnProduct}</td>
-                    <td className={"statistics"}>{product.minimalCost}</td>
+            <table className={"rwd-table"}style={{width:"850px"}}>
+                <tr  style={{height:"30px", background:"floralwhite"}}>
+                    <th>Product Name</th>
+                    <th>Product Description</th>
+                    <th>Date Of Auction Opening</th>
+                    <th>Owner Of The Product</th>
+                    <th>Amount Of Offerings</th>
+                    <th>Minimal Cost</th>
+                </tr>
+                <tr>
+                    <td >{product.productName}</td>
+                    <td>{product.productDescription}</td>
+                    <td>{product.auctionOpeningDate}</td>
+                    <td >{product.ownerOfProduct}</td>
+                    <td>{product.amountOfOfferingOnProduct}</td>
+                    <td >{product.minimalCost}</td>
                 </tr>
             </table>
             <div>
@@ -109,8 +110,7 @@ function Product (){
                         }
                     </ul>
                 </div>
-                <ul className={"statistics"}>
-                </ul>
+
             </div>
             <div>
                 picture:

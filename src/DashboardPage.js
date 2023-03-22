@@ -35,7 +35,17 @@ function DashboardPage(props) {
                 setUsername(res.data.username);
             });
         }
-    }, []);
+             const sse = new EventSource("http://localhost:8080/sse-handler?token=" + token)
+    sse.onmessage = (message) => {
+        console.log(message.data)
+        const data = message.data;
+        if (data === "NEW_OFFER") {
+            alert("Someone added a new offer to your product!");
+        } else if (data === "CLOSE_AUCTION") {
+            alert("An Auction that you have an offer in is closed!");
+        }
+    }
+}, []);
 
     useEffect(() => {
         axios.get("http://localhost:8080/get-all-open-auctions")
@@ -163,15 +173,14 @@ function DashboardPage(props) {
                     option == "showTenders" &&
 
                     <div>
-                        <TextField   style={{backgroundColor:"lightgreen",  marginLeft:"700px",
+                        <TextField   style={{backgroundColor:"papayawhip",  marginLeft:"700px",
                             marginBottom:"20px"}}type={"text"} onKeyUp={filterTable} id="myInput" label="Filter Table By Name"
-                                  color="success"  variant="outlined"/>
+                                  color="success"  variant="outlined"   />
                         <br/>
 
                         {openAuctions.length > 0?
-                        <table className={"auctionTable"} id={"myTable"}>
-                            <tr>
-
+                        <table className={"rwd-table"}>
+                            <tr style={{height:"30px", background:"floralwhite"}}>
                                 <th>productName</th>
                                 <th>Image</th>
                                 <th>Description</th>
@@ -184,7 +193,7 @@ function DashboardPage(props) {
 
                                 openAuctions.map((auction, i) => {
                                     return (
-                                        <tr className={"wpos"}>
+                                        <tr>
                                             <Link to={`/product/${auction.id}`}>
                                                 <td>{auction.productName}</td>
                                             </Link>

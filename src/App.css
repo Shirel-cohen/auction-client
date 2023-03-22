@@ -1,15 +1,84 @@
 
-.App {
+
+.rwd-table {
+margin: 1em 0;
+min-width: 300px;
   text-align: center;
 }
-.background{
 
-  background-image: url("https://economictimes.indiatimes.com/thumb/msid-82060285,width-1200,height-900,resizemode-4,imgsize-305894/art-auction_istock.jpg?from=mdr");
-position: relative;
-height: 720px;
+rwd-table.tr {
+/*border-top: 1px solid #ddd;*/
+/*border-bottom: 1px solid #ddd;*/
+  text-align: center;}
+
+rwd-table.th {
+  display: none;
+  text-align: center;}
+
+rwd-table.td {
+  display: block;}
+rwd-table.td:first-child {
+   padding-top: .5em;
+  text-align: center;
+ }
+rwd-table.td:last-child {
+   padding-bottom: .5em;
+  text-align: center;
+ }
+
+rwd-table.td:before {
+  content: attr(data-th);
+  font-weight: bold;
+  /*width: 6.5em;*/
+  display: inline-block;
+  text-align: center;
+
 }
 
-.toast-su {
+
+
+body {
+  padding: 0 2em;
+  font-family: Montserrat, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  color: #444;
+  background: #eee;
+  text-align: center;
+}
+
+h1 {
+  font-weight: normal;
+  letter-spacing: -1px;
+  color: #34495E;
+}
+
+.rwd-table {
+  background: rgba(255, 255, 255, 0.72);
+  color: #fff;
+  border-radius: .4em;
+  overflow: hidden;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  width:650px;
+  height: 100px;
+  text-align: center;
+
+
+}
+.App {
+  background-color: #cccccc;
+
+
+}
+.background{
+  background-image: url("https://economictimes.indiatimes.com/thumb/msid-82060285,width-1200,height-900,resizemode-4,imgsize-305894/art-auction_istock.jpg?from=mdr");
+  background-size: cover;
+  height: 720px;
+
+
+
 }
 
 
@@ -159,3 +228,8 @@ background-color:lightgreen;
           3px 3px #525073;
 
 }
+
+
+
+
+

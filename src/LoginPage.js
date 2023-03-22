@@ -121,7 +121,7 @@ function LoginPage () {
                  </span >
                 <input style={{ paddingLeft:"40px"}} type={"radio"} name={"type"} value={"signUp"}
                        checked={type == "signUp"} onChange={typeChanged}/>Sign Up
-            </div>
+            </div> <br/>
             <div style={{ justifyContent: "center", display: "flex"}}>
                 <table >
                     <tr>
@@ -130,7 +130,7 @@ function LoginPage () {
                         </td>
                         <td >
                             <TextField style={{backgroundColor:"lightgreen"}}  type={"text"} value={username}
-                            onChange={usernameChanged}  label="user name" variant="outlined" />
+                            onChange={usernameChanged}  label="user name" variant="outlined"  />
 
                         </td>
                     </tr>
@@ -139,7 +139,7 @@ function LoginPage () {
                             Password:
                         </td>
                         <td>
-                            <TextField style={{backgroundColor:"lightgreen"}}  type={"password"} value={password} onChange={passwordChanged}  label="password" variant="outlined" />
+                            <TextField style={{backgroundColor:"lightgreen"}}  type={"password"} value={password} onChange={passwordChanged}  label="password"  variant="outlined" />
                         </td>
                     </tr>
                     {
@@ -177,17 +177,19 @@ function LoginPage () {
 
             <div  style={{alignItems: "center", justifyContent: "center", display: "flex"} }>
 
-                <table   style={{ backgroundColor:"lightsalmon"}} className={"statistics"}>
-                    <tr className={"statistics"}>
-                        <th className={"statistics"}>users</th>
-                        <th className={"statistics"}>auctions</th>
-                        <th className={"statistics"}>Offers made</th>
+                <table className={"rwd-table"} >
+                    <tr>
+                        <th colSpan="3" style={{height:"40px", fontSize:"20px", background:"papayawhip"}}>Statistics</th>
                     </tr>
-                    <tr style={{
-                    fontSize:"20px"}} className={"statistics"}>
-                        <td className={"statistics"}>{amountOfUsers}</td>
-                        <td className={"statistics"}>{amountOfAuctions}</td>
-                        <td className={"statistics"}>{amountOfOffers}</td>
+                    <tr  style={{height:"30px", background:"floralwhite"}}>
+                        <th>users</th>
+                        <th>auctions</th>
+                        <th>Offers made</th>
+                    </tr>
+                    <tr style={{height:"25px"}}>
+                        <td>{amountOfUsers}</td>
+                        <td>{amountOfAuctions}</td>
+                        <td>{amountOfOffers}</td>
                     </tr>
                 </table>
 

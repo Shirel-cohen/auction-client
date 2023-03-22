@@ -50,23 +50,26 @@ function MySuggestions (){
             {offersForUser.length>0?
             <div>
                 {
-                    <table className={"statistics"}>
-                        <tr className={"statistics"}>
-                            <th className={"statistics"}>product name</th>
-                            <th className={"statistics"}>amount of offer</th>
-                            <th className={"statistics"}>auction status</th>
-                            <th className={"statistics"}>offer status</th>
+                    <table className={"rwd-table"}>
+                        <tr>
+                            <th colSpan="4" style={{height:"50px", fontSize:"20px", background:"papayawhip"}}>My Offers</th>
+                        </tr>
+                        <tr style={{height:"30px", background:"floralwhite"}}>
+                            <th >Product Name</th>
+                            <th >Amount Of Offer</th>
+                            <th>Auction Status</th>
+                            <th >Offer Status</th>
                         </tr>
                         {
                             offersForUser.map((offers) => {
                                 return(
-                                    <tr className={"statistics"}>
+                                    <tr >
                                         <Link to={`/product/${offers.auctionId}`}>
-                                            <td className={"statistics"}>{offers.productName}</td>
+                                            <td >{offers.productName}</td>
                                         </Link>
-                                        <td className={"statistics"}>{offers.amountOfOffer}</td>
-                                        <td className={"statistics"}>{offers.auctionStatus? "Open" : "Close" }</td>
-                                        <td className={"statistics"}>{offers.offerStatus?"Won":"Didn't Win"}</td>
+                                        <td >{offers.amountOfOffer}</td>
+                                        <td>{offers.auctionStatus? "Open" : "Close" }</td>
+                                        <td>{offers.offerStatus?"Won":"Didn't Win"}</td>
                                     </tr>
                                 )
                             })
