@@ -263,7 +263,7 @@ function ManagePage() {
                 </div>
 
             }
-               </div> :<h2>You Are Not Allowed  To This Page</h2>}
+               </div> :<h2>You Are Not Allowed In This Page</h2>}
         </div>
     );
 }

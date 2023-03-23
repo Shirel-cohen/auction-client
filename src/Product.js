@@ -100,27 +100,27 @@ function Product (){
                 </tr>
             </table>
             <div>
-                <h4>My Previous Offers Amount</h4>
                 <div>
-                    <ul>
-                        {
-                            myOffers.map(offer =>{
-                                return(<li>{offer}</li>)
-                            })
-                        }
-                    </ul>
+                    <table className={"rwd-table"} style={{width:"300px",position:"absolute", top:"335px",left:"1100px"}} >
+                        <tr style={{height:"30px", background:"floralwhite"}}>
+                            <th> My Previous Offers </th>
+                        </tr>
+                            {
+                                myOffers.map(offer =>{
+                                    return(<tr><td>{offer}</td></tr>)
+                                })
+                            }
+
+                    </table>
                 </div>
 
             </div>
-            <div>
-                picture:
-            </div>
-            <img src={product.image} width={"400px"} height={"400px"} />
+            <img src={product.image} width={"300px"} height={"300px"} style={{position:"absolute",top:"350px",left:"700px"}}/>
             {
                 product.open?             <div>
-                    <TextField style={{backgroundColor:"lightgreen"}}  variant={"filled"} label={"Offer"} type={"number"} value={currentOffer}
+                    <TextField style={{backgroundColor:"papayawhip" ,position:"absolute",top: "350px" , left: "430px"}} color="success" variant={"filled"} label={"Offer"} type={"number"} value={currentOffer}
                                onChange={(e) => setCurrentOffer(e.target.value)}/>
-                    <Button size="large" color="success" variant="contained" onClick={sendOffer} disabled={currentOffer.length==0}>Place Offer</Button>
+                    <Button size="large" color="success" variant="contained" onClick={sendOffer} disabled={currentOffer.length==0} style = {{position: "absolute", top: "430px",left:"430px"}}>Place Offer</Button>
                 </div> : "Auction is Closed!"
             }
         </div>

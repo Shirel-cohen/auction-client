@@ -73,12 +73,12 @@ h1 {
 
 }
 .background{
-  background-image: url("https://economictimes.indiatimes.com/thumb/msid-82060285,width-1200,height-900,resizemode-4,imgsize-305894/art-auction_istock.jpg?from=mdr");
+background-image: url("https://m.economictimes.com/thumb/msid-82060285,width-1200,height-900,resizemode-4,imgsize-305894/art-auction_istock.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   background-size: cover;
-  height: 720px;
-
-
-
+  background-position: center center;
+  height: 800px;
 }
 
 
@@ -214,9 +214,6 @@ background-color:lightgreen;
 
 }
 
-.toast-su {
-}
-
 .Buttons:hover {
   -webkit-transform: scale(0.8);
   -ms-transform: scale(0.8);
@@ -227,6 +224,10 @@ background-color:lightgreen;
           2px 2px #4d4881,
           3px 3px #525073;
 
+}
+
+.Toastify__toast-body > div:last-child {
+  color: white;
 }
 
 
