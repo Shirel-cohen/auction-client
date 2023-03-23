@@ -5,6 +5,7 @@ import axios from "axios";
 import {Alert, Button} from "@mui/material";
 import {TextField} from "@mui/material";
 import MenuPage from "./DefaultPage";
+import {toast, ToastContainer} from "react-toastify";
 
 
 function DashboardPage(props) {
@@ -40,9 +41,9 @@ function DashboardPage(props) {
         console.log(message.data)
         const data = message.data;
         if (data === "NEW_OFFER") {
-            alert("Someone added a new offer to your product!");
+            toast.success("Someone added a new offer to your product!",{ className : "toast-su", position: toast.POSITION.TOP_CENTER,theme: "colored"})
         } else if (data === "CLOSE_AUCTION") {
-            alert("An Auction that you have an offer in is closed!");
+            toast.warning("An Auction that you have an offer in is closed!",{ className : "toast-su", position: toast.POSITION.TOP_CENTER,theme: "colored"})
         }
     }
 }, []);
@@ -78,7 +79,7 @@ function DashboardPage(props) {
             }
         }).then((response) => {
             if (response.data.success) {
-                alert("product uploaded");
+                toast.success("Product Uploaded Successfully",{ className : "toast-su", position: toast.POSITION.TOP_CENTER,theme: "colored"});
             }
         })
         setMinimalPrice("");
@@ -92,19 +93,19 @@ function DashboardPage(props) {
             <table>
                 <th>
                     <td>
-                        <TextField  style={{backgroundColor:"lightgreen"}} type={"text"} value={productName} label="Product name"
+                        <TextField  style={{backgroundColor:"papayawhip"}} color="success" type={"text"} value={productName} label="Product name"
                                    onChange={(e) => setProductName(e.target.value)} variant="outlined"/>
                     </td>
                     <td>
-                        <TextField style={{backgroundColor:"lightgreen"}} type={"text"} value={describeProduct} label="describe product"
+                        <TextField style={{backgroundColor:"papayawhip"}} color="success" type={"text"} value={describeProduct} label="describe product"
                                    onChange={(e) => setDescribe(e.target.value)} variant="outlined"/>
                     </td>
                     <td>
-                        <TextField  style={{backgroundColor:"lightgreen"}} type={"url"} value={urlImage} label="URL image"
+                        <TextField  style={{backgroundColor:"papayawhip"}} color="success" type={"url"} value={urlImage} label="URL image"
                                    onChange={(e) => setUrlImage(e.target.value)} variant="outlined"/>
                     </td>
                     <td>
-                        <TextField style={{backgroundColor:"lightgreen"}}  type={"number"} value={minimalPrice} label="minimal price"
+                        <TextField style={{backgroundColor:"papayawhip"}} color="success" type={"number"} value={minimalPrice} label="minimal price"
                                    onChange={(e => setMinimalPrice(e.target.value))} variant="outlined"/>
 
                     </td>
@@ -166,6 +167,7 @@ function DashboardPage(props) {
                         {updateProduct()}
                         <Button size="large" variant="contained" color="success" onClick={uploadProduct}
                                 disabled={isAllowToSubmit()}><h3>Upload</h3></Button>
+                    <ToastContainer/>
                     </div>
                 }
 

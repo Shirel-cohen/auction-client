@@ -4,6 +4,7 @@ import {Button, TextField} from "@mui/material";
 import axios from "axios";
 import {useState,useEffect} from "react";
 import MenuPage from "./DefaultPage";
+import {toast, ToastContainer} from "react-toastify";
 function Product (){
 
     const{id} = useParams();
@@ -60,16 +61,16 @@ function Product (){
             if(res.data.errorCode==null){
                 alert("Offer Uploaded")
             }else if(res.data.errorCode== 1010){
-                alert("Not Enough Credits In Your Account!")
+                toast.error("Not Enough Credits In Your Account!",{ className : "toast-su", position: toast.POSITION.TOP_CENTER,theme: "colored"});
             }
             else if(res.data.errorCode== 1011) {
-                alert("You Already Submitted An Higher Offer!")
+                toast.error("You Already Submitted An Higher Offer!",{ className : "toast-su", position: toast.POSITION.TOP_CENTER,theme: "colored"});
             }
             else if(res.data.errorCode== 1012) {
-                alert("Your Offer Is Lower Than The Minimal Cost!")
+                toast.error("Your Offer Is Lower Than The Minimal Cost!",{ className : "toast-su", position: toast.POSITION.TOP_CENTER,theme: "colored"});
             }
             else if(res.data.errorCode==1013){
-                alert("You are the owner of the product, you can't make an offer")
+                toast.warning("You are the owner of the product, you can't make an offer",{ className : "toast-su", position: toast.POSITION.TOP_CENTER,theme: "colored"});
             }
         }));
     }
@@ -121,6 +122,7 @@ function Product (){
                     <TextField style={{backgroundColor:"papayawhip" ,position:"absolute",top: "350px" , left: "430px"}} color="success" variant={"filled"} label={"Offer"} type={"number"} value={currentOffer}
                                onChange={(e) => setCurrentOffer(e.target.value)}/>
                     <Button size="large" color="success" variant="contained" onClick={sendOffer} disabled={currentOffer.length==0} style = {{position: "absolute", top: "430px",left:"430px"}}>Place Offer</Button>
+                    <ToastContainer/>
                 </div> : "Auction is Closed!"
             }
         </div>

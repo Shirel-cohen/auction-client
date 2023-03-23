@@ -4,7 +4,8 @@ import ErrorMessage from "./ErrorMessage";
 import Cookies from "js-cookie";
 import {useNavigate} from "react-router-dom";
 import {Button, TextField} from "@mui/material";
-import image from "./image/background.jpg";
+import {toast, ToastContainer} from "react-toastify";
+
 
 
 function LoginPage () {
@@ -91,8 +92,7 @@ function LoginPage () {
             }).then((response) => {
                 if (response.data.success) {
                     setErrorCode(0)
-
-                    alert ("OK")
+                    toast.success("You Have Signed Up Successfully",{ className : "toast-su", position: toast.POSITION.TOP_CENTER,theme: "colored"});
                 } else {
                     setErrorCode(response.data.errorCode);
                 }
@@ -129,7 +129,7 @@ function LoginPage () {
                             Username:
                         </td>
                         <td >
-                            <TextField style={{backgroundColor:"lightgreen"}}  type={"text"} value={username}
+                            <TextField style={{backgroundColor:"papayawhip"}} color="success" type={"text"} value={username}
                             onChange={usernameChanged}  label="user name" variant="outlined"  />
 
                         </td>
@@ -139,7 +139,7 @@ function LoginPage () {
                             Password:
                         </td>
                         <td>
-                            <TextField style={{backgroundColor:"lightgreen"}}  type={"password"} value={password} onChange={passwordChanged}  label="password"  variant="outlined" />
+                            <TextField style={{backgroundColor:"papayawhip"}} color="success" type={"password"} value={password} onChange={passwordChanged}  label="password"  variant="outlined" />
                         </td>
                     </tr>
                     {
@@ -147,7 +147,7 @@ function LoginPage () {
                         <tr>
                             <td style={{color:"lightgreen"}}>Repeat Password:</td>
                             <td>
-                                <TextField style={{backgroundColor:"lightgreen"}}  type={"password"} value={password2} onChange={password2Changed}  id="myInput" label="Repeat password" variant="outlined" />
+                                <TextField style={{backgroundColor:"papayawhip"}} color="success" type={"password"} value={password2} onChange={password2Changed}  id="myInput" label="Repeat password" variant="outlined" />
 
                             </td>
                             <td>
@@ -172,6 +172,7 @@ function LoginPage () {
                     (password !== password2 && type === "signUp") ||
                     username.length == 0
                 }>{type === "signUp" ? "Sign Up" : "Login"} </Button>
+                <ToastContainer/>
 
             </div>
 

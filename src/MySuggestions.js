@@ -36,16 +36,10 @@ function MySuggestions (){
     })
 
 
-    //     const notify = () => {
-    //     toast.success("hello",{ className : "toast-su", position: toast.POSITION.TOP_CENTER,theme: "colored"});
-    // }
-
     return (
         <div className={"background"}>
             <div>
                 <MenuPage me={"MySuggestions"} username = {username}/>
-                {/*<Button  onClick={notify}>App</Button>*/}
-                {/*<ToastContainer/>*/}
             </div>
             {offersForUser.length>0?
             <div>

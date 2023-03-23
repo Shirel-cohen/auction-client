@@ -59,26 +59,6 @@ function MyProducts(){
             {auctionForUser.length>0?
            <div  style={{alignItems: "center", justifyContent: "center", display: "flex"} }>
                {
-
-                // <table style={{backgroundColor:"whitesmoke"}}>
-                //        <tr >
-                //            <th >product name</th>
-                //            <th>max offer</th>
-                //            <th>auction is open?</th>
-                //            <th></th>
-                //        </tr>
-                //        {
-                //            auctionForUser.map((auction) => {
-                //                return(
-                //                    <div>
-                //                         <RenderProduct product={auction} closeAuction={closeAuction} />
-                //                    </div>
-                //                )
-                //            })
-                //        }
-                //    </table>
-
-
                                       <div>
                                            <RenderProduct product={auctionForUser} closeAuction={closeAuction} />
                                       </div>
