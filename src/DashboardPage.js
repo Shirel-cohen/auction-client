@@ -178,6 +178,7 @@ function DashboardPage(props) {
                         <TextField   style={{backgroundColor:"papayawhip",  marginLeft:"700px",
                             marginBottom:"20px"}}type={"text"} onKeyUp={filterTable} id="myInput" label="Filter Table By Name"
                                   color="success"  variant="outlined"   />
+                        <ToastContainer/>
                         <br/>
 
                         {openAuctions.length > 0?
