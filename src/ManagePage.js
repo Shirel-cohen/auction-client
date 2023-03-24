@@ -3,7 +3,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import {Link, NavLink, useNavigate} from "react-router-dom";
 import MenuPage from "./DefaultPage";
-import {Button, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
+import {Alert, Button, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
 import ErrorMessage from "./ErrorMessage";
 
 function ManagePage() {
@@ -139,16 +139,16 @@ function ManagePage() {
                 <span style={{marginLeft: "20px"}}>
                          Auctions: {auction.length}
                 </span>
-                <span><h3>Money Earned : {systemMoney}$</h3>
+                <span><h3>System Money Earned : {systemMoney}$</h3>
                     </span>
             </div>
 
-            <div style={{alignItems: "center", justifyContent: "center", display: "flex", marginTop: "70px "}}>
+            <div style={{alignItems: "center", justifyContent: "center", display: "flex"}}>
                 <input size={"50px"} type={"radio"} name={"option"} value={"users"} checked={option == "users"}
                        onChange={event => setOption(event.target.value)}/>  <h3>Show Users </h3>
 
                 <input type={"radio"} name={"option"} value={"auction"} checked={option == "auction"}
-                       onChange={optionChangedToTenders}/>  <h3>Show Auctions </h3>
+                       onChange={optionChangedToTenders}/>  <h3>Show Open Auctions </h3>
             </div>
             <div>
 
@@ -187,7 +187,7 @@ function ManagePage() {
                                                     <tr>
 
                                                         <td style={{
-                                                            color: item.amountOfAuctions == 0 ? "orangered" : "purple",
+                                                            color:"#07053",
                                                             fontSize: "25px",
                                                             padding: "10px"
 
@@ -195,7 +195,7 @@ function ManagePage() {
                                                         }}>{item.amountOfAuctions == 0 ? "None" : item.amountOfAuctions}</td>
 
                                                         <td style={{padding: "10px"}}>
-                                                            <TextField style={{backgroundColor: "lightgreen"}}
+                                                            <TextField style={{backgroundColor: "papayawhip"}}
                                                                        color={"secondary"} size={"small"}
                                                                        variant={"filled"}
                                                                        label={"Current Credit " + item.amountOfCredits}
@@ -237,7 +237,7 @@ function ManagePage() {
                 }}>
                     <FormControl fullWidth>
                         <InputLabel
-                            style={{color: "purple", fontStyle: "italic", fontSize: "30px"}}>Products</InputLabel>
+                            style={{color: "midnightblue", fontStyle: "italic", fontSize: "32px",marginTop:"18px"}}>List Of Auctions...</InputLabel>
                         <Select
 
                             labelId="demo-simple-select-label"
@@ -263,7 +263,9 @@ function ManagePage() {
                 </div>
 
             }
-               </div> :<h2>You Are Not Allowed In This Page</h2>}
+               </div> : <Alert  variant="filled" severity="error"  style = {{backgroundColor: "papayawhip", marginTop:"50px", scale: "80%"}}>
+                    <h1 style={{marginLeft:"600px"}}> Sorry, This Page Is Not Available For You! </h1>
+                </Alert>}
         </div>
     );
 }

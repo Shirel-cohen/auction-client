@@ -144,8 +144,8 @@ function DashboardPage(props) {
 
             <div style={{ justifyContent: "center", display: "flex"}}>
                 <MenuPage me={"dashboard"} username = {username}/>
-                <h2 style={{marginInlineEnd:"20px", fontStyle: "italic",color: "lightgreen"}}>Hello <span
-                    style={{fontStyle: "oblique",color: "lightgreen"}}>{username}</span></h2>
+                <h2 style={{ fontStyle: "italic",position:"absolute",marginRight :"1000px",marginTop:"45px"}}>Hello <span
+                    style={{fontStyle: "oblique"}}>{username}</span></h2>
 
             </div>
 
@@ -175,13 +175,14 @@ function DashboardPage(props) {
                     option == "showTenders" &&
 
                     <div>
+                        {openAuctions.length > 0?
+                            <div>
                         <TextField   style={{backgroundColor:"papayawhip",  marginLeft:"700px",
                             marginBottom:"20px"}}type={"text"} onKeyUp={filterTable} id="myInput" label="Filter Table By Name"
                                   color="success"  variant="outlined"   />
                         <ToastContainer/>
                         <br/>
 
-                        {openAuctions.length > 0?
                         <table className={"rwd-table"}>
                             <tr style={{height:"30px", background:"floralwhite"}}>
                                 <th>productName</th>
@@ -212,8 +213,9 @@ function DashboardPage(props) {
 
                                 })
                             }
-                        </table> :
-                            <Alert  variant="outlined" severity="error">
+                        </table>
+                            </div>:
+                            <Alert  variant="filled" severity="error"  style = {{backgroundColor: "papayawhip", marginTop:"20px", scale: "80%"}}>
                                 <h1 style={{marginLeft:"600px"}}> There Are No Open Auctions </h1>
                             </Alert>
                             }

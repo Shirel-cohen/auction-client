@@ -10,7 +10,7 @@ function MenuPage(props){
     const links=[
         {to:"dashboard", text:"Home"},
         {to:"ManagePage", text:"Manage"},
-        {to:"MySuggestions", text:"MY-SUGGESTIONS"},
+        {to:"MySuggestions", text:"MY-OFFERS"},
         {to:"MyProducts", text:"MY-PRODUCTS"},
     ]
     const[credits, setCredits] = useState("");
@@ -53,7 +53,7 @@ function MenuPage(props){
 
                 }
 
-                <Button size="large" color="success" variant="contained" onClick={logout} style={{margin:"30px"}}> Logout</Button>
+                <Button size="large" color="success" variant="contained" onClick={logout} style={{margin:"30px",position: "absolute", marginLeft:"1500px"}}> Logout</Button>
 
             </ul>
             <div style={{ fontSize:"20px",alignItems: "center", justifyContent: "center",display:"flex"}}>

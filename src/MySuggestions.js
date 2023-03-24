@@ -73,7 +73,7 @@ function MySuggestions (){
                     </table>
                 }
             </div>  :
-                <Alert  variant="outlined" severity="error">
+                <Alert  variant="filled" severity="error" style = {{backgroundColor: "papayawhip", marginTop:"100px", scale: "80%"}}>
                     <h1 style={{marginLeft:"600px"}}> You Didn't Place Any Offers Yet </h1>
                 </Alert>
 

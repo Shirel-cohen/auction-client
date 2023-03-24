@@ -4,7 +4,8 @@ import axios from "axios";
 import React, {useEffect, useState} from "react";
 import RenderProduct from "./RenderProduct";
 import MenuPage from "./DefaultPage";
-import {Button} from "@mui/material";
+import {Alert, Button} from "@mui/material";
+import {toast, ToastContainer} from "react-toastify";
 
 
 function MyProducts(){
@@ -42,9 +43,9 @@ function MyProducts(){
             }
         }).then(res => {
             if(res.data.errorCode==null){
-                alert("Auction Closed!")
+                toast.success("Auction Closed!" , { className : "toast-su", position: toast.POSITION.TOP_CENTER,theme: "colored"});
             }else if(res.data.errorCode== 1006){
-                alert("There Are Not Enough Offers In This Auction!")
+                toast.error("There Are Not Enough Offers In This Auction!" , { className : "toast-su", position: toast.POSITION.TOP_CENTER,theme: "colored"});
             }
         })
     }
@@ -61,9 +62,12 @@ function MyProducts(){
                {
                                       <div>
                                            <RenderProduct product={auctionForUser} closeAuction={closeAuction} />
+                                          <ToastContainer/>
                                       </div>
 
-            }  </div> : <h1>You Have No Products Yet</h1> }
+            }  </div> :  <Alert  variant="filled" severity="error"  style = {{backgroundColor: "papayawhip", marginTop:"20px", scale: "80%"}}>
+                    <h1 style={{marginLeft:"600px"}}> You Don't Have Any Products Yet </h1>
+                </Alert> }
         </div>
     );
 }

@@ -59,7 +59,7 @@ function Product (){
                // amountOfOfferingForUser: product.amountOfOfferingOnProductForUser+1
             }}).then((res => {
             if(res.data.errorCode==null){
-                alert("Offer Uploaded")
+                toast.success("Offer Uploaded",{ className : "toast-su", position: toast.POSITION.TOP_CENTER,theme: "colored"});
             }else if(res.data.errorCode== 1010){
                 toast.error("Not Enough Credits In Your Account!",{ className : "toast-su", position: toast.POSITION.TOP_CENTER,theme: "colored"});
             }
@@ -123,7 +123,7 @@ function Product (){
                                onChange={(e) => setCurrentOffer(e.target.value)}/>
                     <Button size="large" color="success" variant="contained" onClick={sendOffer} disabled={currentOffer.length==0} style = {{position: "absolute", top: "430px",left:"430px"}}>Place Offer</Button>
                     <ToastContainer/>
-                </div> : "Auction is Closed!"
+                </div> : <h2 style={{marginTop : "350px"}}>Auction is Closed!</h2>
             }
         </div>
     );

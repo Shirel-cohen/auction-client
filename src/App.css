@@ -43,8 +43,10 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   color: #444;
-  background: #eee;
   text-align: center;
+  background-image: url("https://m.economictimes.com/thumb/msid-82060285,width-1200,height-900,resizemode-4,imgsize-305894/art-auction_istock.jpg");
+  background-size:1700px;
+  background-repeat: no-repeat;
 }
 
 h1 {
@@ -73,7 +75,7 @@ h1 {
 
 }
 .background{
-background-image: url("https://m.economictimes.com/thumb/msid-82060285,width-1200,height-900,resizemode-4,imgsize-305894/art-auction_istock.jpg");
+/*background-image: url("https://m.economictimes.com/thumb/msid-82060285,width-1200,height-900,resizemode-4,imgsize-305894/art-auction_istock.jpg");*/
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
