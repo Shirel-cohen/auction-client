@@ -6,6 +6,7 @@ import {Alert, Button} from "@mui/material";
 import {TextField} from "@mui/material";
 import MenuPage from "./DefaultPage";
 import {toast, ToastContainer} from "react-toastify";
+import Auctions from "./Auctions";
 
 
 function DashboardPage(props) {
@@ -183,37 +184,8 @@ function DashboardPage(props) {
                         <ToastContainer/>
                         <br/>
 
-                        <table className={"rwd-table"}>
-                            <tr style={{height:"30px", background:"floralwhite"}}>
-                                <th>productName</th>
-                                <th>Image</th>
-                                <th>Description</th>
-                                <th>Opening Date</th>
-                                <th>Number of Offers</th>
-                                <th>Number of My Offers</th>
-                            </tr>
+                                <Auctions auctions={openAuctions} owner={username} MyOffersOnProduct={getNumberOfMyOffersOnProduct}></Auctions>
 
-                            {
-
-                                openAuctions.map((auction, i) => {
-                                    return (
-                                        <tr>
-                                            <Link to={`/product/${auction.id}`}>
-                                                <td>{auction.productName}</td>
-                                            </Link>
-                                            <td><img src={auction.productImage} width={"100px"} height={"100px"}/></td>
-                                            <td>{auction.productDescription }</td>
-                                            <td>{auction.dateOpening}</td>
-                                            <td>{auction.amountOfOffers}</td>
-                                            <td> {auction.ownerOfTheProduct === username? "This is your product" : getNumberOfMyOffersOnProduct(auction.productName)}</td>
-                                        </tr>
-
-                                    );
-
-
-                                })
-                            }
-                        </table>
                             </div>:
                             <Alert  variant="filled" severity="error"  style = {{backgroundColor: "papayawhip", marginTop:"20px", scale: "80%"}}>
                                 <h1 style={{marginLeft:"600px"}}> There Are No Open Auctions </h1>

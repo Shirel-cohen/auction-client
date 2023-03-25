@@ -5,6 +5,8 @@ import {Link, NavLink, useNavigate} from "react-router-dom";
 import MenuPage from "./DefaultPage";
 import {Alert, Button, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
 import ErrorMessage from "./ErrorMessage";
+import RenderProduct from "./RenderProduct";
+import Auctions from "./Auctions";
 
 function ManagePage() {
 
@@ -20,6 +22,8 @@ function ManagePage() {
     const [productId, setProductId] = useState(-1);
     const [errorCode, setErrorCode] = useState(0);
     const [username, setUsername] = useState("");
+    const [myOffers,setMyOffers] = useState([]);
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -117,6 +121,16 @@ function ManagePage() {
         setProductId(e.target.value);
     }
 
+
+    const getNumberOfMyOffersOnProduct = (productName) => {
+        axios.get("http://localhost:8080/get-my-offers-on-product?username=" +username +"&productName="+ productName )
+            .then(response => {
+                if (response.data.success) {
+                    setMyOffers(response.data.offers)
+                }
+            })
+        return myOffers.length;
+    }
 
     return (
         <div className={"background"}>
@@ -228,41 +242,11 @@ function ManagePage() {
 
             {
                 option == "auction" &&
-                <div style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: "50px",
-                    backgroundColor: "floralwhite"
-                }}>
-                    <FormControl fullWidth>
-                        <InputLabel
-                            style={{color: "midnightblue", fontStyle: "italic", fontSize: "32px",marginTop:"18px"}}>List Of Auctions...</InputLabel>
-                        <Select
 
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={productId}
-                            label="Products"
-                            color={"secondary"}
-                            variant={"filled"}
-                            onChange={handleProductChanged}>
-                            {
-                                auction.map((item) => {
-                                    return (
-                                        <Link to={`/product/${item.id}`}>
-                                            <MenuItem value={item.id}>{item.productName}</MenuItem>
-                                        </Link>
-
-
-                                    )
-                                })
-                            }
-                        </Select>
-                    </FormControl>
-                </div>
-
+                <Auctions auctions={allAuctions} owner={username} MyOffersOnProduct={getNumberOfMyOffersOnProduct()}  ></Auctions>
             }
+
+
                </div> : <Alert  variant="filled" severity="error"  style = {{backgroundColor: "papayawhip", marginTop:"50px", scale: "80%"}}>
                     <h1 style={{marginLeft:"600px"}}> Sorry, This Page Is Not Available For You! </h1>
                 </Alert>}
