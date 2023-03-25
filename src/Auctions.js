@@ -4,7 +4,7 @@ import axios from "axios";
 
 function Auctions(props) {
 
-    const openAuctions=props.auctions
+    const openAuctions = props.auctions
 
 
     return (
@@ -16,8 +16,10 @@ function Auctions(props) {
                     <th>Image</th>
                     <th>Description</th>
                     <th>Opening Date</th>
+
                     <th>Number of Offers</th>
-                    <th>Number of My Offers</th>
+                    {!props.username=== "Admin" &&
+                        <th>Number of My Offers</th>}
                 </tr>
                 {
                     openAuctions.map((auction, i) => {
@@ -30,13 +32,16 @@ function Auctions(props) {
                                 <td>{auction.productDescription}</td>
                                 <td>{auction.dateOpening}</td>
                                 <td>{auction.amountOfOffers}</td>
-                                <td> {auction.ownerOfTheProduct === props.owner ? "This is your product" : props.MyOffersOnProduct(auction.productName)}</td>
-                            </tr>
+                                {!props.username=== "Admin" &&
+                                    <td> {auction.ownerOfTheProduct === props.owner ? "This is your product" : props.MyOffersOnProduct(auction.productName)}</td>
+                                }
+                                </tr>
                         );
                     })
                 }
             </table>
         </div>
-    ) ;
+    );
 }
+
 export default Auctions;

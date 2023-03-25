@@ -243,7 +243,7 @@ function ManagePage() {
             {
                 option === "auction" &&
 
-                <Auctions auctions={allAuctions} owner={username} MyOffersOnProduct={getNumberOfMyOffersOnProduct}  ></Auctions>
+                <Auctions  auctions={allAuctions} owner={username} MyOffersOnProduct={getNumberOfMyOffersOnProduct}  ></Auctions>
             }
 
 

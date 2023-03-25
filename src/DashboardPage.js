@@ -144,7 +144,7 @@ function DashboardPage(props) {
         <div className={"background"} >
 
             <div style={{ justifyContent: "center", display: "flex"}}>
-                <MenuPage me={"dashboard"} username = {username}/>
+                <MenuPage  username = {username}/>
                 <h2 style={{ fontStyle: "italic",position:"absolute",marginRight :"1000px",marginTop:"45px"}}>Hello <span
                     style={{fontStyle: "oblique"}}>{username}</span></h2>
 
@@ -183,7 +183,7 @@ function DashboardPage(props) {
                                   color="success"  variant="outlined"   />
                         <ToastContainer/>
                         <br/>
-                                <Auctions auctions={openAuctions} id={"myTable"} owner={username} MyOffersOnProduct={getNumberOfMyOffersOnProduct}></Auctions>
+                                <Auctions  auctions={openAuctions} id={"myTable"} owner={username} MyOffersOnProduct={getNumberOfMyOffersOnProduct}></Auctions>
                             </div>:
                             <Alert  variant="filled" severity="error"  style = {{backgroundColor: "papayawhip", marginTop:"20px", scale: "80%"}}>
                                 <h1 style={{marginLeft:"600px"}}> There Are No Open Auctions </h1>
