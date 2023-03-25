@@ -3,15 +3,14 @@ import React, {useState} from "react";
 import axios from "axios";
 
 function Auctions(props) {
+
     const openAuctions=props.auctions
-
-
 
 
     return (
         <div>
 
-            <table className={"rwd-table"}>
+            <table id={props.id} className={"rwd-table"}>
                 <tr style={{height: "30px", background: "floralwhite"}}>
                     <th>productName</th>
                     <th>Image</th>
@@ -20,7 +19,6 @@ function Auctions(props) {
                     <th>Number of Offers</th>
                     <th>Number of My Offers</th>
                 </tr>
-
                 {
                     openAuctions.map((auction, i) => {
                         return (
@@ -35,13 +33,10 @@ function Auctions(props) {
                                 <td> {auction.ownerOfTheProduct === props.owner ? "This is your product" : props.MyOffersOnProduct(auction.productName)}</td>
                             </tr>
                         );
-
-
                     })
                 }
             </table>
         </div>
     ) ;
 }
-
 export default Auctions;

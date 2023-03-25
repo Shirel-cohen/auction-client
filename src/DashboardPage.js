@@ -183,9 +183,7 @@ function DashboardPage(props) {
                                   color="success"  variant="outlined"   />
                         <ToastContainer/>
                         <br/>
-
-                                <Auctions auctions={openAuctions} owner={username} MyOffersOnProduct={getNumberOfMyOffersOnProduct}></Auctions>
-
+                                <Auctions auctions={openAuctions} id={"myTable"} owner={username} MyOffersOnProduct={getNumberOfMyOffersOnProduct}></Auctions>
                             </div>:
                             <Alert  variant="filled" severity="error"  style = {{backgroundColor: "papayawhip", marginTop:"20px", scale: "80%"}}>
                                 <h1 style={{marginLeft:"600px"}}> There Are No Open Auctions </h1>
