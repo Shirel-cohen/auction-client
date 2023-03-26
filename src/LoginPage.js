@@ -98,6 +98,7 @@ function LoginPage () {
                     setPassword2("");
                 } else {
                     setErrorCode(response.data.errorCode);
+
                 }
             })
         } else {
@@ -130,7 +131,7 @@ function LoginPage () {
             <div style={{ justifyContent: "center", display: "flex"}}>
                 <table >
                     <tr>
-                        <td  style={{color:"lightgreen"}}>
+                        <td >
                             Username:
                         </td>
                         <td >
@@ -140,7 +141,7 @@ function LoginPage () {
                         </td>
                     </tr>
                     <tr >
-                        <td style={{color:"lightgreen"}}>
+                        <td>
                             Password:
                         </td>
                         <td>
@@ -150,7 +151,7 @@ function LoginPage () {
                     {
                         type == "signUp" &&
                         <tr>
-                            <td style={{color:"lightgreen"}}>Repeat Password:</td>
+                            <td>Repeat Password:</td>
                             <td>
                                 <TextField style={{backgroundColor:"papayawhip"}} color="success" type={"password"} value={password2} onChange={password2Changed}  id="myInput" label="Repeat password" variant="outlined" />
 

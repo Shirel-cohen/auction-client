@@ -10,7 +10,7 @@ function MenuPage(props){
     const links=[
         {to:"dashboard", text:"Home"},
         {to:"ManagePage", text:"Manage"},
-        {to:"MySuggestions", text:"MY-SUGGESTIONS"},
+        {to:"MySuggestions", text:"MY-OFFERS"},
         {to:"MyProducts", text:"MY-PRODUCTS"},
     ]
     const[credits, setCredits] = useState("");
