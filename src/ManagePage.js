@@ -228,38 +228,33 @@ function ManagePage() {
 
             {
                 option == "auction" &&
-                <div style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    marginTop: "50px",
-                    backgroundColor: "floralwhite"
-                }}>
-                    <FormControl fullWidth>
-                        <InputLabel
-                            style={{color: "purple", fontStyle: "italic", fontSize: "30px"}}>Products</InputLabel>
-                        <Select
+               <div>
 
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={productId}
-                            label="Products"
-                            color={"secondary"}
-                            variant={"filled"}
-                            onChange={handleProductChanged}>
                             {
                                 auction.map((item) => {
+
                                     return (
+
+                                        <div style={{
+                                            display: "flex",
+                                            justifyContent: "center",
+                                            alignItems: "center",
+                                            marginTop: "20px",
+                                            padding: "5px",
+                                        }}>
                                         <Link to={`/product/${item.id}`}>
-                                            <MenuItem value={item.id}>{item.productName}</MenuItem>
+                                             <Button size="large" color="success" variant="contained" value={item.id}>{item.productName}</Button>
                                         </Link>
+
+                                        </div>
+
+
+
 
 
                                     )
                                 })
                             }
-                        </Select>
-                    </FormControl>
                 </div>
 
             }

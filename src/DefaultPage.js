@@ -53,7 +53,7 @@ function MenuPage(props){
 
                 }
 
-                <Button size="large" color="success" variant="contained" onClick={logout} style={{margin:"30px"}}> Logout</Button>
+                <Button size="large" color="success" variant="contained" onClick={logout} style={{margin:"30px",position: "absolute", marginLeft:"1500px"}}> Logout</Button>
 
             </ul>
             <div style={{ fontSize:"20px",alignItems: "center", justifyContent: "center",display:"flex"}}>

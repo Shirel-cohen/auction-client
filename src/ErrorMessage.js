@@ -30,13 +30,13 @@ function ErrorMessage(props) {
             {
                 props.lineBreak ?
                     <div>
-                            <Alert severity="error"  variant="outlined"
-                                   >
-                                {message}
-                            </Alert>
-                </div>  :
+                        <Alert severity="error"  variant="filled"
+                        >
+                            {message}
+                        </Alert>
+                    </div>  :
                     <span>
-                        <Alert  variant="outlined" severity="error">
+                        <Alert  variant="filled" severity="error">
                             {message}
                             </Alert>
                     </span>

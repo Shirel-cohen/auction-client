@@ -1,14 +1,10 @@
-
-
 .rwd-table {
-margin: 1em 0;
-min-width: 300px;
+  margin: 1em 0;
+  min-width: 300px;
   text-align: center;
 }
 
 rwd-table.tr {
-/*border-top: 1px solid #ddd;*/
-/*border-bottom: 1px solid #ddd;*/
   text-align: center;}
 
 rwd-table.th {
@@ -18,13 +14,13 @@ rwd-table.th {
 rwd-table.td {
   display: block;}
 rwd-table.td:first-child {
-   padding-top: .5em;
+  padding-top: .5em;
   text-align: center;
- }
+}
 rwd-table.td:last-child {
-   padding-bottom: .5em;
+  padding-bottom: .5em;
   text-align: center;
- }
+}
 
 rwd-table.td:before {
   content: attr(data-th);
@@ -43,8 +39,10 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   color: #444;
-  background: #eee;
   text-align: center;
+  background-image: url("https://m.economictimes.com/thumb/msid-82060285,width-1200,height-900,resizemode-4,imgsize-305894/art-auction_istock.jpg");
+  background-size:1700px;
+  background-repeat: no-repeat;
 }
 
 h1 {
@@ -73,7 +71,6 @@ h1 {
 
 }
 .background{
-background-image: url("https://m.economictimes.com/thumb/msid-82060285,width-1200,height-900,resizemode-4,imgsize-305894/art-auction_istock.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
@@ -135,54 +132,10 @@ background-image: url("https://m.economictimes.com/thumb/msid-82060285,width-120
 #content {
   width: 100%;
 }
-.statistics{
-  margin-left: 80px;
-  padding: 20px;
-  border: 1px solid black;
-  border-collapse: collapse;
-  alignItems: center;
-}
-#statistics1{
-  margin-left: 80px;
-  padding-left: 150px;
-  border: 1px solid black;
-  border-collapse: collapse;
-  alignItems: center;
-}
-/*#statistics2{*/
-/*  border: 1px solid black;*/
-/*  border-collapse: collapse;*/
-/*}*/
-.auctionTable{
-  border: 1px solid black;
-  border-collapse: collapse;
-  justify-content: center;
-  margin-left: 250px;
-  margin-bottom: 10px;
 
-}
-
-.auctionTable td{
-  border: 1px solid black;
-  border-collapse: collapse;
-  margin-left: 50px;
-;
-}
-
-.auctionTable tr{
-  border: 1px solid black;
-  border-collapse: collapse;
-  margin-right: 50px;
-}
-
-.auctionTable th{
-  border: 1px solid black;
-  border-collapse: collapse;
-  margin-left: 150px;
-}
 
 TextField {
-background-color:lightgreen;
+  background-color:lightgreen;
   color:green;
 
 }
@@ -229,8 +182,5 @@ background-color:lightgreen;
 .Toastify__toast-body > div:last-child {
   color: white;
 }
-
-
-
 
 

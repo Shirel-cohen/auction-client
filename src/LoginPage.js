@@ -93,6 +93,9 @@ function LoginPage () {
                 if (response.data.success) {
                     setErrorCode(0)
                     toast.success("You Have Signed Up Successfully",{ className : "toast-su", position: toast.POSITION.TOP_CENTER,theme: "colored"});
+                    setUsername("");
+                    setPassword("");
+                    setPassword2("");
                 } else {
                     setErrorCode(response.data.errorCode);
                 }
@@ -105,6 +108,8 @@ function LoginPage () {
                     setErrorCode(0)
                     Cookies.set("token", response.data.token);
                     navigate("../dashboard")
+                    setUsername("");
+                    setPassword("");
                 } else {
                     setErrorCode(response.data.errorCode);
                 }

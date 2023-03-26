@@ -15,7 +15,6 @@ function DashboardPage(props) {
     const [openAuctions, setOpenAuctions] = useState([]);
     const [token, setToken] = useState("");
     const [option, setOption] = useState("update")
-    //product inputs from user
     const [productName, setProductName] = useState("")
     const [describeProduct, setDescribe] = useState("")
     const [urlImage, setUrlImage] = useState("")
@@ -143,11 +142,13 @@ function DashboardPage(props) {
         <div className={"background"} >
 
             <div style={{ justifyContent: "center", display: "flex"}}>
-                <MenuPage me={"dashboard"} username = {username}/>
-                <h2 style={{marginInlineEnd:"20px", fontStyle: "italic",color: "lightgreen"}}>Hello <span
-                    style={{fontStyle: "oblique",color: "lightgreen"}}>{username}</span></h2>
+                <MenuPage  username = {username}/>
+                <h2 style={{ fontStyle: "italic",position:"absolute",marginRight :"1000px",marginTop:"45px"}}>Hello <span
+                    style={{fontStyle: "oblique"}}>{username}</span></h2>
 
             </div>
+
+
 
 
 
@@ -174,15 +175,17 @@ function DashboardPage(props) {
                 {
                     option == "showTenders" &&
 
-                    <div>
-                        <TextField   style={{backgroundColor:"papayawhip",  marginLeft:"700px",
-                            marginBottom:"20px"}}type={"text"} onKeyUp={filterTable} id="myInput" label="Filter Table By Name"
-                                  color="success"  variant="outlined"   />
-                        <ToastContainer/>
-                        <br/>
+                        <div>
 
                         {openAuctions.length > 0?
-                        <table className={"rwd-table"}>
+                            <div>
+                                <TextField   style={{backgroundColor:"papayawhip",  marginLeft:"700px",
+                                    marginBottom:"20px"}}type={"text"} onKeyUp={filterTable} id="myInput" label="Filter Table By Name"
+                                             color="success"  variant="outlined"   />
+                                <ToastContainer/>
+                                <br/>
+
+                        <table className={"rwd-table"} id={"myTable"}>
                             <tr style={{height:"30px", background:"floralwhite"}}>
                                 <th>productName</th>
                                 <th>Image</th>
@@ -212,10 +215,11 @@ function DashboardPage(props) {
 
                                 })
                             }
-                        </table> :
-                            <Alert  variant="outlined" severity="error">
+                        </table>
+                                </div>:
+
                                 <h1 style={{marginLeft:"600px"}}> There Are No Open Auctions </h1>
-                            </Alert>
+
                             }
 
                     </div>

@@ -4,10 +4,7 @@ import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {useEffect, useState} from "react";
 import MenuPage from "./DefaultPage";
-import {Alert} from "@mui/material";
-import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import {Button, Zoom} from "@mui/material";
 
 function MySuggestions (){
     const navigate = useNavigate();
@@ -73,9 +70,9 @@ function MySuggestions (){
                     </table>
                 }
             </div>  :
-                <Alert  variant="outlined" severity="error">
+
                     <h1 style={{marginLeft:"600px"}}> You Didn't Place Any Offers Yet </h1>
-                </Alert>
+
 
             }
         </div>
